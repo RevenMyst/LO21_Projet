@@ -8,12 +8,12 @@ N'ajoutez pas les autres fichiers générés par votre IDE (en modifiant le .git
 
 ## Nomenclature
 
-- Une classe commence par une majuscule (certains IDE l'oblige donc pour etre sur que cela ne genera personne autant tous le faire).
-- Variables en anglais ou francais sauf les variables locales ( et donc uniquement connue de celui/celle qui a dev la fonction. ( Néanmoins pour la relecture il serait plus pratique si tout les variables etaient en anglais ou francais)).
+- Une classe commence par une majuscule (certains IDE l'oblige donc pour être sûr que cela ne gênera personne autant tous le faire).
+- Variables en anglais ou francais sauf les variables locales ( et donc uniquement connue de celui/celle qui a dev la fonction. ( Néanmoins pour la relecture il serait plus pratique si toutes les variables étaient en anglais ou francais)).
 
 ## Organisation du code
 
-- Une classe = un header et un fichier sources (sauf si le design pattern demande de mettre plusieurs classe dans le meme fichier).
+- Une classe = un header (.h) et un fichier source (.cpp) (sauf si le design pattern demande de mettre plusieurs classes dans le même fichier).
 
 
 
