@@ -1,6 +1,3 @@
-#ifndef OPERAND_H
-#define OPERAND_H
-
 #pragma once
 #include <string>
 class Operand
@@ -12,4 +9,4 @@ public:
 	virtual void exec() = 0;
 };
 
-#endif
+

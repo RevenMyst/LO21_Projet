@@ -1,6 +1,3 @@
-#ifndef OPERATOR_H
-#define OPERATOR_H
-
 #pragma once
 #include "Operand.h"
 
@@ -16,5 +13,3 @@ public:
 protected:
 	void ope();
 };
-
-#endif
