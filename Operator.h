@@ -1,5 +1,6 @@
 #pragma once
 #include "Operand.h"
+
 #include <string>
 class Operator : public Operand
 {
@@ -22,6 +23,4 @@ public:
 		}
 	}
 
-
 };
-
