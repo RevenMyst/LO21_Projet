@@ -5,7 +5,7 @@ class Operand
 protected:
 	unsigned int arite;
 public:
-	virtual std::string toString(int size);
+	virtual std::string toString() const;
 	virtual void exec();
 };
 

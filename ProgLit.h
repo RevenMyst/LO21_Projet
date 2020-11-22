@@ -11,8 +11,11 @@ public:
 	void addOperand(Operand o) {
 		operands.push_back(o);
 	}
-	std::string toString(int size) const;
+	std::string toString() const;
 	std::vector<Operand> getOperands() const { return operands; }
 	void accept(Visitor vistor) { visitor.visitProgLit(*this); }
+	bool operator==(const Litteral &) const;
+	bool operator!=(const Litteral&) const;
+
 };
 

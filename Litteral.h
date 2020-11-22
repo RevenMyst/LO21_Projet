@@ -8,9 +8,15 @@ protected:
 	unsigned int arite = 0;
 	LitType type;
 public:
-	void accept(Visitor visitor);
-	LitType getClass() { return type; }
-	void exec();
+	virtual void accept(Visitor visitor);
+	LitType getClass() const{ return type; }
+	void exec();// a maj lors ajout pile
+	virtual bool operator==(const Litteral& lit) const { return false; }
+	virtual bool operator>=(const Litteral& lit) const { return false; }
+	virtual bool operator<=(const Litteral& lit) const { return false; }
+	virtual bool operator>(const Litteral& lit) const { return false; }
+	virtual bool operator<(const Litteral& lit) const { return false; }
+
 };
 
 
