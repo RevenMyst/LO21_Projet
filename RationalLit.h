@@ -1,16 +1,20 @@
 #pragma once
 #include "Litteral.h"
 
-class LitRational : public Litteral
+class LitRational : public LitteralNumerique
 {
 	int numerateur;
 	unsigned int denominateur;
 	LitType Type = RATIONALLIT;
 public:
-	LitRational(int n, unsigned int d) : numerateur(n), denominateur(d) {}
-	int getNum() { return numerateur; }
-	unsigned int getDen() { return denominateur; }
-	std::string toString(int size) {
+	LitRational(int n, unsigned int d) : numerateur(n), denominateur(d) {
+		ReductionRational(numerateur, denominateur);
+	}
+	void ReductionRational(int Num, unsigned int Den);
+	int getNum() const { return numerateur; }
+	unsigned int getDen() const { return denominateur; }
+	int getValue() const;
+	std::string toString(int size) const{
 		//Cas d'ou on a un entier
 		if (getDen() == 1)
 			return(std::to_string(getNum()));
