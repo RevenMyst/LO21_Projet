@@ -19,9 +19,9 @@ public:
 	virtual int getValue() const = 0;
 };
 
-bool operator == (const Litteral& Lit1, const Litteral& Lit2);
-bool operator != (const Litteral& Lit1, const Litteral& Lit2);
-bool operator >= (const Litteral& Lit1, const Litteral& Lit2);
-bool operator <= (const Litteral& Lit1, const Litteral& Lit2);
-bool operator > (const Litteral& Lit1, const Litteral& Lit2);
-bool operator < (const Litteral& Lit1, const Litteral& Lit2);
+bool operator==(const Litteral& Lit1, const Litteral& Lit2) const;
+bool operator!=(const Litteral& Lit1, const Litteral& Lit2) const;
+bool operator>=(const Litteral& Lit1, const Litteral& Lit2) const;
+bool operator<=(const Litteral& Lit1, const Litteral& Lit2) const;
+bool operator>(const Litteral& Lit1, const Litteral& Lit2) const;
+bool operator<(const Litteral& Lit1, const Litteral& Lit2) const;
