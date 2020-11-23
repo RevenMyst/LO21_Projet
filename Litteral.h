@@ -8,9 +8,10 @@ protected:
 	unsigned int arite = 0;
 	LitType type;
 public:
-	void accept(Visitor visitor);
+	virtual void accept(Visitor& visitor);
 	LitType getClass() { return type; }
-	void exec();
+	void exec(); // a maj pour empiler
+
 };
 
 
