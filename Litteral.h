@@ -6,11 +6,22 @@ class Litteral : public Operand
 {
 protected:
 	unsigned int arite = 0;
-	LitType type;
+	LitType Type;
 public:
 	void accept(Visitor visitor);
-	LitType getClass() { return type; }
+	LitType getClass() const { return Type; }
 	void exec();
 };
 
+class LitteralNumerique : public Litteral
+{
+public:
+	virtual int getValue() const = 0;
+};
 
+bool operator == (const Litteral& Lit1, const Litteral& Lit2);
+bool operator != (const Litteral& Lit1, const Litteral& Lit2);
+bool operator >= (const Litteral& Lit1, const Litteral& Lit2);
+bool operator <= (const Litteral& Lit1, const Litteral& Lit2);
+bool operator > (const Litteral& Lit1, const Litteral& Lit2);
+bool operator < (const Litteral& Lit1, const Litteral& Lit2);
