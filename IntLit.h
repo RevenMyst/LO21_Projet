@@ -2,13 +2,13 @@
 
 #include "Litteral.h"
 
-class LitInt : public Litteral
+class LitInt : public LitteralNumerique
 {
 	int value;
 	LitType Type = INTLIT;
 public:
 	LitInt(int v) : value(v){}
-	int getValue() { return value; }
+	int getValue() const { return value; }
 	std::string toString(int size) {
 		std::string res = std::to_string(value);
 		return(res);
