@@ -14,6 +14,7 @@ protected:
 	std::string symbole;
 	virtual void ope() = 0;
 public:
+	std::string toString() const { return symbole; }
 	void exec() {
 		if (verify()) {
 			ope();
