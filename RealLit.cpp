@@ -1,6 +1,6 @@
 #include "RealLit.h"
 
-double LitReel::getValueR() {
+double LitReel::getValueR() const {
 	//Taille maximale si on a un int de 10 chiffres et une mantisse de 10 chiffres
 	int i = 20;
 	std::string stringValue = LitReel::toString(i);
@@ -8,7 +8,7 @@ double LitReel::getValueR() {
 	return(res);
 }
 
-std::string LitReel::toString(int size) {
+std::string LitReel::toString(int size) const {
 	std::string valeur = std::to_string(integer).append(".");
 	std::string virgule = std::to_string(mantisse);
 	if (virgule != "0")
@@ -16,7 +16,7 @@ std::string LitReel::toString(int size) {
 	return(valeur);
 }
 
-int LitReel::getValue() {
+int LitReel::getValue() const{
 	//Conversion a string des parties du reel
 	std::string s1 = std::to_string(getInt());
 	std::string s2 = std::to_string(getMant());
