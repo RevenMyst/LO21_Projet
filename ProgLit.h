@@ -13,9 +13,9 @@ public:
 	}
 	std::string toString() const;
 	std::vector<Operand> getOperands() const { return operands; }
-	void accept(Visitor vistor) { visitor.visitProgLit(*this); }
-	bool operator==(const Litteral &) const;
-	bool operator!=(const Litteral&) const;
+	void accept(Visitor& vistor) const override { visitor.visitProgLit(*this); }
+	bool operator==(const Litteral &) const override;
+	bool operator!=(const Litteral&) const override;
 
 };
 
