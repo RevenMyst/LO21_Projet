@@ -1,14 +1,14 @@
 #pragma once
 #include "Operand.h"
-
 #include <string>
+#include "ComputerException.h"
 class Operator : public Operand
 {
 private:
-	//verifie quil reste assez d'elements dans la pile pour effectuer l'operation.
+
 	bool verify() {
-		int elementDansPile; // a mettre a jour lors de la creation de la pile
-		return (arite >= elementDansPile);
+		
+		return (arite >= Computer::getInstance().getPile()->size());
 	}
 protected:
 	std::string symbole;
@@ -20,7 +20,7 @@ public:
 			ope();
 		}
 		else {
-			throw "erreur";// a mettre a jour lorsde la creation de la classe Exception
+			throw ComputerException("Erreur : Il n'y a pas assez de Litterals dans la pile.");
 		}
 	}
 
