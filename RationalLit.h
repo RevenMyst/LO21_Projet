@@ -13,7 +13,7 @@ public:
 	void ReductionRational(int Num, unsigned int Den);
 	int getNum() const { return numerateur; }
 	unsigned int getDen() const { return denominateur; }
-	int getValue() const;
+	double getValue() const;
 	std::string toString(int size) const{
 		//Cas d'ou on a un entier
 		if (getDen() == 1)
