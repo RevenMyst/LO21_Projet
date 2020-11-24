@@ -23,6 +23,5 @@ public:
 class LitteralNumerique : public Litteral
 {
 public:
-	virtual int getValue() const = 0;
+	virtual double getValue() const = 0;
 };
-
