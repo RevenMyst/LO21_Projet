@@ -18,6 +18,7 @@ public:
 	void exec() {
 		if (verify()) {
 			ope();
+			delete this;
 		}
 		else {
 			throw ComputerException("Erreur : Il n'y a pas assez de Litterals dans la pile.");
