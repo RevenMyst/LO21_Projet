@@ -11,9 +11,10 @@ class LitInt : public LitteralNumerique
 public:
 
 	LitInt(int v) : value(v){}
-	int getValue() const { return value; }
+	double getValue() const { return value; }
+	int getInt() const {return value} //retourne de valeur en int (pas de 1.0)
 	std::string toString(int size) const{
-		std::string res = std::to_string(getValue());
+		std::string res = std::to_string(getInt());
 		return(res);
 	}
 
