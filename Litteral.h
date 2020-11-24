@@ -8,9 +8,16 @@ protected:
 	unsigned int arite = 0;
 	LitType Type;
 public:
-	void accept(Visitor visitor);
-	LitType getClass() const { return Type; }
-	void exec();
+
+	virtual void accept(Visitor& visitor) const = 0;
+	LitType getClass() const { return type; }
+	void exec();// a maj lors ajout pile
+	virtual bool operator==(const Litteral& lit) const { return false; }
+	virtual bool operator!=(const Litteral& lit) const { return false; }
+	virtual bool operator>=(const Litteral& lit) const { return false; }
+	virtual bool operator<=(const Litteral& lit) const { return false; }
+	virtual bool operator>(const Litteral& lit) const { return false; }
+	virtual bool operator<(const Litteral& lit) const { return false; }
 };
 
 class LitteralNumerique : public Litteral
@@ -19,9 +26,3 @@ public:
 	virtual int getValue() const = 0;
 };
 
-bool operator==(const Litteral& Lit1, const Litteral& Lit2) const;
-bool operator!=(const Litteral& Lit1, const Litteral& Lit2) const;
-bool operator>=(const Litteral& Lit1, const Litteral& Lit2) const;
-bool operator<=(const Litteral& Lit1, const Litteral& Lit2) const;
-bool operator>(const Litteral& Lit1, const Litteral& Lit2) const;
-bool operator<(const Litteral& Lit1, const Litteral& Lit2) const;

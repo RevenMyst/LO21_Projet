@@ -5,8 +5,10 @@ class Operand
 protected:
 	unsigned int arite;
 public:
-	virtual std::string toString(int size)= 0;
+
+	virtual std::string toString() const= 0;
 	virtual void exec() = 0;
+
 };
 
 
