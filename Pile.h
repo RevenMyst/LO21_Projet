@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-
 class Litteral;
 
 class Pile
@@ -13,6 +12,7 @@ public:
 	void push(Litteral* lit);
 	Litteral* pull();
 	unsigned int size() const { return litterals.size(); }
+	std::vector<Litteral*>& getLitterals() { return litterals; }
 	~Pile();
 };
 
