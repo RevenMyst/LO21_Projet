@@ -18,8 +18,13 @@ int main() {
 
 	afficherPile();
 
-	OpeDUP* o = new OpeDUP;
+	OpeSWAP* o = new OpeSWAP;
 	o->exec();
+
+	afficherPile();
+
+	OpeCLEAR* op = new OpeCLEAR;
+	op->exec();
 
 	afficherPile();
 	
