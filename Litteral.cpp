@@ -1,5 +1,7 @@
 #include "Litteral.h"
-
+#include <sstream>
+#include "Visitor.h"
+#include "Computer.h"
 
 bool operator==(const Litteral& lit1, const Litteral& lit2)
 {
@@ -56,36 +58,37 @@ bool operator>(const Litteral& lit1, const Litteral& lit2)
 /***********REALLIT*************/
 /*******************************/
 
-double RealLit::getValue() const {
-
-	std::string stringValue = RealLit::toString();
-	double res = stod(stringValue);
-	return(res);
-}
-
 std::string RealLit::toString() const {
-	std::string valeur = std::to_string(integer);
-	std::string virgule = std::to_string(mantisse);
-	std::string dot = ".";
-	if (virgule == "0" && valeur == "0")
-	{
-		return valeur.append("0.0");
+	std::ostringstream ss;
+	if (getMant() == 0) {
+		return std::to_string(getInt()) + ".";
 	}
-	else if (valeur == "0") {
-		return dot.append(virgule);
-	}
-	else if (virgule == "0") {
-		return valeur.append(dot);
+	else if (getInt() == 0) {
+		ss << getMant();
+		std::string str = ss.str();
+		str.erase(0, 1);
+		return str;
 	}
 	else {
-		return valeur.append(dot.append(virgule));
+		ss << value;
+		return ss.str();
 	}
+}
+
+void RealLit::accept(Visitor* visitor) const
+{
+	visitor->visitRealLit(this);
 }
 
 /*******************************/
 /*********RATIONALLIT***********/
 /*******************************/
 
+
+void RationalLit::accept(Visitor* visitor) const
+{
+	visitor->visitRationalLit(this);
+}
 
 void RationalLit::ReductionRational() {
 	for (int i = numerateur * denominateur; i > 1; i--) {
@@ -97,7 +100,20 @@ void RationalLit::ReductionRational() {
 }
 
 double RationalLit::getValue() const {
-	return(numerateur / denominateur);
+
+	return (numerateur / (double)denominateur);
+}
+
+std::string RationalLit::toString() const
+{
+	//Cas d'ou on a un entier
+	if (getDen() == 1)
+		return(std::to_string(getNum()));
+	//Cas d'ou on a meme valeur dans les deux parties ex: 5/5
+	if (getDen() == getNum())
+		return("1");
+	std::string res = std::to_string(getNum()) + "/" + std::to_string(getDen());
+	return(res);
 }
 
 /*******************************/
@@ -119,4 +135,35 @@ std::string ProgLit::toString() const
 	}
 	str += "]";
 	return str;
+}
+
+void ProgLit::accept(Visitor* visitor) const
+{
+	visitor->visitProgLit(this);
+}
+
+void Litteral::exec()
+{
+	Computer::getInstance().getPile()->push(this);
+}
+
+void ExpLit::accept(Visitor* visitor) const
+{
+	visitor->visitExpLit(this);
+}
+
+void IntLit::accept(Visitor* visitor) const
+{
+	visitor->visitIntLit(this);
+}
+
+std::string IntLit::toString() const
+{
+	std::string res = std::to_string(getInt());
+	return(res);
+}
+
+Operand* IntLit::clone()
+{
+	return new IntLit(*this);
 }

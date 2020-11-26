@@ -1,4 +1,8 @@
 #include "Operator.h"
+#include "Litteral.h"
+#include "ComputerException.h"
+#include "Computer.h"
+
 
 void OpeDUP::ope()
 {
@@ -27,4 +31,20 @@ void OpeSWAP::ope()
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
 	Computer::getInstance().getPile()->push(l1);
 	Computer::getInstance().getPile()->push(l2);
+}
+
+bool Operator::verify()
+{
+	return (arite <= Computer::getInstance().getPile()->size());
+}
+
+void Operator::exec()
+{
+	if (verify()) {
+		ope();
+		delete this;
+	}
+	else {
+		throw ComputerException("Erreur : Il n'y a pas assez de Litterals dans la pile.");
+	}
 }

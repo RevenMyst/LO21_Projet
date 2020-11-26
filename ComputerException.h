@@ -1,11 +1,14 @@
 #pragma once
 #include <string>
-class ComputerException {
+#include <stdexcept>
+using namespace std;
+class ComputerException : public exception {
 private:
-	std::string err;
+	string info;
 public:
-	ComputerException(std::string err) :err(err) {}
-	const std::string& getInfo() const { return err; }
+	ComputerException(const string& i)  noexcept:info(i) {}
+	virtual ~ComputerException() noexcept {};
+	const char* what() const noexcept{ return info.c_str(); }
 };
 
 

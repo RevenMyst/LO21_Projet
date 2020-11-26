@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Computer.h"
+
 class Operand
 {
 protected:

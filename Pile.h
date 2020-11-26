@@ -1,10 +1,11 @@
 #pragma once
-#include <vector>
+#include <list>
+
 class Litteral;
 
 class Pile
 {
-	std::vector<Litteral*> litterals;
+	std::list<Litteral*> litterals;
 	
 public:
 
@@ -12,7 +13,7 @@ public:
 	void push(Litteral* lit);
 	Litteral* pull();
 	unsigned int size() const { return litterals.size(); }
-	std::vector<Litteral*>& getLitterals() { return litterals; }
+	std::list<Litteral*>& getLitterals() { return litterals; }
 	~Pile();
 };
 

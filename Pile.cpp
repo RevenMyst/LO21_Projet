@@ -1,6 +1,6 @@
 #include "Pile.h"
-#include "ComputerException.h"
 #include <iostream>
+#include "ComputerException.h"
 
 void Pile::push(Litteral* lit)
 {
@@ -21,8 +21,6 @@ Litteral* Pile::pull()
 	}
 
 }
-
-
 
 
 Pile::~Pile()
