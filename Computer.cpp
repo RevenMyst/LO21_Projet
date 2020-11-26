@@ -17,6 +17,6 @@ bool AtomManager::removeAtom(const std::string str)
 
 Operand* AtomManager::getOperand(const std::string str)
 {
-	return nullptr;
+	return atoms.at(str)->clone();
 
 }
