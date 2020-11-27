@@ -10,11 +10,10 @@ class Litteral : public Operand
 {
 protected:
 	unsigned int arite = 0;
-	LitType type = INTLIT;
 public:
 
 	virtual void accept(Visitor* visitor) const = 0;
-	LitType getClass() const { return type; }
+	virtual LitType getClass() const = 0;
 	void exec() override;
 };
 
@@ -34,12 +33,13 @@ public:
 class ExpLit : public Litteral
 {
 	std::string name;
-	LitType type = EXPLIT;
 public:
 	ExpLit(std::string str) :name(str) {}
-	std::string toString() const { return name; }
+	std::string toString() const override{ return "'"+name+"'"; }
+	const std::string getValue() const { return name; }
 	void accept(Visitor* visitor) const;
 	~ExpLit() = default;
+	LitType getClass() const { return EXPLIT; }
 	Operand* clone() { return new ExpLit(*this); }
 
 };
@@ -47,7 +47,6 @@ public:
 class RealLit : public NumLit
 {
 	double value;
-	LitType Type = REALLIT;
 public:
 	RealLit(double v) : value(v) {}
 	int getInt() const { 
@@ -60,7 +59,7 @@ public:
 	std::string toString() const;
 	void accept(Visitor* visitor) const;
 	~RealLit() = default;
-
+	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
 };
 
@@ -68,7 +67,6 @@ class RationalLit : public NumLit
 {
 	int numerateur;
 	unsigned int denominateur;
-	LitType Type = RATIONALLIT;
 public:
 	RationalLit(int n, unsigned int d) : numerateur(n), denominateur(d) {
 		ReductionRational();
@@ -81,6 +79,7 @@ public:
 	double getValue() const;
 	std::string toString() const;
 	~RationalLit() = default;
+	LitType getClass() const { return RATIONALLIT; }
 	Operand* clone() { return new RationalLit(*this); }
 };
 
@@ -88,7 +87,6 @@ class IntLit : public NumLit
 
 {
 	int value;
-	LitType Type = INTLIT;
 public:
 
 	IntLit(int v) : value(v) {}
@@ -97,6 +95,7 @@ public:
 	int getInt() const { return value; } //retourne de valeur en int (pas de 1.0)
 	std::string toString() const;
 	~IntLit() = default;
+	LitType getClass() const { return INTLIT; }
 	Operand* clone();
 
 };
@@ -105,7 +104,6 @@ class ProgLit : public Litteral
 {
 private:
 	std::list<Operand* > operands;
-	LitType type = PROGLIT;
 public:
 	
 	ProgLit() = default;
@@ -121,6 +119,7 @@ public:
 			delete o;
 		}
 	}
+	LitType getClass() const { return PROGLIT; }
 	Operand* clone() { return new ProgLit(*this); }
 
 };

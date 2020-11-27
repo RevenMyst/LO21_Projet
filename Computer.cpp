@@ -1,11 +1,15 @@
 #include "Computer.h"
-#include "Operand.h"
+#include "Litteral.h"
 #include "Pile.h"
+#include <stdexcept>
 
 
-bool AtomManager::addAtom(const std::string str, Operand* o)
+bool AtomManager::addAtom(const std::string str, Litteral* o)
 {
-	std::pair<std::map<std::string, Operand *>::iterator, bool> res = atoms.insert(std::pair<std::string,Operand*>(str, o));
+	if (atoms.count(str) > 0) {
+		removeAtom(str);
+	}
+	std::pair<std::map<std::string, Litteral*>::iterator, bool> res = atoms.insert(std::pair<std::string, Litteral*>(str, o));
 	return res.second;
 }
 
@@ -15,8 +19,13 @@ bool AtomManager::removeAtom(const std::string str)
 	return res != 0;
 }
 
-Operand* AtomManager::getOperand(const std::string str)
+Litteral* AtomManager::getLitteral(const std::string str)
 {
-	return atoms.at(str)->clone();
+	try {
+		return dynamic_cast<Litteral*>(atoms.at(str)->clone());
+	}
+	catch (std::exception e) {
+		return nullptr;
+	}
 
 }

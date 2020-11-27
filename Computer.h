@@ -2,11 +2,24 @@
 #include <string>
 #include <map>
 #include "Pile.h";
+
+
+class AtomManager {
+	std::map<std::string, Litteral*> atoms;
+public:
+	AtomManager() = default;
+	bool addAtom(const std::string, Litteral*);
+	bool removeAtom(const std::string str);
+	Litteral* getLitteral(const std::string str);
+	unsigned int size() { return atoms.size(); }
+};
+
 class Computer
 {
 private:
 	Pile* pile;
-	Computer() :pile(new Pile()) {}
+	AtomManager* atomManager;
+	Computer() :pile(new Pile()), atomManager(new AtomManager()) {}
 	Computer(const Computer& c);
 	Computer& operator=(const Computer& c) = default;
 	~Computer() { delete pile; }
@@ -16,16 +29,8 @@ public:
 		return instance;
 	}
 	Pile* getPile() { return pile; }
+	AtomManager* getAtomManager() { return atomManager; }
 };
 
-class Operand;
 
-class AtomManager {
-	std::map<std::string, Operand*> atoms;
-public:
-	bool addAtom(const std::string, Operand*);
-	bool removeAtom(const std::string str);
-	Operand* getOperand(const std::string str);
-	unsigned int size() { return atoms.size(); }
-};
 
