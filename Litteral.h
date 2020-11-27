@@ -50,7 +50,7 @@ class RealLit : public NumLit
 public:
 	RealLit(double v) : value(v) {}
 	int getInt() const { 
-		return floor(value);
+		return (int) floor(value);
 	}
 	double getMant() const {
 		return value-getInt();

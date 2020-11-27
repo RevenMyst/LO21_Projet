@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <map>
-#include "Pile.h";
+#include "Pile.h"
 
 
 class AtomManager {

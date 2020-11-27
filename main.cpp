@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Master.h";
+#include "Master.h"
 void afficherPile() {
 	std::cout << "==========PILE==========" << std::endl;
 	int i = 0;
