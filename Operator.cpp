@@ -63,7 +63,7 @@ void OpeSTO::ope()
 		}else{
 			throw ComputerException("Erreur Un opérateur utilise deja ce nom");
 		}
-		
+
 	}
 	else {
 		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et un litteral numerique ou programme.");
@@ -73,7 +73,7 @@ void OpeSTO::ope()
 void OpeEVAL::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
-	
+
 	if (l->getClass() == PROGLIT) {
 		ProgLit* lit = dynamic_cast<ProgLit*>(l);
 		for (Operand* o : lit->getOperands()) {
@@ -104,4 +104,36 @@ void OpeEVAL::ope()
 	else {
 		throw ComputerException("Erreur l'operateur EVAL doit recevoir une litteral expression ou programme.");
 	}
+}
+
+void OpeAND::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	if((l1->getClass() == INTLIT && dynamic_cast<IntLit*>(l1)->getInt() == 0) || (l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)) {
+        Litteral* l3 = new IntLit(0);
+        l3->exec();
+	}
+    else {
+        Litteral* l3 = new IntLit(1);
+        l3->exec();
+    }
+    delete l1;
+    delete l2;
+}
+
+void OpeOR::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	if((l1->getClass() == INTLIT && dynamic_cast<IntLit*>(l1)->getInt() == 0) && (l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)) {
+        Litteral* l3 = new IntLit(0);
+        l3->exec();
+	}
+    else {
+        Litteral* l3 = new IntLit(1);
+        l3->exec();
+    }
+    delete l1;
+    delete l2;
 }
