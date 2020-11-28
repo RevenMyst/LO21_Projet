@@ -82,7 +82,7 @@ void RealLit::accept(Visitor* visitor) const
 }
 
 //NUMLIT-------------------------------
-//Surcharge des opérateurs arithmétiques
+//Surcharge des opï¿½rateurs arithmï¿½tiques
 NumLit* NumLit::operator+(const NumLit & l)const{
 LitType classe1 = this->getClass();
 LitType classe2 = l.getClass();
@@ -98,9 +98,9 @@ std::cout<<"cas real----------------"<<std::endl;
 
         const RealLit& nl =dynamic_cast<const RealLit&>(l);
         double val = nl.getValue() + this->getValue();
-        // Si la mantisse vaut 0 on crée un INTLIT, sinon un REALLIT
+        // Si la mantisse vaut 0 on crï¿½e un INTLIT, sinon un REALLIT
         if(val-floor(val)==0){
-            std::cout<<"Crée Int"<<std::endl;
+            std::cout<<"Crï¿½e Int"<<std::endl;
             IntLit * it = new IntLit(val);
             return it;
         }
@@ -116,7 +116,7 @@ std::cout<<"cas real----------------"<<std::endl;
 
     const IntLit& nl =dynamic_cast<const IntLit&>(l);
         double val = nl.getValue() + this->getValue();
-        // Si la mantisse vaut 0 on crée un INTLIT, sinon un REALLIT
+        // Si la mantisse vaut 0 on crï¿½e un INTLIT, sinon un REALLIT
             std::cout<<"+ok"<<std::endl;
             RealLit * rl = new RealLit(val);
             return rl;
@@ -128,8 +128,8 @@ std::cout<<"cas real----------------"<<std::endl;
         {
         const RationalLit& nl =dynamic_cast<const RationalLit&>(l);
         double val = nl.getValue() + this->getValue();
-        /*On est obligé de créer un réel dans un premier temps
-        car sinon problème dans le cas ou on additionne un réél
+        /*On est obligï¿½ de crï¿½er un rï¿½el dans un premier temps
+        car sinon problï¿½me dans le cas ou on additionne un rï¿½ï¿½l
         et une fraction et que la mantisse vaut 0*/
         RealLit * rl = new RealLit(val);
         std::cout<<"cree real"<<rl->getInt()<<" ,"<<rl->getMant()<<std::endl;
@@ -160,7 +160,7 @@ std::cout<<"cas int ----------"<<std::endl;
         const RealLit& nl =dynamic_cast<const RealLit&>(l);
         double val = nl.getValue() + this->getValue();
 
-        //On suppose qu'un réel + un entier donnera toujours un reel
+        //On suppose qu'un rï¿½el + un entier donnera toujours un reel
             RealLit * rl = new RealLit(val);
             return rl;
         }
@@ -203,6 +203,17 @@ std::cout<<"cas int ----------"<<std::endl;
 
 
 
+void RealLit::exec()
+{
+	if (getMant() != 0) {
+		Litteral::exec();
+	}
+	else {
+		IntLit* lit = new IntLit(getInt());
+		lit->exec();
+		delete this;
+	}
+}
 
 /*******************************/
 /*********RATIONALLIT***********/
