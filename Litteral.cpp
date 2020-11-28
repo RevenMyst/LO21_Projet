@@ -80,6 +80,18 @@ void RealLit::accept(Visitor* visitor) const
 	visitor->visitRealLit(this);
 }
 
+void RealLit::exec()
+{
+	if (getMant() != 0) {
+		Litteral::exec();
+	}
+	else {
+		IntLit* lit = new IntLit(getInt());
+		lit->exec();
+		delete this;
+	}
+}
+
 /*******************************/
 /*********RATIONALLIT***********/
 /*******************************/

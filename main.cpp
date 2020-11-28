@@ -12,6 +12,13 @@ void afficherPile() {
 
 int main() {
 	
+	RealLit* l1 = new RealLit(5.0);
+
+	std::cout << l1->toString() << endl;
+
+	l1->exec();
+
+	afficherPile();
 	
 	
 	return 0;

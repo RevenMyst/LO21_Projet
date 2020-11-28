@@ -58,6 +58,7 @@ public:
 	double getValue() const { return value; }
 	std::string toString() const;
 	void accept(Visitor* visitor) const;
+	void exec() override;
 	~RealLit() = default;
 	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
