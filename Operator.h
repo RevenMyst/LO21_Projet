@@ -85,3 +85,21 @@ public:
     std::string toString() const { return "OR"; }
     Operand* clone() { return new OpeOR(*this); }
 };
+
+class OpeDIV : public Operator {
+    unsigned int arite = 2;
+public:
+    OpeDIV() = default;
+    void ope() override;
+    std::string toString() const { return "DIV"; }
+    Operand* clone() { return new OpeDIV(*this); }
+};
+
+class OpeMOD : public Operator {
+    unsigned int arite = 2;
+public:
+    OpeMOD() = default;
+    void ope() override;
+    std::string toString() const { return "MOD"; }
+    Operand* clone() { return new OpeMOD(*this); }
+};

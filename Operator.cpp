@@ -137,3 +137,41 @@ void OpeOR::ope()
     delete l1;
     delete l2;
 }
+
+void OpeDIV::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
+        int divid = dynamic_cast<IntLit*>(l2)->getInt();
+        int divis = dynamic_cast<IntLit*>(l1)->getInt();
+        Litteral* l3 = new IntLit(divid/divis);
+        delete l1;
+        delete l2;
+        l3->exec();
+	}
+	else {
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur l'operateur DIV doit recevoir des litterales entieres");
+	}
+}
+
+void OpeMOD::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
+        int divid = dynamic_cast<IntLit*>(l2)->getInt();
+        int divis = dynamic_cast<IntLit*>(l1)->getInt();
+        Litteral* l3 = new IntLit(divid%divis);
+        delete l1;
+        delete l2;
+        l3->exec();
+	}
+	else {
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur l'operateur MOD doit recevoir des litterales entieres");
+	}
+}
