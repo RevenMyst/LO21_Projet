@@ -67,3 +67,13 @@ public:
 	std::string toString() const { return "EVAL"; }
 	Operand* clone() { return new OpeEVAL(*this); }
 };
+
+class OpePlus : public Operator{
+    unsigned int arite = 2;
+    public:
+    OpePlus() = default;
+    void ope()override;
+    Operand* clone() { return new OpePlus(*this); }
+    std::string toString() const { return "EVAL"; }
+
+    };

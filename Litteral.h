@@ -1,8 +1,9 @@
 #pragma once
 #include "Operand.h"
 #include <list>
+#include <tgmath.h>
 
-const enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT };
+enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT };
 
 
 class Visitor;
@@ -28,6 +29,8 @@ class NumLit : public Litteral
 {
 public:
 	virtual double getValue() const = 0;
+    NumLit* operator+(const NumLit & l) const;
+
 };
 
 class ExpLit : public Litteral
@@ -49,7 +52,7 @@ class RealLit : public NumLit
 	double value;
 public:
 	RealLit(double v) : value(v) {}
-	int getInt() const { 
+	int getInt() const {
 		return floor(value);
 	}
 	double getMant() const {
@@ -61,6 +64,10 @@ public:
 	~RealLit() = default;
 	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
+    NumLit*operator+(const NumLit & l) const;
+    NumLit& operator-(const NumLit &l) const;
+    NumLit& operator*(const NumLit & l) const;
+    NumLit& operator/(const NumLit & l) const;
 };
 
 class RationalLit : public NumLit
@@ -81,6 +88,10 @@ public:
 	~RationalLit() = default;
 	LitType getClass() const { return RATIONALLIT; }
 	Operand* clone() { return new RationalLit(*this); }
+    NumLit*operator+(const NumLit & l) const;
+    NumLit& operator-(const NumLit &l) const;
+    NumLit& operator*(const NumLit & l) const;
+    NumLit& operator/(const NumLit & l) const;
 };
 
 class IntLit : public NumLit
@@ -97,6 +108,10 @@ public:
 	~IntLit() = default;
 	LitType getClass() const { return INTLIT; }
 	Operand* clone();
+    NumLit*operator+(const NumLit & l) const;
+    NumLit& operator-(const NumLit &l) const;
+    NumLit& operator*(const NumLit & l) const;
+    NumLit& operator/(const NumLit & l) const;
 
 };
 
@@ -105,7 +120,7 @@ class ProgLit : public Litteral
 private:
 	std::list<Operand* > operands;
 public:
-	
+
 	ProgLit() = default;
 	ProgLit(const ProgLit& lit);
 	void addOperand(Operand* o) {

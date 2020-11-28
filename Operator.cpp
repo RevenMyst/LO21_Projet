@@ -63,7 +63,7 @@ void OpeSTO::ope()
 		}else{
 			throw ComputerException("Erreur Un opérateur utilise deja ce nom");
 		}
-		
+
 	}
 	else {
 		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et un litteral numerique ou programme.");
@@ -73,7 +73,7 @@ void OpeSTO::ope()
 void OpeEVAL::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
-	
+
 	if (l->getClass() == PROGLIT) {
 		ProgLit* lit = dynamic_cast<ProgLit*>(l);
 		for (Operand* o : lit->getOperands()) {
@@ -104,4 +104,16 @@ void OpeEVAL::ope()
 	else {
 		throw ComputerException("Erreur l'operateur EVAL doit recevoir une litteral expression ou programme.");
 	}
+}
+
+
+void OpePlus::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+    const NumLit & nl1 = dynamic_cast<const NumLit&>(*l1);
+    const NumLit & nl2 = dynamic_cast<const NumLit&>(*l2);
+
+  Computer::getInstance().getPile()->push(nl1+nl2);
+
 }
