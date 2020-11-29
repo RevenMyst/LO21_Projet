@@ -28,6 +28,7 @@ public:
 		static Computer instance;
 		return instance;
 	}
+	static vector<string> parse(std::string str);
 	Pile* getPile() { return pile; }
 	AtomManager* getAtomManager() { return atomManager; }
 };

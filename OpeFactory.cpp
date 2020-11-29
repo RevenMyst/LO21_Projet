@@ -25,6 +25,10 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	entry.second = new STOFactory();
 	factories.insert(entry);
 
+	entry.first = "FORGET";
+	entry.second = new FORGETFactory();
+	factories.insert(entry);
+
 	entry.first = "EVAL";
 	entry.second = new EVALFactory();
 	factories.insert(entry);

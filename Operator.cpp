@@ -182,3 +182,18 @@ void OpeMOD::ope()
 	}
 }
 
+void OpeFORGET::ope()
+{
+	Litteral* l = Computer::getInstance().getPile()->pull();
+	if (l->getClass() == EXPLIT) {
+		ExpLit* lit = dynamic_cast<ExpLit*>(l);
+		if (!Computer::getInstance().getAtomManager()->removeAtom(lit->getValue())) {
+			throw ComputerException("Aucune variable ou programme n'est associé a cette expression");
+		}
+		delete l;
+	}
+	else {
+		l->exec();
+		throw ComputerException("Erreur, l'opérateur forget doit s'appliquer sur une litterale expression");
+	}
+}
