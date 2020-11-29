@@ -48,3 +48,26 @@ public:
 	Operator* getOpe() override { return new OpeEVAL(); }
 };
 
+class ANDFactory : public OpeFactory {
+public:
+	ANDFactory() = default;
+	Operator* getOpe() override { return new OpeAND(); }
+};
+
+class ORFactory : public OpeFactory {
+public:
+	ORFactory() = default;
+	Operator* getOpe() override { return new OpeOR(); }
+};
+
+class DIVFactory : public OpeFactory {
+public:
+	DIVFactory() = default;
+	Operator* getOpe() override { return new OpeDIV(); }
+};
+
+class MODFactory : public OpeFactory {
+public:
+	MODFactory() = default;
+	Operator* getOpe() override { return new OpeMOD(); }
+};

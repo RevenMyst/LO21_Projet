@@ -29,6 +29,22 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	entry.second = new EVALFactory();
 	factories.insert(entry);
 
+	entry.first = "AND";
+	entry.second = new ANDFactory();
+	factories.insert(entry);
+
+	entry.first = "OR";
+	entry.second = new ORFactory();
+	factories.insert(entry);
+
+	entry.first = "DIV";
+	entry.second = new DIVFactory();
+	factories.insert(entry);
+
+	entry.first = "MOD";
+	entry.second = new MODFactory();
+	factories.insert(entry);
+
 	return factories;
 }
 
