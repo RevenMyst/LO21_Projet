@@ -1,8 +1,11 @@
 #pragma once
 #include "Operand.h"
 #include <list>
+#include <cmath>
 
-const enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT };
+using namespace std;
+
+enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT };
 
 
 class Visitor;
@@ -49,7 +52,7 @@ class RealLit : public NumLit
 	double value;
 public:
 	RealLit(double v) : value(v) {}
-	int getInt() const { 
+	int getInt() const {
 		return (int) floor(value);
 	}
 	double getMant() const {
@@ -105,7 +108,7 @@ class ProgLit : public Litteral
 private:
 	std::list<Operand* > operands;
 public:
-	
+
 	ProgLit() = default;
 	ProgLit(const ProgLit& lit);
 	void addOperand(Operand* o) {
