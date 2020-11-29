@@ -75,7 +75,7 @@ std::string RealLit::toString() const {
 	}
 }
 
-void RealLit::accept(Visitor* visitor) const
+void RealLit::accept(Visitor* visitor)
 {
 	visitor->visitRealLit(this);
 }
@@ -85,7 +85,7 @@ void RealLit::accept(Visitor* visitor) const
 /*******************************/
 
 
-void RationalLit::accept(Visitor* visitor) const
+void RationalLit::accept(Visitor* visitor)
 {
 	visitor->visitRationalLit(this);
 }
@@ -137,7 +137,7 @@ std::string ProgLit::toString() const
 	return str;
 }
 
-void ProgLit::accept(Visitor* visitor) const
+void ProgLit::accept(Visitor* visitor)
 {
 	visitor->visitProgLit(this);
 }
@@ -147,12 +147,12 @@ void Litteral::exec()
 	Computer::getInstance().getPile()->push(this);
 }
 
-void ExpLit::accept(Visitor* visitor) const
+void ExpLit::accept(Visitor* visitor)
 {
 	visitor->visitExpLit(this);
 }
 
-void IntLit::accept(Visitor* visitor) const
+void IntLit::accept(Visitor* visitor)
 {
 	visitor->visitIntLit(this);
 }

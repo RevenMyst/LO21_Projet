@@ -15,7 +15,7 @@ protected:
 	unsigned int arite = 0;
 public:
 
-	virtual void accept(Visitor* visitor) const = 0;
+	virtual void accept(Visitor* visitor) = 0;
 	virtual LitType getClass() const = 0;
 	void exec() override;
 };
@@ -40,7 +40,7 @@ public:
 	ExpLit(std::string str) :name(str) {}
 	std::string toString() const override{ return "'"+name+"'"; }
 	const std::string getValue() const { return name; }
-	void accept(Visitor* visitor) const;
+	void accept(Visitor* visitor);
 	~ExpLit() = default;
 	LitType getClass() const { return EXPLIT; }
 	Operand* clone() { return new ExpLit(*this); }
@@ -60,7 +60,7 @@ public:
 	}
 	double getValue() const { return value; }
 	std::string toString() const;
-	void accept(Visitor* visitor) const;
+	void accept(Visitor* visitor);
 	~RealLit() = default;
 	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
@@ -75,7 +75,7 @@ public:
 		ReductionRational();
 	}
 
-	void accept(Visitor* visitor) const;
+	void accept(Visitor* visitor);
 	void ReductionRational();
 	int getNum() const { return numerateur; }
 	unsigned int getDen() const { return denominateur; }
@@ -93,7 +93,7 @@ class IntLit : public NumLit
 public:
 
 	IntLit(int v) : value(v) {}
-	void accept(Visitor* visitor) const;
+	void accept(Visitor* visitor);
 	double getValue() const { return value; }
 	int getInt() const { return value; } //retourne de valeur en int (pas de 1.0)
 	std::string toString() const;
@@ -116,7 +116,7 @@ public:
 	}
 	std::string toString() const;
 	std::list<Operand*> getOperands() const { return operands; }
-	void accept(Visitor* visitor) const;
+	void accept(Visitor* visitor);
 	~ProgLit() {
 		for (Operand* o : operands) {
 			delete o;
