@@ -61,11 +61,15 @@ void OpeSTO::ope()
 			Computer::getInstance().getAtomManager()->addAtom(lit->getValue(), l2);
 			delete lit;
 		}else{
+			l1->exec();
+			l2->exec();
 			throw ComputerException("Erreur Un opérateur utilise deja ce nom");
 		}
 
 	}
 	else {
+		l1->exec();
+		l2->exec();
 		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et un litteral numerique ou programme.");
 	}
 }
@@ -98,10 +102,12 @@ void OpeEVAL::ope()
 			}
 		}
 		else {
+			l->exec();
 			throw ComputerException("Erreur cet expression ne correspond a aucun programme ou variable");
 		}
 	}
 	else {
+		l->exec();
 		throw ComputerException("Erreur l'operateur EVAL doit recevoir une litteral expression ou programme.");
 	}
 }
@@ -175,3 +181,4 @@ void OpeMOD::ope()
         throw ComputerException("Erreur l'operateur MOD doit recevoir des litterales entieres");
 	}
 }
+
