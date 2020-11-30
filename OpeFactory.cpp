@@ -37,6 +37,30 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	entry.second = new ORFactory();
 	factories.insert(entry);
 
+	entry.first = "=";
+	entry.second = new EQUALFactory();
+	factories.insert(entry);
+
+	entry.first = "!=";
+	entry.second = new DIFFactory();
+	factories.insert(entry);
+
+	entry.first = ">";
+	entry.second = new GTFactory();
+	factories.insert(entry);
+
+	entry.first = "<";
+	entry.second = new LTFactory();
+	factories.insert(entry);
+
+	entry.first = ">=";
+	entry.second = new GTEFactory();
+	factories.insert(entry);
+
+	entry.first = "<=";
+	entry.second = new LTEFactory();
+	factories.insert(entry);
+
 	entry.first = "DIV";
 	entry.second = new DIVFactory();
 	factories.insert(entry);

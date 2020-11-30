@@ -182,3 +182,92 @@ void OpeMOD::ope()
 	}
 }
 
+void OpeEQUAL::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 == *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeLTE::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 <= *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeGTE::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 >= *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeGT::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 > *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeLT::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 < *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeDIF::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 != *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}

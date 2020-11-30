@@ -12,6 +12,7 @@ void afficherPile() {
 
 int main() {
 	
+
 	
 	
 	return 0;
