@@ -13,20 +13,21 @@ void afficherPile() {
 int main() {
 	IntLit* l1 = new IntLit(50);
 	l1->exec();
-	IntLit* l2 = new IntLit(5);
-	l2->exec();
+
 
     //Test d'addition
     //double d = 0.666666666666666666;
     //std::cout<<d<<" "<<1/3<<std::endl;
 
-    RationalLit* r2= new RationalLit(1,2);
-	IntLit* r1 = new IntLit(2);
-
-    r2->exec();
-    afficherPile();
+    RationalLit* r2= new RationalLit(5,3);
+	RationalLit* r1 = new RationalLit(4,3);
+    RealLit * r3 = new RealLit(3.6);
+    IntLit* l2 = new IntLit(5);
 
     r1->exec();
+    afficherPile();
+
+    l2->exec();
     afficherPile();
 
     std::cout<<"1"<<endl;
@@ -47,15 +48,15 @@ int main() {
 	afficherPile();
 
 
-	
-	RealLit* l1 = new RealLit(5.0);
 
-	std::cout << l1->toString() << endl;
+//	RealLit* l1 = new RealLit(5.0);
 
-	l1->exec();
+	//std::cout << l1->toString() << endl;
+
+	//l1->exec();
 
 	afficherPile();
-	
-	
+
+
 	return 0;
 }

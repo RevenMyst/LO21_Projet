@@ -181,6 +181,8 @@ std::cout<<"cas int ----------"<<std::endl;
 
     case RATIONALLIT :
         {
+        std::cout<<" cas int ratio"<<std::endl;
+
         const RationalLit& nl =dynamic_cast<const RationalLit&>(l);
         //Un i=IntLit + un RationalLit donne toujours un RationnalLit
         std::cout<<"cas int - rationnelle"<<std::endl;
@@ -197,6 +199,59 @@ std::cout<<"cas int ----------"<<std::endl;
     }//Fin switch
 
 } //Fin du cas INTLIT
+if(classe1==RATIONALLIT){
+std::cout<<"cas ratio----------------"<<std::endl;
+
+    switch(classe2){
+
+    case REALLIT :
+       {
+
+        const RealLit& nl =dynamic_cast<const RealLit&>(l);
+        double val = nl.getValue() + this->getValue();
+        // Si la mantisse vaut 0 on cr�e un INTLIT, sinon un REALLIT
+        if(val-floor(val)==0){
+            std::cout<<"Cree Int"<<std::endl;
+            IntLit * it = new IntLit(val);
+            return it;
+        }
+        else{
+            RealLit * rl = new RealLit(val);
+            return rl;
+        }
+       }
+        break;
+
+   case INTLIT:
+    {
+
+        const RationalLit& rl =dynamic_cast<const RationalLit&>(*this);
+
+        double val =l.getValue();
+        int newnum = val*rl.getDen() + rl.getNum();
+        int newden= rl.getDen();
+        RationalLit * rl2 = new RationalLit(newnum,newden);
+        return rl2;
+    }
+        break;
+
+
+    case RATIONALLIT :
+        {
+        std::cout<<" cas ration ratio"<<std::endl;
+        const RationalLit& rl =dynamic_cast<const RationalLit&>(*this);
+        const RationalLit& rll =dynamic_cast<const RationalLit&>(l);
+
+        int newnum = rll.getNum()*rl.getDen() + rl.getNum()*rll.getDen();
+        int newden= rl.getDen()*rll.getDen();
+
+        RationalLit * rl2 = new RationalLit(newnum,newden);
+        return rl2;
+        }
+        break;
+
+    }//Fin du switch
+}
 }
 
 
