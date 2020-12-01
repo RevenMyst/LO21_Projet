@@ -73,7 +73,7 @@ class RationalLit : public NumLit
 public:
 	RationalLit(int n, int d) : numerateur(n), denominateur(d) {
 		ReductionRational();
-		if (denominateur == 0) throw ("erreur, pas possible d'avoir un division par 0");
+		if (denominateur == 0) throw ComputerException("erreur, pas possible d'avoir un division par 0");
 		if (denominateur < 0) {
 			denominateur *= -1;
 			numerateur *= -1;
