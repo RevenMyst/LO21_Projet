@@ -27,7 +27,7 @@ public:
 class RATFactory : public LitFactory {
 public:
 	RATFactory() = default;
-	Litteral* getLitteral() override { return new RationalLit(); }
+	Litteral* getLitteral(std::string rat);
 };
 
 class EXPFactory : public LitFactory {
