@@ -196,6 +196,7 @@ void OpeFORGET::ope()
 		l->exec();
 		throw ComputerException("Erreur, l'op�rateur forget doit s'appliquer sur une litterale expression");
 	}
+}
 void OpeEQUAL::ope()
 {
 	Pile* p = Computer::getInstance().getPile();

@@ -2,6 +2,7 @@
 #include "Operand.h"
 #include <list>
 #include <cmath>
+#include "ComputerException.h"
 
 using namespace std;
 

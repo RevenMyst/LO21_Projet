@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include "Pile.h"
+#include <vector>
 
 
 class AtomManager {
@@ -28,7 +29,7 @@ public:
 		static Computer instance;
 		return instance;
 	}
-	static vector<string> parse(std::string str);
+	static std::vector<std::string> parse(std::string str);
 	Pile* getPile() { return pile; }
 	AtomManager* getAtomManager() { return atomManager; }
 };
