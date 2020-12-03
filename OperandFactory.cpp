@@ -7,7 +7,7 @@ Operand* OperandFactory::createOperand(std::string str)
     if (std::regex_match(str, std::regex("[0-9]*"))) {
         //int
     }else 
-    if (std::regex_match(str, std::regex("-?[0-9]+/[0-9]+"))) {
+    if (std::regex_match(str, std::regex("-?[0-9]+/-?[0-9]+"))) {
         //rationel
     }else
     if (std::regex_match(str, std::regex("-?[0-9]*\\.[0-9]*"))) {
@@ -16,7 +16,7 @@ Operand* OperandFactory::createOperand(std::string str)
     if (std::regex_match(str, std::regex("([A-Z]+[0-9]*)+"))) {
         // Forme d'un atome
         if (OpeFactory::isOpe(str)) {
-            //si c'est un op�rateur
+            //si c'est un operateur
             return OpeFactory::getOpeFactories().at(str)->getOpe();
         }
         else {

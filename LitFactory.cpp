@@ -1,55 +1,80 @@
 #include "LitFactory.h"
 
-std::map<std::string, LitFactory*> LitFactory::getLitFactories(){
-  std::map<std::string, OpeFactory*>litteraux;
-  std::pair<std::string, OpeFactory*> entry;
+#include "Litteral.h"
 
-  entry.first = "INTLIT"
+std::map<LitType, LitFactory*> LitFactory::getLitFactories(){
+  std::map<LitType, LitFactory*>litteraux;
+  std::pair<LitType, LitFactory*> entry;
+
+  entry.first = INTLIT;
   entry.second = new INTFactory();
   litteraux.insert(entry);
 
-  entry.first = "RATIONALLIT"
+  entry.first = RATIONALLIT;
   entry.second = new RATFactory();
   litteraux.insert(entry);
 
-  entry.first = "REALLIT"
+  entry.first = REALLIT;
   entry.second = new REALFactory();
   litteraux.insert(entry);
 
-  entry.first = "PROGLIT"
+  entry.first = PROGLIT;
   entry.second = new PROGFactory();
   litteraux.insert(entry);
 
-  entry.first = "EXPLIT"
+  entry.first = EXPLIT;
   entry.second = new EXPFactory();
   litteraux.insert(entry);
 
-  entry.first = "ATOM"
+  entry.first = ATOMLIT;
   entry.second = new ATOMFactory();
   litteraux.insert(entry);
 
   return litteraux;
 }
 
-Litteral* RATFactory::getLitteral(std::string rat){
+Operand* RATFactory::getLitteral(std::string str){
   using namespace std;
-  int num, den;
-  int nombre = 0;
-  bool neg = false;
-  for (int i = 0; i < (int)rat.length(); i++){
-    if(rat[i] == '-') neg = true;
-    if(isdigit(rat[i]))
-    //Il faut eliminer le caractere '0': '1' - '0' = 1
-      nombre = (nombre * 10) + (rat[i] - '0');
-    else{
-      if(nombre > 0) nombre = num; //On garde le premier nombre comme notre numerateur
-      if(neg == true){
-          num *= -1;
-          neg = false;
-      }
-    }
+  string num = "", den = "";
+  bool numBool = true;
+  for (int i = 0; i < str.length(); i++) {
+	  if (str[i] == '/') {
+		  numBool = false;
+	  }
+	  else {
+		  if (numBool) {
+			  num.append(1, str[i]);
+		  }
+		  else {
+			  den.append(1, str[i]);
+		  }
+	  }
+
   }
-  nombre = den;
-  if(neg == true) den *= -1;
-  return new RationalLit(num, den);
+  return new RationalLit(stoi(num), stoi(den));
+}
+
+Operand* ATOMFactory::getLitteral(std::string str)
+{
+    return nullptr;
+}
+
+Operand* REALFactory::getLitteral(std::string str)
+{
+    return nullptr;
+}
+
+Operand* EXPFactory::getLitteral(std::string str)
+{
+    return nullptr;
+}
+
+Operand* PROGFactory::getLitteral(std::string str)
+{
+    return nullptr;
+}
+
+Operand* INTFactory::getLitteral(std::string str)
+{
+    return nullptr;
 }

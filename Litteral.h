@@ -6,7 +6,7 @@
 
 using namespace std;
 
-enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT };
+enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT, ATOMLIT };
 
 
 class Visitor;
