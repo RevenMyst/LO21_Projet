@@ -63,7 +63,7 @@ void OpeSTO::ope()
 		}else{
 			l1->exec();
 			l2->exec();
-			throw ComputerException("Erreur Un opérateur utilise deja ce nom");
+			throw ComputerException("Erreur Un opï¿½rateur utilise deja ce nom");
 		}
 
 	}
@@ -182,6 +182,21 @@ void OpeMOD::ope()
 	}
 }
 
+void OpeFORGET::ope()
+{
+	Litteral* l = Computer::getInstance().getPile()->pull();
+	if (l->getClass() == EXPLIT) {
+		ExpLit* lit = dynamic_cast<ExpLit*>(l);
+		if (!Computer::getInstance().getAtomManager()->removeAtom(lit->getValue())) {
+			throw ComputerException("Aucune variable ou programme n'est associï¿½ a cette expression");
+		}
+		delete l;
+	}
+	else {
+		l->exec();
+		throw ComputerException("Erreur, l'opï¿½rateur forget doit s'appliquer sur une litterale expression");
+	}
+}
 void OpeEQUAL::ope()
 {
 	Pile* p = Computer::getInstance().getPile();

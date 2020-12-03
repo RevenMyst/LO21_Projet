@@ -59,6 +59,15 @@ public:
 	Operand* clone() { return new OpeSTO(*this); }
 };
 
+class OpeFORGET : public Operator {
+	unsigned int arite = 1;
+public:
+	OpeFORGET() = default;
+	void ope() override;
+	std::string toString() const { return "FORGET"; }
+	Operand* clone() { return new OpeFORGET(*this); }
+};
+
 class OpeEVAL : public Operator {
 	unsigned int arite = 1;
 public:

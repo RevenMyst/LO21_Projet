@@ -42,6 +42,12 @@ public:
 	Operator* getOpe() override { return new OpeSTO(); }
 };
 
+class FORGETFactory : public OpeFactory {
+public:
+	FORGETFactory() = default;
+	Operator* getOpe() override { return new OpeFORGET(); }
+};
+
 class EVALFactory : public OpeFactory {
 public:
 	EVALFactory() = default;
