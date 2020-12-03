@@ -95,6 +95,60 @@ public:
     Operand* clone() { return new OpeOR(*this); }
 };
 
+class OpeEQUAL : public Operator {
+	unsigned int arite = 2;
+public:
+	OpeEQUAL() = default;
+	void ope() override;
+	std::string toString() const { return "="; }
+	Operand* clone() { return new OpeEQUAL(*this); }
+};
+
+class OpeLTE : public Operator {
+	unsigned int arite = 2;
+public:
+	OpeLTE() = default;
+	void ope() override;
+	std::string toString() const { return "<="; }
+	Operand* clone() { return new OpeLTE(*this); }
+};
+
+class OpeGTE : public Operator {
+	unsigned int arite = 2;
+public:
+	OpeGTE() = default;
+	void ope() override;
+	std::string toString() const { return ">="; }
+	Operand* clone() { return new OpeGTE(*this); }
+};
+
+class OpeGT : public Operator {
+	unsigned int arite = 2;
+public:
+	OpeGT() = default;
+	void ope() override;
+	std::string toString() const { return ">"; }
+	Operand* clone() { return new OpeGT(*this); }
+};
+
+class OpeLT : public Operator {
+	unsigned int arite = 2;
+public:
+	OpeLT() = default;
+	void ope() override;
+	std::string toString() const { return "<"; }
+	Operand* clone() { return new OpeLT(*this); }
+};
+
+class OpeDIF : public Operator {
+	unsigned int arite = 2;
+public:
+	OpeDIF() = default;
+	void ope() override;
+	std::string toString() const { return "!="; }
+	Operand* clone() { return new OpeDIF(*this); }
+};
+
 class OpeDIV : public Operator {
     unsigned int arite = 2;
 public:

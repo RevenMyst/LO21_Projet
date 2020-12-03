@@ -16,7 +16,7 @@ Operand* OperandFactory::createOperand(std::string str)
     if (std::regex_match(str, std::regex("([A-Z]+[0-9]*)+"))) {
         // Forme d'un atome
         if (OpeFactory::isOpe(str)) {
-            //si c'est un opérateur
+            //si c'est un opï¿½rateur
             return OpeFactory::getOpeFactories().at(str)->getOpe();
         }
         else {

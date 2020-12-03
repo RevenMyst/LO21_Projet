@@ -63,7 +63,7 @@ void OpeSTO::ope()
 		}else{
 			l1->exec();
 			l2->exec();
-			throw ComputerException("Erreur Un opérateur utilise deja ce nom");
+			throw ComputerException("Erreur Un opï¿½rateur utilise deja ce nom");
 		}
 
 	}
@@ -188,12 +188,100 @@ void OpeFORGET::ope()
 	if (l->getClass() == EXPLIT) {
 		ExpLit* lit = dynamic_cast<ExpLit*>(l);
 		if (!Computer::getInstance().getAtomManager()->removeAtom(lit->getValue())) {
-			throw ComputerException("Aucune variable ou programme n'est associé a cette expression");
+			throw ComputerException("Aucune variable ou programme n'est associï¿½ a cette expression");
 		}
 		delete l;
 	}
 	else {
 		l->exec();
-		throw ComputerException("Erreur, l'opérateur forget doit s'appliquer sur une litterale expression");
+		throw ComputerException("Erreur, l'opï¿½rateur forget doit s'appliquer sur une litterale expression");
 	}
+void OpeEQUAL::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 == *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeLTE::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 <= *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeGTE::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 >= *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeGT::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 > *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeLT::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 < *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeDIF::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 != *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
 }

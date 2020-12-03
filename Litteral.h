@@ -69,16 +69,21 @@ public:
 class RationalLit : public NumLit
 {
 	int numerateur;
-	unsigned int denominateur;
+	int denominateur;
 public:
-	RationalLit(int n, unsigned int d) : numerateur(n), denominateur(d) {
+	RationalLit(int n, int d) : numerateur(n), denominateur(d) {
 		ReductionRational();
+		if (denominateur == 0) throw ComputerException("erreur, pas possible d'avoir un division par 0");
+		if (denominateur < 0) {
+			denominateur *= -1;
+			numerateur *= -1;
+		}
 	}
 
 	void accept(Visitor* visitor);
 	void ReductionRational();
 	int getNum() const { return numerateur; }
-	unsigned int getDen() const { return denominateur; }
+	int getDen() const { return denominateur; }
 	double getValue() const;
 	std::string toString() const;
 	~RationalLit() = default;
@@ -126,8 +131,3 @@ public:
 	Operand* clone() { return new ProgLit(*this); }
 
 };
-
-
-
-
-
