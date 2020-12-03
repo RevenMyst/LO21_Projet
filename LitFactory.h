@@ -14,13 +14,13 @@ protected:
 class INTFactory : public LitFactory {
 public:
 	INTFactory() = default;
-	Operand* getLitteral() override { return new LitInt(); }
+	Operand* getLitteral(std::string rat);
 };
 
 class REALFactory : public LitFactory {
 public:
 	REALFactory() = default;
-	Operand* getLitteral() override { return new RealLit(); }
+	Operand* getLitteral(std::string rat);
 };
 
 class RATFactory : public LitFactory {
@@ -32,17 +32,17 @@ public:
 class EXPFactory : public LitFactory {
 public:
 	EXPFactory() = default;
-	Operand* getLitteral() override { return new ExpLit(); }
+	Operand* getLitteral(std::string rat);
 };
 
 class PROGFactory : public LitFactory {
 public:
 	PROGFactory() = default;
-	Operand* getLitteral() override { return new ProgLit(); }
+	Operand* getLitteral(std::string rat);
 };
 
 class ATOMFactory : public LitFactory {
 public:
 	PROGFactory() = default;
-	Operand* getLitteral() override { return new Operand(); }
+	Operand* getLitteral(std::string rat);
 };
