@@ -40,7 +40,7 @@ Operand* RATFactory::getLitteral(std::string str){
   using namespace std;
   string num = "", den = "";
   bool numBool = true;
-  for (int i = 0; i < str.length(); i++) {
+  for (size_t i = 0; i < str.length(); i++) {
 	  if (str[i] == '/') {
 		  numBool = false;
 	  }
@@ -60,6 +60,7 @@ Operand* RATFactory::getLitteral(std::string str){
 Operand* ATOMFactory::getLitteral(std::string str)
 {
 	//return new AtomLit(str);
+	return nullptr;
 }
 
 Operand* REALFactory::getLitteral(std::string str)

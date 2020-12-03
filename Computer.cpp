@@ -45,7 +45,7 @@ vector<string> Computer::parse(std::string str)
 	vector<string> res;
 	int prog = 0;
 	string p = "";
-	for (int i = 0; i < results.size(); i++) {
+	for (size_t i = 0; i < results.size(); i++) {
 		if (results[i] != "[" && prog == 0) {
 			res.push_back(results[i]);
 		}
