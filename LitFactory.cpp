@@ -1,6 +1,9 @@
 #include "LitFactory.h"
 
 #include "Litteral.h"
+#include "Operator.h"
+#include <vector>
+#include "Computer.h"
 
 std::map<LitType, LitFactory*> LitFactory::getLitFactories(){
   std::map<LitType, LitFactory*>litteraux;
@@ -56,7 +59,7 @@ Operand* RATFactory::getLitteral(std::string str){
 
 Operand* ATOMFactory::getLitteral(std::string str)
 {
-    return nullptr;
+	//return new AtomLit(str);
 }
 
 Operand* REALFactory::getLitteral(std::string str)
@@ -66,12 +69,17 @@ Operand* REALFactory::getLitteral(std::string str)
 
 Operand* EXPFactory::getLitteral(std::string str)
 {
-    return nullptr;
+	return new ExpLit(str);
 }
 
 Operand* PROGFactory::getLitteral(std::string str)
 {
-    return nullptr;
+	ProgLit* lit = new ProgLit();
+	std::vector<std::string> tab = Computer::parse(str);
+	for (std::string s : tab) {
+		lit->addOperand(Computer::createOperand(s));
+	}
+	return lit;
 }
 
 Operand* INTFactory::getLitteral(std::string str)

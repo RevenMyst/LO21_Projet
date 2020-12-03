@@ -5,6 +5,10 @@
 #include <iterator>
 #include <sstream>
 #include <vector>
+#include "OpeFactory.h"
+#include "LitFactory.h"
+#include <regex>
+#include "Operand.h"
 using namespace std;
 
 bool AtomManager::addAtom(const std::string str, Litteral* o)
@@ -56,7 +60,7 @@ vector<string> Computer::parse(std::string str)
 				p = p + results[i] + " ";
 				if (prog == 0) {
 					p = p.substr(0, p.size() - 1);
-					p = p.substr(2, p.size() - 4); //pour enlever les crochets
+					//p = p.substr(2, p.size() - 4); //pour enlever les crochets
 					res.push_back(p);
 					p = "";
 				}
@@ -68,3 +72,59 @@ vector<string> Computer::parse(std::string str)
 	}
 	return results;
 }
+
+Operand* Computer::createOperand(std::string str)
+{
+	if (std::regex_match(str, std::regex("[0-9]*"))) {
+		//int
+		return LitFactory::getLitFactories().at(INTLIT)->getLitteral(str);
+	}
+	else
+	if (std::regex_match(str, std::regex("-?[0-9]+/-?[0-9]+"))) {
+		//rationnel
+		return LitFactory::getLitFactories().at(RATIONALLIT)->getLitteral(str);	
+	}
+	else
+	if (std::regex_match(str, std::regex("-?[0-9]*\\.[0-9]*"))) {
+				//reel
+		return LitFactory::getLitFactories().at(REALLIT)->getLitteral(str);
+	}
+	if (str[0] == '[' && str[str.size() - 1] == ']') {
+		//programme
+		return LitFactory::getLitFactories().at(PROGLIT)->getLitteral(str.substr(2, str.size() - 4));
+	}
+	if (str[0] == '\'' && str[str.size() - 1] == '\'') {
+		//expression
+		return LitFactory::getLitFactories().at(EXPLIT)->getLitteral(str.substr(2, str.size() - 4));
+	}
+	if (std::regex_match(str, std::regex("([A-Z]+[0-9]*)+"))) {
+		// Forme d'un atome
+		if (OpeFactory::isOpe(str)) {
+			//si c'est un operateur
+			return OpeFactory::getOpeFactories().at(str)->getOpe();
+		}
+		else {
+			//sinon litterale Atome
+			return LitFactory::getLitFactories().at(ATOMLIT)->getLitteral(str);
+
+		}
+	}
+	else
+	if (std::regex_match(str, std::regex("(\\+|\\-|\\/|=|>=|<=|<|>|!=|\\*)"))) {
+			//operateur + - * / <= >= == < > !=
+		return OpeFactory::getOpeFactories().at(str)->getOpe();
+	}
+		else
+			if (str[0] == '[' && str[str.size() - 1] == ']') {
+
+			}
+			else
+				if (str[0] == '\'' && str[str.size() - 1] == '\'') {
+
+				}
+	return nullptr;
+}
+
+
+
+

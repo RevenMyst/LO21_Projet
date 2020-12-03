@@ -4,7 +4,7 @@
 class Operand;
 enum LitType;
 class LitFactory {
-protected:
+public:
 	LitFactory() = default;
 	virtual ~LitFactory() {}
 	virtual Operand* getLitteral(std::string str) = 0;
