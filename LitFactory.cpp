@@ -8,10 +8,6 @@ std::map<std::string, LitFactory*> LitFactory::getLitFactories(){
   entry.second = new INTFactory();
   litteraux.insert(entry);
 
-  entry.first = "REALLIT"
-  entry.second = new REALFactory();
-  litteraux.insert(entry);
-
   entry.first = "RATIONALLIT"
   entry.second = new RATFactory();
   litteraux.insert(entry);
@@ -28,11 +24,11 @@ std::map<std::string, LitFactory*> LitFactory::getLitFactories(){
   entry.second = new EXPFactory();
   litteraux.insert(entry);
 
-  return litteraux;
-}
+  entry.first = "ATOM"
+  entry.second = new ATOMFactory();
+  litteraux.insert(entry);
 
-bool LitFactory::isLit(std::string Lit){
-  return getLitFactories().count(Lit) > 0;
+  return litteraux;
 }
 
 Litteral* RATFactory::getLitteral(std::string rat){
