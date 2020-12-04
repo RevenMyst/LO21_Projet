@@ -1,5 +1,6 @@
 #pragma once
 #include "Operand.h"
+#include "ComputerException.h"
 #include <list>
 #include <tgmath.h>
 
@@ -16,8 +17,10 @@ public:
 	virtual void accept(Visitor* visitor) const = 0;
 	virtual LitType getClass() const = 0;
 	void exec() override;
+
 };
 
+Litteral* operator+(const Litteral& lit1,const Litteral & lit2);
 bool operator==(const Litteral& lit1, const Litteral& lit2);
 bool operator!=(const Litteral& lit1, const Litteral& lit2);
 bool operator>=(const Litteral& lit1, const Litteral& lit2);
@@ -32,6 +35,10 @@ public:
     NumLit* operator+(const NumLit & l) const;
 
 };
+
+
+
+
 
 class ExpLit : public Litteral
 {
@@ -49,15 +56,11 @@ public:
 
 class RealLit : public NumLit
 {
-	double value;
+	float value;
 public:
-	RealLit(double v) : value(v) {}
-	int getInt() const {
-		return floor(value);
-	}
-	double getMant() const {
-		return value-getInt();
-	}
+	RealLit(float v) : value(v) {}
+	int getInt() const {return floor(value);}
+	double getMant() const {return value-getInt();}
 	double getValue() const { return value; }
 	std::string toString() const;
 	void accept(Visitor* visitor) const;
@@ -65,10 +68,11 @@ public:
 	~RealLit() = default;
 	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
-    NumLit*operator+(const NumLit & l) const;
-    NumLit& operator-(const NumLit &l) const;
-    NumLit& operator*(const NumLit & l) const;
-    NumLit& operator/(const NumLit & l) const;
+    /*Litteral* operator+(const Litteral & l) const override;
+   /* Litteral* operator-(const Litteral & l) const override;
+    Litteral* operator*(const Litteral & l) const override;
+    Litteral* operator/(const Litteral & l) const override;*/
+
 };
 
 class RationalLit : public NumLit
@@ -89,10 +93,10 @@ public:
 	~RationalLit() = default;
 	LitType getClass() const { return RATIONALLIT; }
 	Operand* clone() { return new RationalLit(*this); }
-    NumLit*operator+(const NumLit & l) const;
-    NumLit& operator-(const NumLit &l) const;
-    NumLit& operator*(const NumLit & l) const;
-    NumLit& operator/(const NumLit & l) const;
+    /*Litteral* operator+(const Litteral & l) const override;
+    Litteral* operator-(const Litteral & l) const override;
+    Litteral* operator*(const Litteral & l) const override;
+    Litteral* operator/(const Litteral & l) const override;*/
 };
 
 class IntLit : public NumLit
@@ -109,12 +113,25 @@ public:
 	~IntLit() = default;
 	LitType getClass() const { return INTLIT; }
 	Operand* clone();
-    NumLit*operator+(const NumLit & l) const;
-    NumLit& operator-(const NumLit &l) const;
-    NumLit& operator*(const NumLit & l) const;
-    NumLit& operator/(const NumLit & l) const;
 
 };
+
+//Surcharge des operateurs arithmétiques
+
+//**************OPEPLUS*****************
+//INTLIT--------------------------------
+NumLit* operator+(const IntLit & il,const IntLit & il2);
+NumLit* operator+(const IntLit & il,const RealLit & rl);
+NumLit* operator+(const IntLit & il,const RationalLit & rtl);
+//REALIT-------------------------------
+NumLit* operator+(const RealLit & rl,const RealLit & rl2);
+NumLit* operator+(const RealLit & rl,const RationalLit & rtl);
+NumLit* operator+(const RealLit & rl,const IntLit & il);
+//RATIONALLIT--------------------------
+NumLit* operator+(const RationalLit & rtl,const RationalLit & rtl2);
+NumLit* operator+(const RationalLit & rtl,const IntLit & il);
+NumLit* operator+(const RationalLit & rtl,const RealLit & rl);
+
 
 class ProgLit : public Litteral
 {

@@ -74,6 +74,6 @@ class OpePlus : public Operator{
     OpePlus() = default;
     void ope()override;
     Operand* clone() { return new OpePlus(*this); }
-    std::string toString() const { return "EVAL"; }
+    std::string toString() const { return "+"; }
 
     };

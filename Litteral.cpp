@@ -4,8 +4,45 @@
 #include "Visitor.h"
 #include "Computer.h"
 
+Litteral* operator+(const Litteral& lit1,const Litteral & lit2){
+LitType classe1 = lit1.getClass();
+LitType classe2 = lit2.getClass();
+switch(classe1)
+{
+    case RATIONALLIT: {
+        const RationalLit& nrtl =dynamic_cast<const RationalLit&>(lit1);
+        switch(classe2) {
+            case RATIONALLIT: {const RationalLit& nrtl2 =dynamic_cast<const RationalLit&>(lit2); return nrtl2+nrtl;} break;
+            case REALLIT: {const RealLit& nrl2 =dynamic_cast<const RealLit&>(lit2); return nrl2+nrtl;} break;
+            case INTLIT: {const IntLit& nil =dynamic_cast<const IntLit&>(lit2); return nil+nrtl;}  break;
+        }
+     } break;
+
+    case REALLIT: {
+        const RealLit& nrl =dynamic_cast<const RealLit&>(lit1);
+        switch(classe2) {
+            case RATIONALLIT: {const RationalLit& nrtl =dynamic_cast<const RationalLit&>(lit2); return nrl+nrtl;} break;
+            case REALLIT: {const RealLit& nrl2 =dynamic_cast<const RealLit&>(lit2); return nrl2+nrl;} break;
+            case INTLIT: {const IntLit& nil =dynamic_cast<const IntLit&>(lit2); return nil+nrl;}  break;
+        }
+        }break;
+
+    case INTLIT: {
+    const IntLit& nil =dynamic_cast<const IntLit&>(lit1);
+     switch(classe2) {
+            case RATIONALLIT: {const RationalLit& nrtl =dynamic_cast<const RationalLit&>(lit2); return nil+nrtl;} break;
+            case REALLIT: {const RealLit& nrl2 =dynamic_cast<const RealLit&>(lit2); return nrl2+nil;} break;
+            case INTLIT: {const IntLit& nil2 =dynamic_cast<const IntLit&>(lit2); return nil+nil2;}  break;
+        }
+    }break;
+
+    default : {throw ComputerException("Littérales non compatibles avec l'opérateur '+'");} break;
+}
+}
+
 bool operator==(const Litteral& lit1, const Litteral& lit2)
 {
+
 	// si variable numeriques : cast et compare valeurs
 	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT) {
 		return (dynamic_cast<const NumLit&>(lit1).getValue() == dynamic_cast<const NumLit&>(lit2).getValue());
@@ -81,181 +118,79 @@ void RealLit::accept(Visitor* visitor) const
 	visitor->visitRealLit(this);
 }
 
-//NUMLIT-------------------------------
-//Surcharge des op�rateurs arithm�tiques
-NumLit* NumLit::operator+(const NumLit & l)const{
-LitType classe1 = this->getClass();
-LitType classe2 = l.getClass();
-std::cout<<"ok++"<<std::endl;
 
-if(classe1==REALLIT){
-std::cout<<"cas real----------------"<<std::endl;
+/*******************************/
+/**SURCHARGE OPE ARITHMETIQUES**/
+/*******************************/
 
-    switch(classe2){
+//************OPERATEUR'+'**************
+//INTLIT--------------------------------
+NumLit* operator+(const IntLit & il,const IntLit & il2){
+    /*Somme INTLIT-INLIT => INTLIT*/
+    IntLit * nil = new IntLit(il.getValue() + il2.getValue());
+    return nil;
+}
 
-    case REALLIT :
-       {
+NumLit* operator+(const IntLit & il,const RealLit & rl){
+    /*Somme INTLIT-REALLIT => REALLIT*/
+    RealLit * nrl = new RealLit(il.getValue() + rl.getValue());
+    return nrl;
+}
 
-        const RealLit& nl =dynamic_cast<const RealLit&>(l);
-        double val = nl.getValue() + this->getValue();
-        // Si la mantisse vaut 0 on cr�e un INTLIT, sinon un REALLIT
+NumLit* operator+(const IntLit & il,const RationalLit & rtl){
+    /*Somme INTLIT-RATIONALLIT => RATIONALLIT*/
+        int newnum = il.getValue()*rtl.getDen() + rtl.getNum();
+        int newden = rtl.getDen();
+        RationalLit * nrtl = new RationalLit(newnum,newden);
+        return nrtl;
+}
+
+//REALIT-------------------------------
+NumLit* operator+(const RealLit & rl,const RealLit & rl2){
+    /*Somme REALLIT-REALLIT => INTLIT SI MANTISSE = 0, REALLIT SINON*/
+
+        double val = rl.getValue() + rl2.getValue();
         if(val-floor(val)==0){
-            std::cout<<"Cr�e Int"<<std::endl;
             IntLit * it = new IntLit(val);
             return it;
         }
         else{
-            RealLit * rl = new RealLit(val);
-            return rl;
+            RealLit * nrl = new RealLit(val);
+            return nrl;
         }
-       }
-        break;
+}
 
-   case INTLIT:
-    {
-
-    const IntLit& nl =dynamic_cast<const IntLit&>(l);
-        double val = nl.getValue() + this->getValue();
-        // Si la mantisse vaut 0 on cr�e un INTLIT, sinon un REALLIT
-            std::cout<<"+ok"<<std::endl;
-            RealLit * rl = new RealLit(val);
-            return rl;
-    }
-        break;
-
-
-    case RATIONALLIT :
-        {
-        const RationalLit& nl =dynamic_cast<const RationalLit&>(l);
-        double val = nl.getValue() + this->getValue();
-        /*On est oblig� de cr�er un r�el dans un premier temps
-        car sinon probl�me dans le cas ou on additionne un r��l
-        et une fraction et que la mantisse vaut 0*/
-        RealLit * rl = new RealLit(val);
-        std::cout<<"cree real"<<rl->getInt()<<" ,"<<rl->getMant()<<std::endl;
-
-        if(rl->getMant() ==0){
-            std::cout<<"cree int"<<std::endl;
-            IntLit * it = new IntLit(val);
-            return it;
-        }
-
-        return rl;
-
-        break;
-        }
-    }//Fin du switch
-}//Fin test avec real
-
-//TEST AVEC UN INTLIT ------------------------------
-    if(classe1==INTLIT){
-std::cout<<"cas int ----------"<<std::endl;
-
-    switch(classe2){
-
-    case REALLIT :
-       {
-        std::cout<<"cas int - reel"<<std::endl;
-
-        const RealLit& nl =dynamic_cast<const RealLit&>(l);
-        double val = nl.getValue() + this->getValue();
-
-        //On suppose qu'un r�el + un entier donnera toujours un reel
-            RealLit * rl = new RealLit(val);
-            return rl;
-        }
-
-        break;
-
-   case INTLIT:
-    {
-
-    const IntLit& nl =dynamic_cast<const IntLit&>(l);
-        double val = nl.getValue() + this->getValue();
-    //Un intlit + un intlit donnera un intlit
-            IntLit * rl = new IntLit(val);
-            return rl;
-    }
-        break;
-
-
-    case RATIONALLIT :
-        {
-        std::cout<<" cas int ratio"<<std::endl;
-
-        const RationalLit& nl =dynamic_cast<const RationalLit&>(l);
-        //Un i=IntLit + un RationalLit donne toujours un RationnalLit
-        std::cout<<"cas int - rationnelle"<<std::endl;
-        int val = this->getValue();
-        int newnum = val*nl.getDen() + nl.getNum();
-        int newden= nl.getDen();
-        RationalLit * rl = new RationalLit(newnum,newden);
-        return rl;
-
-        break;
-    }
-
-
-    }//Fin switch
-
-} //Fin du cas INTLIT
-if(classe1==RATIONALLIT){
-std::cout<<"cas ratio----------------"<<std::endl;
-
-    switch(classe2){
-
-    case REALLIT :
-       {
-
-        const RealLit& nl =dynamic_cast<const RealLit&>(l);
-        double val = nl.getValue() + this->getValue();
-        // Si la mantisse vaut 0 on cr�e un INTLIT, sinon un REALLIT
+NumLit* operator+(const RealLit & rl,const RationalLit & rtl){
+    /*Somme REALLIT-REATIONALLIT => INTLIT SI MANTISSE = 0, REALLIT SINON*/
+    double val = rl.getValue() + rtl.getValue();
         if(val-floor(val)==0){
-            std::cout<<"Cree Int"<<std::endl;
             IntLit * it = new IntLit(val);
             return it;
         }
         else{
-            RealLit * rl = new RealLit(val);
-            return rl;
+            RealLit * nrl = new RealLit(val);
+            return nrl;
         }
-       }
-        break;
-
-   case INTLIT:
-    {
-
-        const RationalLit& rl =dynamic_cast<const RationalLit&>(*this);
-
-        double val =l.getValue();
-        int newnum = val*rl.getDen() + rl.getNum();
-        int newden= rl.getDen();
-        RationalLit * rl2 = new RationalLit(newnum,newden);
-        return rl2;
-    }
-        break;
-
-
-    case RATIONALLIT :
-        {
-        std::cout<<" cas ration ratio"<<std::endl;
-        const RationalLit& rl =dynamic_cast<const RationalLit&>(*this);
-        const RationalLit& rll =dynamic_cast<const RationalLit&>(l);
-
-        int newnum = rll.getNum()*rl.getDen() + rl.getNum()*rll.getDen();
-        int newden= rl.getDen()*rll.getDen();
-
-        RationalLit * rl2 = new RationalLit(newnum,newden);
-        return rl2;
-        }
-        break;
-
-    }//Fin du switch
 }
+NumLit* operator+(const RealLit & rl,const IntLit & il){
+            return il+rl;
 }
 
 
-
+//RATIONALLIT--------------------------
+NumLit* operator+(const RationalLit & rtl,const RationalLit & rtl2){
+    /*Somme RATIONALLIT-RATIONALIT => RATIONALLIT */
+    int newnum = rtl.getNum()*rtl2.getDen() + rtl2.getNum()*rtl.getDen();
+    int newden= rtl2.getDen()*rtl.getDen();
+    RationalLit * nrtl = new RationalLit(newnum,newden);
+    return nrtl;
+}
+NumLit* operator+(const RationalLit & rtl,const IntLit & il){
+    return il+rtl;
+}
+NumLit* operator+(const RationalLit & rtl,const RealLit & rl){
+    return rl+rtl;
+}
 
 
 void RealLit::exec()

@@ -111,9 +111,6 @@ void OpePlus::ope()
 {
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
-    const NumLit & nl1 = dynamic_cast<const NumLit&>(*l1);
-    const NumLit & nl2 = dynamic_cast<const NumLit&>(*l2);
-
-  Computer::getInstance().getPile()->push(nl1+nl2);
+    Computer::getInstance().getPile()->push(*l1+*l2);
 
 }
