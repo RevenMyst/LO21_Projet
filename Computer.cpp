@@ -75,54 +75,21 @@ vector<string> Computer::parse(std::string str)
 
 Operand* Computer::createOperand(std::string str)
 {
-	if (std::regex_match(str, std::regex("[0-9]*"))) {
-		//int
-		return LitFactory::getLitFactories().at(INTLIT)->getLitteral(str);
-	}
-	else
-	if (std::regex_match(str, std::regex("-?[0-9]+/-?[0-9]+"))) {
-		//rationnel
-		return LitFactory::getLitFactories().at(RATIONALLIT)->getLitteral(str);	
-	}
-	else
-	if (std::regex_match(str, std::regex("-?[0-9]*\\.[0-9]*"))) {
-				//reel
-		return LitFactory::getLitFactories().at(REALLIT)->getLitteral(str);
-	}
-	if (str[0] == '[' && str[str.size() - 1] == ']') {
-		//programme
-		return LitFactory::getLitFactories().at(PROGLIT)->getLitteral(str.substr(2, str.size() - 4));
-	}
-	if (str[0] == '\'' && str[str.size() - 1] == '\'') {
-		//expression
-		return LitFactory::getLitFactories().at(EXPLIT)->getLitteral(str.substr(2, str.size() - 4));
-	}
-	if (std::regex_match(str, std::regex("([A-Z]+[0-9]*)+"))) {
-		// Forme d'un atome
-		if (OpeFactory::isOpe(str)) {
-			//si c'est un operateur
-			return OpeFactory::getOpeFactories().at(str)->getOpe();
-		}
-		else {
-			//sinon litterale Atome
-			return LitFactory::getLitFactories().at(ATOMLIT)->getLitteral(str);
-
-		}
-	}
-	else
-	if (std::regex_match(str, std::regex("(\\+|\\-|\\/|=|>=|<=|<|>|!=|\\*)"))) {
-			//operateur + - * / <= >= == < > !=
+	if (OpeFactory::isOpe(str)) {
 		return OpeFactory::getOpeFactories().at(str)->getOpe();
 	}
-		else
-			if (str[0] == '[' && str[str.size() - 1] == ']') {
-
+	else {
+		//c'est une litterale
+		for (LitFactory* l : LitFactory::getLitFactories()) {
+			//l.isTypeLit retourne true si le string correcpond a l'expression d'une litteral (regex)
+			if (l->isTypeLit(str)) {
+				// getLitteral retourne la litteral créée a partir du string
+				return l->getLitteral(str);
 			}
-			else
-				if (str[0] == '\'' && str[str.size() - 1] == '\'') {
-
-				}
-	return nullptr;
+		}
+	}
+	// si rien ne correspond au string on retourne une erreur
+	throw ComputerException("Erreur : Aucune Operand ne peut etre créée");
 }
 
 

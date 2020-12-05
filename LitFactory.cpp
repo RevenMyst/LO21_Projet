@@ -1,39 +1,33 @@
 #include "LitFactory.h"
-
 #include "Litteral.h"
 #include "Operator.h"
-#include <vector>
 #include "Computer.h"
+#include <regex>
 
-std::map<LitType, LitFactory*> LitFactory::getLitFactories(){
-  std::map<LitType, LitFactory*>litteraux;
-  std::pair<LitType, LitFactory*> entry;
+std::vector<LitFactory*> LitFactory::getLitFactories()
+{
+	std::vector<LitFactory*>litteraux;
 
-  entry.first = INTLIT;
-  entry.second = new INTFactory();
-  litteraux.insert(entry);
+	litteraux.push_back(new INTFactory());
 
-  entry.first = RATIONALLIT;
-  entry.second = new RATFactory();
-  litteraux.insert(entry);
+	litteraux.push_back(new REALFactory());
 
-  entry.first = REALLIT;
-  entry.second = new REALFactory();
-  litteraux.insert(entry);
+	litteraux.push_back(new ATOMFactory());
 
-  entry.first = PROGLIT;
-  entry.second = new PROGFactory();
-  litteraux.insert(entry);
+	litteraux.push_back(new PROGFactory());
 
-  entry.first = EXPLIT;
-  entry.second = new EXPFactory();
-  litteraux.insert(entry);
+	litteraux.push_back(new EXPFactory());
 
-  entry.first = ATOMLIT;
-  entry.second = new ATOMFactory();
-  litteraux.insert(entry);
+	//litteraux.push_back(new RATFactory());
+	//La commande ne peux creer directement une litterale rationnelle
 
-  return litteraux;
+	return litteraux;
+}
+
+
+bool RATFactory::isTypeLit(std::string str)
+{
+	return std::regex_match(str, std::regex("-?[0-9]+/-?[0-9]+"));
 }
 
 Operand* RATFactory::getLitteral(std::string str){
@@ -57,10 +51,20 @@ Operand* RATFactory::getLitteral(std::string str){
   return new RationalLit(stoi(num), stoi(den));
 }
 
+bool ATOMFactory::isTypeLit(std::string str)
+{
+	return std::regex_match(str, std::regex("([A-Z]+[0-9]*)+"));
+}
+
 Operand* ATOMFactory::getLitteral(std::string str)
 {
 	//return new AtomLit(str);
 	return nullptr;
+}
+
+bool REALFactory::isTypeLit(std::string str)
+{
+	return std::regex_match(str, std::regex("-?[0-9]*\\.[0-9]*"));
 }
 
 Operand* REALFactory::getLitteral(std::string str)
@@ -68,9 +72,19 @@ Operand* REALFactory::getLitteral(std::string str)
     return nullptr;
 }
 
+bool EXPFactory::isTypeLit(std::string str)
+{
+	return std::regex_match(str, std::regex("'([A-Z]+[0-9]*)+'"));;
+}
+
 Operand* EXPFactory::getLitteral(std::string str)
 {
 	return new ExpLit(str);
+}
+
+bool PROGFactory::isTypeLit(std::string str)
+{
+	return str[0] == '[' && str[str.size() - 1] == ']';
 }
 
 Operand* PROGFactory::getLitteral(std::string str)
@@ -83,7 +97,14 @@ Operand* PROGFactory::getLitteral(std::string str)
 	return lit;
 }
 
+bool INTFactory::isTypeLit(std::string str)
+{
+	return std::regex_match(str, std::regex("[0-9]+"));
+}
+
 Operand* INTFactory::getLitteral(std::string str)
 {
     return nullptr;
 }
+
+

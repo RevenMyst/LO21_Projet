@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Operand.h"
+#include "Visitor.h"
 
 class Operator : public Operand
 {
@@ -59,20 +60,23 @@ public:
 	Operand* clone() { return new OpeSTO(*this); }
 };
 
-class OpeFORGET : public Operator {
+class OpeFORGET : public Operator,public Visitor{
 	unsigned int arite = 1;
 public:
 	OpeFORGET() = default;
 	void ope() override;
+	void visitExpLit(ExpLit* l1) override;
 	std::string toString() const { return "FORGET"; }
 	Operand* clone() { return new OpeFORGET(*this); }
 };
 
-class OpeEVAL : public Operator {
+class OpeEVAL : public Operator, public Visitor {
 	unsigned int arite = 1;
 public:
 	OpeEVAL() = default;
 	void ope() override;
+	void visitExpLit(ExpLit* l1) override;
+	void visitProgLit(ProgLit* l1) override;
 	std::string toString() const { return "EVAL"; }
 	Operand* clone() { return new OpeEVAL(*this); }
 };
