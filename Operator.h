@@ -166,3 +166,21 @@ public:
     std::string toString() const { return "MOD"; }
     Operand* clone() { return new OpeMOD(*this); }
 };
+
+class OpeIFT : public Operator {
+    unsigned int arite = 2;
+public:
+    OpeIFT() = default;
+    void ope() override;
+    std::string toString() const { return "IFT"; }
+    Operand* clone() { return new OpeIFT(*this); }
+};
+
+class OpeIFTE : public Operator {
+    unsigned int arite = 3;
+public:
+    OpeIFTE() = default;
+    void ope() override;
+    std::string toString() const { return "IFTE"; }
+    Operand* clone() { return new OpeIFTE(*this); }
+};
