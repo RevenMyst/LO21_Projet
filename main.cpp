@@ -18,7 +18,7 @@ int operator-(IntLit& l1, IntLit& l2) {
 int main() {
 	
 
-	IntLit* int1 = new IntLit(5);
+	RationalLit* int1 = new RationalLit(3,2);
 	int1->exec();
 	afficherPile();
 	std::cout << "Operator NEG" << endl;
