@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Operand.h"
+#include "Visitor.h"
 
 class Operator : public Operand
 {
@@ -56,18 +57,21 @@ public:
 	Operand* clone() { return new OpeSTO(*this); }
 };
 
-class OpeFORGET : public Operator {
+class OpeFORGET : public Operator, public Visitor {
 public:
 	OpeFORGET() : Operator(2) {}
 	void ope() override;
+	void visitExpLit(ExpLit* l1) override;
 	std::string toString() const { return "FORGET"; }
 	Operand* clone() { return new OpeFORGET(*this); }
 };
 
-class OpeEVAL : public Operator {
+class OpeEVAL : public Operator, public Visitor {
 public:
 	OpeEVAL() : Operator(1) {}
 	void ope() override;
+	void visitExpLit(ExpLit* l1) override;
+	void visitProgLit(ProgLit* l1) override;
 	std::string toString() const { return "EVAL"; }
 	Operand* clone() { return new OpeEVAL(*this); }
 };
@@ -151,3 +155,22 @@ public:
     std::string toString() const { return "MOD"; }
     Operand* clone() { return new OpeMOD(*this); }
 };
+
+class OpeNOT: public Operator {
+    unsigned int arite = 1;
+public:
+    OpeNOT() = default;
+    void ope() override;
+    std::string toString() const { return "NOT"; }
+    Operand* clone() { return new OpeNOT(*this); }
+};
+
+class OpeNEG: public Operator {
+    unsigned int arite = 1;
+public:
+    OpeNEG() = default;
+    void ope() override;
+    std::string toString() const { return "NEG"; }
+    Operand* clone() { return new OpeNEG(*this); }
+};
+

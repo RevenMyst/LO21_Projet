@@ -113,3 +113,15 @@ public:
 	MODFactory() = default;
 	Operator* getOpe() override { return new OpeMOD(); }
 };
+
+class NOTFactory: public OpeFactory {
+public:
+    NOTFactory() = default;
+    Operator* getOpe() override { return new OpeNOT(); }
+};
+
+class NEGFactory: public OpeFactory {
+public:
+    NEGFactory() = default;
+    OpeFactory* getOpe() override { return new OpeNEG(); }
+};
