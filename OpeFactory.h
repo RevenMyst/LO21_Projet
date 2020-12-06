@@ -123,5 +123,5 @@ public:
 class NEGFactory: public OpeFactory {
 public:
     NEGFactory() = default;
-    OpeFactory* getOpe() override { return new OpeNEG(); }
+    Operator* getOpe() override { return new OpeNEG(); }
 };

@@ -271,29 +271,60 @@ void OpeDIF::ope()
 
 void OpeNOT::ope()
 {
-    Litteral* l = Computer::getInstance().getPile()->pull();
+	Litteral* l = Computer::getInstance().getPile()->pull();
+	if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 1) {
+		Litteral* tmp = new IntLit(0);
+		tmp->exec();
+	}
+	else {
+		Litteral* tmp = new IntLit(1);
+		tmp->exec();
+	}
+	delete l;
 
-    if (l->getClass() == INTLIT){
-        Computer::getInstance().getPile()->push(new IntLit(- dynamic_cast<IntLit*>(l)->getValue()));
-    } else if (l->getClass() == REALLIT){
-        Computer::getInstance().getPile()->push(new RealLit(- dynamic_cast<RealLit*>(l)->getValue()));
-    } else if (l->getClass() == RATIONALLIT){
-        Computer::getInstance().getPile()->push(new RationalLit(- dynamic_cast<RationalLit*>(l)->getNum(), dynamic_cast<RationalLit*>(l)->getDen()));
-    } else {
-        throw ComputerException("Erreur, l'opérateur negative ne s'applique pas sur cette litterale");
-    }
-    delete l;
+
 }
 
 void OpeNEG::ope()
 {
-    Litteral* l = Computer::getInstance().getPile()->pull();
-    if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 1){
-        Litteral* tmp = new IntLit(0);
-        tmp->exec();
-    } else {
-        Litteral* tmp = new IntLit(1);
-        tmp->exec();
-    }
-    delete l;
+	Litteral* l = Computer::getInstance().getPile()->pull();
+
+	if (l->getClass() == INTLIT) {
+		Computer::getInstance().getPile()->push(new IntLit(-dynamic_cast<IntLit*>(l)->getValue()));
+	}
+	else if (l->getClass() == REALLIT) {
+		Computer::getInstance().getPile()->push(new RealLit(-dynamic_cast<RealLit*>(l)->getValue()));
+	}
+	else if (l->getClass() == RATIONALLIT) {
+		Computer::getInstance().getPile()->push(new RationalLit(-dynamic_cast<RationalLit*>(l)->getNum(), dynamic_cast<RationalLit*>(l)->getDen()));
+	}
+	else {
+		throw ComputerException("Erreur, l'opérateur negative ne s'applique pas sur cette litterale");
+	}
+	delete l;
+    
 }
+
+void OpeNEG::visitIntLit(IntLit* l)
+{
+	IntLit* lit = new IntLit(-l->getValue());
+	lit->exec();
+	delete l;
+}
+
+void OpeNEG::visitRealLit(RealLit* l)
+{
+	RealLit* lit = new RealLit(-l->getValue());
+	lit->exec();
+	delete l;
+}
+
+void OpeNEG::visitRationalLit(RationalLit* l)
+{
+
+	RationalLit* lit = new RationalLit(-l->getNum(), l->getDen());
+	lit->exec();
+	delete l;
+}
+
+

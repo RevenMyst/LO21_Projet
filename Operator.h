@@ -157,20 +157,21 @@ public:
 };
 
 class OpeNOT: public Operator {
-    unsigned int arite = 1;
 public:
-    OpeNOT() = default;
+    OpeNOT() : Operator(1) {}
     void ope() override;
     std::string toString() const { return "NOT"; }
     Operand* clone() { return new OpeNOT(*this); }
 };
 
-class OpeNEG: public Operator {
-    unsigned int arite = 1;
+class OpeNEG: public Operator, public Visitor {
 public:
-    OpeNEG() = default;
+    OpeNEG() : Operator(1) {}
     void ope() override;
     std::string toString() const { return "NEG"; }
     Operand* clone() { return new OpeNEG(*this); }
+	void visitIntLit(IntLit* l1) override;
+	void visitRealLit(RealLit* l1) override;
+	void visitRationalLit(RationalLit* l1) override;
 };
 
