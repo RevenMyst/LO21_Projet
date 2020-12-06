@@ -286,3 +286,31 @@ void OpeDIF::ope()
 	delete l1;
 	delete l2;
 }
+
+void OpeNOT::ope()
+{
+    Litteral* l = Computer::getInstance().getPile()->pull();
+
+    if (l->getClass() == INTLIT){
+        l->accept(new IntLit(- dynamic_cast<IntLit*>(tmp)->getValue()));
+    } else if (l->getClass() == REALLIT){
+        l->accept(new RealLit(- dynamic_cast<RealLit*>(tmp)->getValue));
+    } else if (l->getClass() == RATIONALLIT){
+        l->accept(new RationalLit(- dynamic_cast<RationalLit*>(tmp)->getNum(), dynamic_cast<RationalLit*>(tmp)->getDen()));
+    } else {
+        throw ComputerException("Erreur, l'opérateur negative ne s'applique pas sur cette litterale");
+    }
+}
+
+void OpeNEG::ope()
+{
+    Litteral* l = Computer::getInstance().getPile()->pull();
+    if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 1){
+        Litteral* tmp = new IntLit(0);
+        tmp->exec();
+    } else {
+        Litteral* tmp = new IntLit(1);
+        tmp->exec();
+    }
+    delete l;
+}
