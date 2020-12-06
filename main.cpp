@@ -11,8 +11,16 @@ void afficherPile() {
 }
 
 int main() {
+	afficherPile();
+	try {
 
-
+		OpeDUP* o = new OpeDUP();
+		o->exec();
+	}
+	catch (exception& e) {
+		std::cout << e.what() << endl;
+	}
+	afficherPile();
 
 	
 	
