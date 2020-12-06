@@ -292,14 +292,16 @@ void OpeNOT::ope()
     Litteral* l = Computer::getInstance().getPile()->pull();
 
     if (l->getClass() == INTLIT){
-        l->accept(new IntLit(- dynamic_cast<IntLit*>(tmp)->getValue()));
+        Computer::getInstance().getPile()->push(new IntLit(- dynamic_cast<IntLit*>(l)->getValue()));
     } else if (l->getClass() == REALLIT){
-        l->accept(new RealLit(- dynamic_cast<RealLit*>(tmp)->getValue));
+        Computer::getInstance().getPile()->push(new RealLit(- dynamic_cast<RealLit*>(l)->getValue()));
     } else if (l->getClass() == RATIONALLIT){
-        l->accept(new RationalLit(- dynamic_cast<RationalLit*>(tmp)->getNum(), dynamic_cast<RationalLit*>(tmp)->getDen()));
+        delete l;
+        Computer::getInstance().getPile()->push(new RationalLit(- dynamic_cast<RationalLit*>(l)->getNum(), dynamic_cast<RationalLit*>(l)->getDen()));
     } else {
         throw ComputerException("Erreur, l'opérateur negative ne s'applique pas sur cette litterale");
     }
+    delete l;
 }
 
 void OpeNEG::ope()
