@@ -13,7 +13,6 @@ bool operator==(const Litteral& lit1, const Litteral& lit2)
 		// sinon compare string value (2 programme identiques on la meme string value
 		return lit1.toString() == lit2.toString();
 	}
-	return false;
 }
 
 bool operator!=(const Litteral& lit1, const Litteral& lit2)
