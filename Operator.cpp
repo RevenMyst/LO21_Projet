@@ -296,7 +296,6 @@ void OpeNOT::ope()
     } else if (l->getClass() == REALLIT){
         Computer::getInstance().getPile()->push(new RealLit(- dynamic_cast<RealLit*>(l)->getValue()));
     } else if (l->getClass() == RATIONALLIT){
-        delete l;
         Computer::getInstance().getPile()->push(new RationalLit(- dynamic_cast<RationalLit*>(l)->getNum(), dynamic_cast<RationalLit*>(l)->getDen()));
     } else {
         throw ComputerException("Erreur, l'opérateur negative ne s'applique pas sur cette litterale");
