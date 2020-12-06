@@ -287,7 +287,7 @@ void OpeDIF::ope()
 	delete l2;
 }
 
-void OpeNOT::ope()
+void OpeNEG::ope()
 {
     Litteral* l = Computer::getInstance().getPile()->pull();
 
@@ -303,14 +303,14 @@ void OpeNOT::ope()
     delete l;
 }
 
-void OpeNEG::ope()
+void OpeNOT::ope()
 {
     Litteral* l = Computer::getInstance().getPile()->pull();
-    if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 1){
-        Litteral* tmp = new IntLit(0);
+    if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 0){
+        Litteral* tmp = new IntLit(1);
         tmp->exec();
     } else {
-        Litteral* tmp = new IntLit(1);
+        Litteral* tmp = new IntLit(0);
         tmp->exec();
     }
     delete l;
