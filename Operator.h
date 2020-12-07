@@ -164,6 +164,14 @@ public:
     Operand* clone() { return new OpeNOT(*this); }
 };
 
+class OpeUNDO : public Operator {
+public:
+	OpeUNDO() : Operator(0) {}
+	void ope() override;
+	std::string toString() const { return "UNDO"; }
+	Operand* clone() { return new OpeUNDO(*this); }
+};
+
 class OpeNEG: public Operator, public Visitor {
 public:
     OpeNEG() : Operator(1) {}

@@ -313,4 +313,7 @@ void OpeNEG::visitRationalLit(RationalLit* l)
 	lit->exec();
 }
 
-
+void OpeUNDO::ope()
+{
+	Computer::getInstance().backup();
+}

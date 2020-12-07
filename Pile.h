@@ -10,6 +10,7 @@ class Pile
 public:
 
 	Pile() = default;
+	Pile(Pile& p);
 	void push(Litteral* lit);
 	Litteral* pull();
 	unsigned int size() const { return litterals.size(); }

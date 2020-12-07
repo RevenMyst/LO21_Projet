@@ -125,3 +125,9 @@ public:
     NEGFactory() = default;
     Operator* getOpe() override { return new OpeNEG(); }
 };
+
+class UNDOFactory : public OpeFactory {
+public:
+	UNDOFactory() = default;
+	Operator* getOpe() override { return new OpeUNDO(); }
+};

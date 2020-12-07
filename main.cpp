@@ -9,30 +9,43 @@ void afficherPile() {
 	}
 	std::cout << "========================" << std::endl;
 }
-int operator-(Litteral& l1, Litteral& l2) {
-	return 0;
-}
-int operator-(IntLit& l1, IntLit& l2) {
-	return l1.getValue()-l2.getValue();
-}
+
 int main() {
 	
 
-	RationalLit* int1 = new RationalLit(3,2);
+	/*RationalLit* int1 = new RationalLit(3,2);
+	Computer::getInstance().save();
 	int1->exec();
-	afficherPile();
-	std::cout << "Operator NEG" << endl;
+	RationalLit* int2 = new RationalLit(5, 2);
+	Computer::getInstance().save();
+	int2->exec();
+	RationalLit* int3 = new RationalLit(7, 2);
+	Computer::getInstance().save();
+	int3->exec();
 	OpeNEG* o = new OpeNEG();
+	Computer::getInstance().save();
 	o->exec();
 	afficherPile();
-	std::cout << "Operator NOT" << endl;
-	OpeNOT* o2 = new OpeNOT();
+	Computer::getInstance().save();
+	OpeUNDO* o2 = new OpeUNDO();
 	o2->exec();
 	afficherPile();
-	std::cout << "Operator NOT" << endl;
-	OpeNOT* o3 = new OpeNOT();
-	o3->exec();
-	afficherPile();
+	Computer::getInstance().save();
+	OpeUNDO* o3 = new OpeUNDO();
+	o3->exec();*/
+	try {
+		std::string command = "[ 'TEUB' DUP ] 'TEST' SWAP DUP EVAL";
+		Computer::getInstance().execCommand(command);
+		afficherPile();
+		command = "UNDO";
+		Computer::getInstance().execCommand(command);
+		afficherPile();
+
+	}
+	catch (exception& e) {
+		std::cout << e.what();
+	}
+		
 	
 	return 0;
 }

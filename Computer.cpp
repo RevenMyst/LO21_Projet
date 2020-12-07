@@ -11,22 +11,37 @@
 #include "Operand.h"
 using namespace std;
 
-bool AtomManager::addAtom(const std::string str, Litteral* o)
+AtomManager::AtomManager(AtomManager& a)
+{
+	for (auto atom : a.atoms) {
+		pair<string, Litteral*> entry = pair<string, Litteral*>(atom.first, dynamic_cast<Litteral*>(atom.second->clone()));
+		atoms.insert(entry);
+	}
+}
+
+AtomManager::~AtomManager()
+{
+	for (auto a : atoms) {
+		delete a.second;
+	}
+}
+
+bool AtomManager::addAtom(const string str, Litteral* o)
 {
 	if (atoms.count(str) > 0) {
 		removeAtom(str);
 	}
-	std::pair<std::map<std::string, Litteral*>::iterator, bool> res = atoms.insert(std::pair<std::string, Litteral*>(str, o));
+	pair<map<string, Litteral*>::iterator, bool> res = atoms.insert(pair<string, Litteral*>(str, o));
 	return res.second;
 }
 
-bool AtomManager::removeAtom(const std::string str)
+bool AtomManager::removeAtom(const string str)
 {
 	unsigned int res = atoms.erase(str);
 	return res != 0;
 }
 
-Litteral* AtomManager::getLitteral(const std::string str)
+Litteral* AtomManager::getLitteral(const string str)
 {
 	try {
 		return dynamic_cast<Litteral*>(atoms.at(str)->clone());
@@ -37,7 +52,7 @@ Litteral* AtomManager::getLitteral(const std::string str)
 
 }
 
-vector<string> Computer::parse(std::string str)
+vector<string> Computer::parse(string str)
 {
 
 	istringstream iss(str);
@@ -70,10 +85,10 @@ vector<string> Computer::parse(std::string str)
 			}
 		}
 	}
-	return results;
+	return res;
 }
 
-Operand* Computer::createOperand(std::string str)
+Operand* Computer::createOperand(string str)
 {
 	if (OpeFactory::isOpe(str)) {
 		return OpeFactory::getOpeFactories().at(str)->getOpe();
@@ -91,6 +106,47 @@ Operand* Computer::createOperand(std::string str)
 	// si rien ne correspond au string on retourne une erreur
 	throw ComputerException("Erreur : Aucune Operand ne peut etre créée");
 }
+
+void Computer::execCommand(std::string command)
+{
+	//on parse la command pour separer chaque string de chaque operand
+	vector<string> opeStringTab = parse(command);
+	for (string opeStr : opeStringTab) {
+		//on creer chaque operand à partir de son string
+		Operand* o = createOperand(opeStr);
+		//on sauvegarde l'etat
+		save();
+		//on exec (empilement si litteral , depilement et calcul si operateur)
+		o->exec();
+	}
+}
+
+void Computer::save()
+{
+	atomHistory.push_back(new AtomManager(*atomManager));
+	pileHistory.push_back(new Pile(*pile));
+	if (pileHistory.size() >= 10) {
+		pileHistory.pop_front();
+		atomHistory.pop_front();
+	}
+}
+
+void Computer::backup()
+{
+	if (pileHistory.size() > 1) {
+		Pile* temp = pile;
+		//on supprime la sauvegarde pre-UNDO
+		pileHistory.pop_back();
+		//on retablit la sauvegarde
+		pile = pileHistory.back();
+		//on supprime de la liste
+		pileHistory.pop_back();
+		delete temp;
+	}
+	
+}
+
+
 
 
 
