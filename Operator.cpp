@@ -252,7 +252,7 @@ void OpePlus::ope()
 	else {
 		// l'addition est commutative, pour limiter le nombre d'action on verifie si l'addition dans l'autre sens existe
 		get<1>(t) = l2->getClass();
-		get<0>(t) = l2->getClass();
+		get<2>(t) = l1->getClass();
 		if (Action::exist(t)) {
 			Action::getActions().at(t)->exec(l2, l1)->exec();
 		}

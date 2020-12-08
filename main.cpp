@@ -13,7 +13,7 @@ void afficherPile() {
 
 int main() {
 	RealLit* l1 = new RealLit(5.3);
-	RealLit* l2 = new RealLit(5.7);
+	RationalLit* l2 = new RationalLit(4,7);
 	l2->exec();
 	l1->exec();
 	afficherPile();

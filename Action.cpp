@@ -22,7 +22,7 @@ map<tuple<string, LitType, LitType>, Action*> Action::getActions()
     entry.second = new PlusSimpleAction();
     actions.insert(entry);
 
-    t = make_tuple("+", INTLIT, REALLIT);
+    t = make_tuple("+", RATIONALLIT, REALLIT);
     entry.first = t;
     entry.second = new PlusSimpleAction();
     actions.insert(entry);
