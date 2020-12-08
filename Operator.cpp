@@ -3,6 +3,7 @@
 #include "ComputerException.h"
 #include "Computer.h"
 #include "OpeFactory.h"
+#include "Action.h"
 #include <iostream>
 
 void OpeDUP::ope()
@@ -244,7 +245,25 @@ void OpePlus::ope()
 {
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
-    Computer::getInstance().getPile()->push(*l1+*l2);
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l1->getClass(), l2->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l1, l2)->exec();
+	}
+	else {
+		// l'addition est commutative, pour limiter le nombre d'action on verifie si l'addition dans l'autre sens existe
+		get<1>(t) = l2->getClass();
+		get<0>(t) = l2->getClass();
+		if (Action::exist(t)) {
+			Action::getActions().at(t)->exec(l2, l1)->exec();
+		}
+		else {
+			//ces deux litterales ne possedent pas d'actions pour les additionner on reempile et on envoie une erreur
+			l2->exec();
+			l1->exec();
+			throw ComputerException("Erreur : ces deux litterales ne peuvent etre additionnée");
+
+		}
+	}
 
 }
 void OpeLT::ope()
