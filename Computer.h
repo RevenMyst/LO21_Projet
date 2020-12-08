@@ -1,9 +1,10 @@
 #pragma once
 #include <string>
 #include <map>
-#include "Pile.h";
+#include "Pile.h"
+#include <vector>
 
-
+class Operand;
 class AtomManager {
 	std::map<std::string, Litteral*> atoms;
 public:
@@ -28,6 +29,8 @@ public:
 		static Computer instance;
 		return instance;
 	}
+	static std::vector<std::string> parse(std::string str);
+	static Operand* createOperand(std::string str);
 	Pile* getPile() { return pile; }
 	AtomManager* getAtomManager() { return atomManager; }
 };

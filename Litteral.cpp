@@ -51,7 +51,6 @@ bool operator==(const Litteral& lit1, const Litteral& lit2)
 		// sinon compare string value (2 programme identiques on la meme string value
 		return lit1.toString() == lit2.toString();
 	}
-	return false;
 }
 
 bool operator!=(const Litteral& lit1, const Litteral& lit2)
@@ -113,7 +112,7 @@ std::string RealLit::toString() const {
 	}
 }
 
-void RealLit::accept(Visitor* visitor) const
+void RealLit::accept(Visitor* visitor)
 {
 	visitor->visitRealLit(this);
 }
@@ -210,7 +209,7 @@ void RealLit::exec()
 /*******************************/
 
 
-void RationalLit::accept(Visitor* visitor) const
+void RationalLit::accept(Visitor* visitor)
 {
 	visitor->visitRationalLit(this);
 }
@@ -262,7 +261,15 @@ std::string ProgLit::toString() const
 	return str;
 }
 
-void ProgLit::accept(Visitor* visitor) const
+void ProgLit::compile()
+{
+	for (Operand* o : getOperands()) {
+		o->clone()->exec();
+	}
+	delete this;
+}
+
+void ProgLit::accept(Visitor* visitor)
 {
 	visitor->visitProgLit(this);
 }
@@ -272,12 +279,12 @@ void Litteral::exec()
 	Computer::getInstance().getPile()->push(this);
 }
 
-void ExpLit::accept(Visitor* visitor) const
+void ExpLit::accept(Visitor* visitor)
 {
 	visitor->visitExpLit(this);
 }
 
-void IntLit::accept(Visitor* visitor) const
+void IntLit::accept(Visitor* visitor)
 {
 	visitor->visitIntLit(this);
 }

@@ -55,55 +55,188 @@ void OpeSTO::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	if (l1->getClass() == EXPLIT && (l2->getClass()== PROGLIT || l2->getClass() == RATIONALLIT || l2->getClass() == INTLIT || l2->getClass() == REALLIT)) {
+	if (l1->getClass() == EXPLIT && l2->getClass()!= EXPLIT) {
 		ExpLit* lit = dynamic_cast<ExpLit*>(l1);
 		if (!OpeFactory::isOpe(lit->getValue())) {
+			//si ce n'est pas un nom reservÃ©
 			Computer::getInstance().getAtomManager()->addAtom(lit->getValue(), l2);
 			delete lit;
 		}else{
-			throw ComputerException("Erreur Un opérateur utilise deja ce nom");
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur Un operateur utilise deja ce nom");
 		}
 
 	}
 	else {
-		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et un litteral numerique ou programme.");
+		l1->exec();
+		l2->exec();
+		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et une litteral numerique ou programme.");
 	}
 }
 
 void OpeEVAL::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
+	l->accept(this);
+}
 
-	if (l->getClass() == PROGLIT) {
-		ProgLit* lit = dynamic_cast<ProgLit*>(l);
-		for (Operand* o : lit->getOperands()) {
-			o->clone()->exec();
-		}
-		delete lit;
-
-	}else
-	if (l->getClass() == EXPLIT) {
-		ExpLit* lit = dynamic_cast<ExpLit*>(l);
-		Litteral* atom = Computer::getInstance().getAtomManager()->getLitteral(lit->getValue());
-		if (atom) {
-			if (atom->getClass() == PROGLIT) {
-				ProgLit* plit = dynamic_cast<ProgLit*>(atom);
-				for (Operand* o : plit->getOperands()) {
-					o->clone()->exec();
-				}
-				delete plit;
-			}
-			else {
-				atom->exec();
-			}
-		}
-		else {
-			throw ComputerException("Erreur cet expression ne correspond a aucun programme ou variable");
-		}
+void OpeEVAL::visitExpLit(ExpLit* l)
+{
+	Litteral* lit = Computer::getInstance().getAtomManager()->getLitteral(l->getValue());
+	if (lit->getClass() == PROGLIT) {
+		dynamic_cast<ProgLit*>(lit)->compile();
 	}
 	else {
-		throw ComputerException("Erreur l'operateur EVAL doit recevoir une litteral expression ou programme.");
+		lit->exec();
+		delete lit;
 	}
+}
+
+void OpeEVAL::visitProgLit(ProgLit* l)
+{
+	l->compile();
+}
+
+void OpeAND::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	if((l1->getClass() == INTLIT && dynamic_cast<IntLit*>(l1)->getInt() == 0) || (l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)) {
+        Litteral* l3 = new IntLit(0);
+        l3->exec();
+	}
+    else {
+        Litteral* l3 = new IntLit(1);
+        l3->exec();
+    }
+    delete l1;
+    delete l2;
+}
+
+void OpeOR::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	if((l1->getClass() == INTLIT && dynamic_cast<IntLit*>(l1)->getInt() == 0) && (l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)) {
+        Litteral* l3 = new IntLit(0);
+        l3->exec();
+	}
+    else {
+        Litteral* l3 = new IntLit(1);
+        l3->exec();
+    }
+    delete l1;
+    delete l2;
+}
+
+void OpeDIV::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
+        int divid = dynamic_cast<IntLit*>(l2)->getInt();
+        int divis = dynamic_cast<IntLit*>(l1)->getInt();
+        Litteral* l3 = new IntLit(divid/divis);
+        delete l1;
+        delete l2;
+        l3->exec();
+	}
+	else {
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur l'operateur DIV doit recevoir des litterales entieres");
+	}
+}
+
+void OpeMOD::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
+        int divid = dynamic_cast<IntLit*>(l2)->getInt();
+        int divis = dynamic_cast<IntLit*>(l1)->getInt();
+        Litteral* l3 = new IntLit(divid%divis);
+        delete l1;
+        delete l2;
+        l3->exec();
+	}
+	else {
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur l'operateur MOD doit recevoir des litterales entieres");
+	}
+}
+
+void OpeFORGET::ope()
+{
+	Computer::getInstance().getPile()->pull()->accept(this);
+}
+void OpeFORGET::visitExpLit(ExpLit* l)
+{
+	if (!Computer::getInstance().getAtomManager()->removeAtom(l->getValue())) {
+		throw ComputerException("Aucune variable ou programme n'est associï¿½ a cette expression");
+	}
+	delete l;
+}
+void OpeEQUAL::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 == *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeLTE::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 <= *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeGTE::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 >= *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeGT::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 > *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
 }
 
 
@@ -114,3 +247,78 @@ void OpePlus::ope()
     Computer::getInstance().getPile()->push(*l1+*l2);
 
 }
+void OpeLT::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 < *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeDIF::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	if (*l2 != *l1) {
+		p->push(new IntLit(1));
+	}
+	else {
+		p->push(new IntLit(0));
+	}
+	delete l1;
+	delete l2;
+}
+
+void OpeNOT::ope()
+{
+	Litteral* l = Computer::getInstance().getPile()->pull();
+	Litteral* tmp;
+	if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 0) {
+		tmp = new IntLit(1);
+	}
+	else {
+		tmp = new IntLit(0);
+	}
+	tmp->exec();
+	delete l;
+
+
+}
+
+void OpeNEG::ope()
+{
+	Litteral* l = Computer::getInstance().getPile()->pull();
+
+	l->accept(this);
+	delete l;
+    
+}
+
+void OpeNEG::visitIntLit(IntLit* l)
+{
+	IntLit* lit = new IntLit(-l->getValue());
+	lit->exec();
+}
+
+void OpeNEG::visitRealLit(RealLit* l)
+{
+	RealLit* lit = new RealLit(-l->getValue());
+	lit->exec();
+}
+
+void OpeNEG::visitRationalLit(RationalLit* l)
+{
+
+	RationalLit* lit = new RationalLit(-l->getNum(), l->getDen());
+	lit->exec();
+}
+
+

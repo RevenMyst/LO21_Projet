@@ -42,9 +42,86 @@ public:
 	Operator* getOpe() override { return new OpeSTO(); }
 };
 
+class FORGETFactory : public OpeFactory {
+public:
+	FORGETFactory() = default;
+	Operator* getOpe() override { return new OpeFORGET(); }
+};
+
 class EVALFactory : public OpeFactory {
 public:
 	EVALFactory() = default;
 	Operator* getOpe() override { return new OpeEVAL(); }
 };
 
+class ANDFactory : public OpeFactory {
+public:
+	ANDFactory() = default;
+	Operator* getOpe() override { return new OpeAND(); }
+};
+
+class ORFactory : public OpeFactory {
+public:
+	ORFactory() = default;
+	Operator* getOpe() override { return new OpeOR(); }
+};
+
+class EQUALFactory : public OpeFactory {
+public:
+	EQUALFactory() = default;
+	Operator* getOpe() override { return new OpeEQUAL(); }
+};
+
+class DIFFactory : public OpeFactory {
+public:
+	DIFFactory() = default;
+	Operator* getOpe() override { return new OpeDIF(); }
+};
+
+class LTFactory : public OpeFactory {
+public:
+	LTFactory() = default;
+	Operator* getOpe() override { return new OpeLT(); }
+};
+
+class LTEFactory : public OpeFactory {
+public:
+	LTEFactory() = default;
+	Operator* getOpe() override { return new OpeLTE(); }
+};
+
+class GTFactory : public OpeFactory {
+public:
+	GTFactory() = default;
+	Operator* getOpe() override { return new OpeGT(); }
+};
+
+class GTEFactory : public OpeFactory {
+public:
+	GTEFactory() = default;
+	Operator* getOpe() override { return new OpeGTE(); }
+};
+
+class DIVFactory : public OpeFactory {
+public:
+	DIVFactory() = default;
+	Operator* getOpe() override { return new OpeDIV(); }
+};
+
+class MODFactory : public OpeFactory {
+public:
+	MODFactory() = default;
+	Operator* getOpe() override { return new OpeMOD(); }
+};
+
+class NOTFactory: public OpeFactory {
+public:
+    NOTFactory() = default;
+    Operator* getOpe() override { return new OpeNOT(); }
+};
+
+class NEGFactory: public OpeFactory {
+public:
+    NEGFactory() = default;
+    Operator* getOpe() override { return new OpeNEG(); }
+};

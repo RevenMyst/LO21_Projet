@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Master.h";
+#include "Master.h"
 void afficherPile() {
 	std::cout << "==========PILE==========" << std::endl;
 	int i = 0;
@@ -10,7 +10,12 @@ void afficherPile() {
 	std::cout << "========================" << std::endl;
 	std::cout<<std::endl;
 }
-
+int operator-(Litteral& l1, Litteral& l2) {
+	return 0;
+}
+int operator-(IntLit& l1, IntLit& l2) {
+	return l1.getValue()-l2.getValue();
+}
 int main() {
 	IntLit* l1 = new IntLit(50);
 	l1->exec();
@@ -42,5 +47,23 @@ int main() {
 	afficherPile();
 
 
+	
+
+	RationalLit* int1 = new RationalLit(3,2);
+	int1->exec();
+	afficherPile();
+	std::cout << "Operator NEG" << endl;
+	OpeNEG* o = new OpeNEG();
+	o->exec();
+	afficherPile();
+	std::cout << "Operator NOT" << endl;
+	OpeNOT* o2 = new OpeNOT();
+	o2->exec();
+	afficherPile();
+	std::cout << "Operator NOT" << endl;
+	OpeNOT* o3 = new OpeNOT();
+	o3->exec();
+	afficherPile();
+	
 	return 0;
 }
