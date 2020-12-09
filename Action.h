@@ -17,7 +17,7 @@ public:
 };
 
 class PlusSimpleAction : public Action {
-	//additions simples : int + int, int + reel, reel + int, reel + reel
+	//additions simples : int + int, int + reel, reel + int, reel + reel, reel + rationel, rationel + reel
 public:
 	PlusSimpleAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
