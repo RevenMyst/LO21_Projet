@@ -121,6 +121,7 @@ public:
 		operands.push_back(o);
 	}
 	std::string toString() const;
+	void compile();
 	std::list<Operand*> getOperands() const { return operands; }
 	void accept(Visitor* visitor);
 	~ProgLit() {

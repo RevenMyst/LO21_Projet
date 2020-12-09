@@ -1,187 +1,177 @@
 #pragma once
 #include <string>
 #include "Operand.h"
+#include "Visitor.h"
 
 class Operator : public Operand
 {
 private:
+	unsigned int arite;
 	bool verify();
 protected:
 	virtual void ope() = 0;
 public:
+	Operator(unsigned int a):arite(a){}
 	virtual std::string toString() const = 0;
 	void exec();
 
 };
 
 class OpeDUP : public Operator {
-	unsigned int arite = 1;
 public:
-	OpeDUP() = default;
+	OpeDUP() : Operator(1){}
 	void ope() override;
 	std::string toString() const { return "DUP"; }
 	Operand* clone() { return new OpeDUP(*this); }
 };
 
 class OpeDROP : public Operator {
-	unsigned int arite = 1;
 public:
-	OpeDROP() = default;
+	OpeDROP() : Operator(1) {}
 	void ope() override;
 	std::string toString() const { return "DROP"; }
 	Operand* clone() { return new OpeDROP(*this); }
 };
 
 class OpeCLEAR : public Operator {
-	unsigned int arite = 1;
 public:
-	OpeCLEAR() = default;
+	OpeCLEAR() : Operator(1) {}
 	void ope() override;
 	std::string toString() const { return "CLEAR"; }
 	Operand* clone() { return new OpeCLEAR(*this); }
 };
 
 class OpeSWAP : public Operator {
-	unsigned int arite = 2;
 public:
-	OpeSWAP() = default;
+	OpeSWAP() : Operator(2) {}
 	void ope() override;
 	std::string toString() const { return "SWAP"; }
 	Operand* clone() { return new OpeSWAP(*this); }
 };
 
 class OpeSTO : public Operator {
-	unsigned int arite = 2;
 public:
-	OpeSTO() = default;
+	OpeSTO() : Operator(2) {}
 	void ope() override;
 	std::string toString() const { return "STO"; }
 	Operand* clone() { return new OpeSTO(*this); }
 };
 
-class OpeFORGET : public Operator {
-	unsigned int arite = 1;
+class OpeFORGET : public Operator, public Visitor {
 public:
-	OpeFORGET() = default;
+	OpeFORGET() : Operator(2) {}
 	void ope() override;
+	void visitExpLit(ExpLit* l1) override;
 	std::string toString() const { return "FORGET"; }
 	Operand* clone() { return new OpeFORGET(*this); }
 };
 
-class OpeEVAL : public Operator {
-	unsigned int arite = 1;
+class OpeEVAL : public Operator, public Visitor {
 public:
-	OpeEVAL() = default;
+	OpeEVAL() : Operator(1) {}
 	void ope() override;
+	void visitExpLit(ExpLit* l1) override;
+	void visitProgLit(ProgLit* l1) override;
 	std::string toString() const { return "EVAL"; }
 	Operand* clone() { return new OpeEVAL(*this); }
 };
 
 class OpeAND : public Operator {
-    unsigned int arite = 2;
 public:
-    OpeAND() = default;
+    OpeAND() : Operator(2) {}
     void ope() override;
     std::string toString() const { return "AND"; }
     Operand* clone() { return new OpeAND(*this); }
 };
 
 class OpeOR : public Operator {
-    unsigned int arite = 2;
 public:
-    OpeOR() = default;
+    OpeOR() : Operator(2) {}
     void ope() override;
     std::string toString() const { return "OR"; }
     Operand* clone() { return new OpeOR(*this); }
 };
 
 class OpeEQUAL : public Operator {
-	unsigned int arite = 2;
 public:
-	OpeEQUAL() = default;
+	OpeEQUAL() : Operator(2) {}
 	void ope() override;
 	std::string toString() const { return "="; }
 	Operand* clone() { return new OpeEQUAL(*this); }
 };
 
 class OpeLTE : public Operator {
-	unsigned int arite = 2;
 public:
-	OpeLTE() = default;
+	OpeLTE() : Operator(2) {}
 	void ope() override;
 	std::string toString() const { return "<="; }
 	Operand* clone() { return new OpeLTE(*this); }
 };
 
 class OpeGTE : public Operator {
-	unsigned int arite = 2;
 public:
-	OpeGTE() = default;
+	OpeGTE() : Operator(2) {}
 	void ope() override;
 	std::string toString() const { return ">="; }
 	Operand* clone() { return new OpeGTE(*this); }
 };
 
 class OpeGT : public Operator {
-	unsigned int arite = 2;
 public:
-	OpeGT() = default;
+	OpeGT() : Operator(2) {}
 	void ope() override;
 	std::string toString() const { return ">"; }
 	Operand* clone() { return new OpeGT(*this); }
 };
 
 class OpeLT : public Operator {
-	unsigned int arite = 2;
 public:
-	OpeLT() = default;
+	OpeLT() : Operator(2) {}
 	void ope() override;
 	std::string toString() const { return "<"; }
 	Operand* clone() { return new OpeLT(*this); }
 };
 
 class OpeDIF : public Operator {
-	unsigned int arite = 2;
 public:
-	OpeDIF() = default;
+	OpeDIF() : Operator(2) {}
 	void ope() override;
 	std::string toString() const { return "!="; }
 	Operand* clone() { return new OpeDIF(*this); }
 };
 
 class OpeDIV : public Operator {
-    unsigned int arite = 2;
 public:
-    OpeDIV() = default;
+    OpeDIV() : Operator(2) {}
     void ope() override;
     std::string toString() const { return "DIV"; }
     Operand* clone() { return new OpeDIV(*this); }
 };
 
 class OpeMOD : public Operator {
-    unsigned int arite = 2;
 public:
-    OpeMOD() = default;
+    OpeMOD() : Operator(2) {}
     void ope() override;
     std::string toString() const { return "MOD"; }
     Operand* clone() { return new OpeMOD(*this); }
 };
 
 class OpeNOT: public Operator {
-    unsigned int arite = 1;
 public:
-    OpeNOT() = default;
+    OpeNOT() : Operator(1) {}
     void ope() override;
     std::string toString() const { return "NOT"; }
     Operand* clone() { return new OpeNOT(*this); }
 };
 
-class OpeNEG: public Operator {
-    unsigned int arite = 1;
+class OpeNEG: public Operator, public Visitor {
 public:
-    OpeNEG() = default;
+    OpeNEG() : Operator(1) {}
     void ope() override;
     std::string toString() const { return "NEG"; }
     Operand* clone() { return new OpeNEG(*this); }
+	void visitIntLit(IntLit* l1) override;
+	void visitRealLit(RealLit* l1) override;
+	void visitRationalLit(RationalLit* l1) override;
 };
 

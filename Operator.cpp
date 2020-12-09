@@ -70,46 +70,31 @@ void OpeSTO::ope()
 	else {
 		l1->exec();
 		l2->exec();
-		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et un litteral numerique ou programme.");
+		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et une litteral numerique ou programme.");
 	}
 }
 
 void OpeEVAL::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
+	l->accept(this);
+}
 
-	if (l->getClass() == PROGLIT) {
-		ProgLit* lit = dynamic_cast<ProgLit*>(l);
-		for (Operand* o : lit->getOperands()) {
-			o->clone()->exec();
-		}
-		delete lit;
-
-	}else
-	if (l->getClass() == EXPLIT) {
-		ExpLit* lit = dynamic_cast<ExpLit*>(l);
-		Litteral* atom = Computer::getInstance().getAtomManager()->getLitteral(lit->getValue());
-		if (atom) {
-			if (atom->getClass() == PROGLIT) {
-				ProgLit* plit = dynamic_cast<ProgLit*>(atom);
-				for (Operand* o : plit->getOperands()) {
-					o->clone()->exec();
-				}
-				delete plit;
-			}
-			else {
-				atom->exec();
-			}
-		}
-		else {
-			l->exec();
-			throw ComputerException("Erreur cet expression ne correspond a aucun programme ou variable");
-		}
+void OpeEVAL::visitExpLit(ExpLit* l)
+{
+	Litteral* lit = Computer::getInstance().getAtomManager()->getLitteral(l->getValue());
+	if (lit->getClass() == PROGLIT) {
+		dynamic_cast<ProgLit*>(lit)->compile();
 	}
 	else {
-		l->exec();
-		throw ComputerException("Erreur l'operateur EVAL doit recevoir une litteral expression ou programme.");
+		lit->exec();
+		delete lit;
 	}
+}
+
+void OpeEVAL::visitProgLit(ProgLit* l)
+{
+	l->compile();
 }
 
 void OpeAND::ope()
@@ -184,18 +169,14 @@ void OpeMOD::ope()
 
 void OpeFORGET::ope()
 {
-	Litteral* l = Computer::getInstance().getPile()->pull();
-	if (l->getClass() == EXPLIT) {
-		ExpLit* lit = dynamic_cast<ExpLit*>(l);
-		if (!Computer::getInstance().getAtomManager()->removeAtom(lit->getValue())) {
-			throw ComputerException("Aucune variable ou programme n'est associ� a cette expression");
-		}
-		delete l;
+	Computer::getInstance().getPile()->pull()->accept(this);
+}
+void OpeFORGET::visitExpLit(ExpLit* l)
+{
+	if (!Computer::getInstance().getAtomManager()->removeAtom(l->getValue())) {
+		throw ComputerException("Aucune variable ou programme n'est associ� a cette expression");
 	}
-	else {
-		l->exec();
-		throw ComputerException("Erreur, l'op�rateur forget doit s'appliquer sur une litterale expression");
-	}
+	delete l;
 }
 void OpeEQUAL::ope()
 {
@@ -287,31 +268,48 @@ void OpeDIF::ope()
 	delete l2;
 }
 
-void OpeNEG::ope()
-{
-    Litteral* l = Computer::getInstance().getPile()->pull();
-
-    if (l->getClass() == INTLIT){
-        Computer::getInstance().getPile()->push(new IntLit(- dynamic_cast<IntLit*>(l)->getValue()));
-    } else if (l->getClass() == REALLIT){
-        Computer::getInstance().getPile()->push(new RealLit(- dynamic_cast<RealLit*>(l)->getValue()));
-    } else if (l->getClass() == RATIONALLIT){
-        Computer::getInstance().getPile()->push(new RationalLit(- dynamic_cast<RationalLit*>(l)->getNum(), dynamic_cast<RationalLit*>(l)->getDen()));
-    } else {
-        throw ComputerException("Erreur, l'opérateur negative ne s'applique pas sur cette litterale");
-    }
-    delete l;
-}
-
 void OpeNOT::ope()
 {
-    Litteral* l = Computer::getInstance().getPile()->pull();
-    if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 0){
-        Litteral* tmp = new IntLit(1);
-        tmp->exec();
-    } else {
-        Litteral* tmp = new IntLit(0);
-        tmp->exec();
-    }
-    delete l;
+	Litteral* l = Computer::getInstance().getPile()->pull();
+	Litteral* tmp;
+	if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 0) {
+		tmp = new IntLit(1);
+	}
+	else {
+		tmp = new IntLit(0);
+	}
+	tmp->exec();
+	delete l;
+
+
 }
+
+void OpeNEG::ope()
+{
+	Litteral* l = Computer::getInstance().getPile()->pull();
+
+	l->accept(this);
+	delete l;
+
+}
+
+void OpeNEG::visitIntLit(IntLit* l)
+{
+	IntLit* lit = new IntLit(-l->getValue());
+	lit->exec();
+}
+
+void OpeNEG::visitRealLit(RealLit* l)
+{
+	RealLit* lit = new RealLit(-l->getValue());
+	lit->exec();
+}
+
+void OpeNEG::visitRationalLit(RationalLit* l)
+{
+
+	RationalLit* lit = new RationalLit(-l->getNum(), l->getDen());
+	lit->exec();
+}
+
+

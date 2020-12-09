@@ -136,6 +136,14 @@ std::string ProgLit::toString() const
 	return str;
 }
 
+void ProgLit::compile()
+{
+	for (Operand* o : getOperands()) {
+		o->clone()->exec();
+	}
+	delete this;
+}
+
 void ProgLit::accept(Visitor* visitor)
 {
 	visitor->visitProgLit(this);
