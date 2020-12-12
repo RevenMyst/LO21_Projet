@@ -46,7 +46,7 @@ public:
 	~ExpLit() = default;
 	LitType getClass() const { return EXPLIT; }
 	Operand* clone() { return new ExpLit(*this); }
-
+    void compile();
 };
 
 class RealLit : public NumLit

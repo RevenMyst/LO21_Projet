@@ -168,7 +168,7 @@ Operand* IntLit::clone()
 	return new IntLit(*this);
 }
 
-void AtomLit::ope()
+void ExpLit::compile()
 {
     const std::string s;
     s = getValue();
@@ -185,11 +185,22 @@ void AtomLit::ope()
             ProgLit* plit = dynamic_cast<ProgLit*>(l2);
             plit->compile();
         }
-
     }
     else {
-        Litteral* exp = new ExpLit(s);
-        exp->exec();
+        throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
+    }
+}
+
+void AtomLit::ope()
+{
+    const std::string s;
+    s = getValue();
+    ExpLit exp = ExpLit(s);
+    try {
+        exp.compile();
+    }
+    catch(std::exception const& e) {
+        exp.exec();
     }
     delete this;
 }

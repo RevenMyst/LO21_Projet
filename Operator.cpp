@@ -298,47 +298,35 @@ void OpeIFT::ope()
     }
     else if(l2->getClass() == EXPLIT) {
         ExpLit* elit = dynamic_cast<ExpLit*>(l2);
-		Litteral* atom = Computer::getInstance().getAtomManager()->getLitteral(elit->getValue());
-		if (atom) {
-			if (atom->getClass() == PROGLIT) {
-				ProgLit* plit = dynamic_cast<ProgLit*>(atom);
-				plit->compile();
-			}
-			else {
-				atom->exec();
-			}
-		}
-		else {
-			l2->exec();
+        try {
+            elit->compile();
+        }
+        catch(std::exception const& e) {
+            l2->exec();
             l1->exec();
-			throw ComputerException("Erreur l'expression du test logique ne correspond a aucun programme ou variable");
-		}
+            return;
+        }
+        delete elit;
         l2 = Computer::getInstance().getPile()->pull();
     }
     if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)
         delete l1;
     else {
         if(l1->getClass() == PROGLIT) {
-        ProgLit* plit = dynamic_cast<ProgLit*>(l1);
-        plit->compile();
+            ProgLit* plit = dynamic_cast<ProgLit*>(l1);
+            plit->compile();
         }
         else if(l1->getClass() == EXPLIT) {
             ExpLit* elit = dynamic_cast<ExpLit*>(l1);
-            Litteral* atom = Computer::getInstance().getAtomManager()->getLitteral(elit->getValue());
-            if (atom) {
-                if (atom->getClass() == PROGLIT) {
-                    ProgLit* plit = dynamic_cast<ProgLit*>(atom);
-                    plit->compile();
-                }
-                else {
-                    atom->exec();
-                }
+            try {
+                elit->compile();
             }
-            else {
+            catch(std::exception const& e) {
                 l2->exec();
                 l1->exec();
-                throw ComputerException("Erreur l'expression a evaluer ne correspond a aucun programme ou variable");
+                return;
             }
+            delete elit;
         }
         else l1->exec();
     }
@@ -357,74 +345,56 @@ void OpeIFTE::ope()
     }
     else if(l2->getClass() == EXPLIT) {
         ExpLit* elit = dynamic_cast<ExpLit*>(l2);
-		Litteral* atom = Computer::getInstance().getAtomManager()->getLitteral(elit->getValue());
-		if (atom) {
-			if (atom->getClass() == PROGLIT) {
-				ProgLit* plit = dynamic_cast<ProgLit*>(atom);
-				plit->compile();
-			}
-			else {
-				atom->exec();
-			}
-		}
-		else {
-			l2->exec();
+        try {
+            elit->compile();
+        }
+        catch(std::exception const& e) {
+            l2->exec();
             l1->exec();
             l3->exec();
-			throw ComputerException("Erreur l'expression du test logique ne correspond a aucun programme ou variable");
-		}
+            return;
+        }
+        delete elit;
         l2 = Computer::getInstance().getPile()->pull();
     }
     if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0) {
         if(l3->getClass() == PROGLIT) {
-        ProgLit* plit = dynamic_cast<ProgLit*>(l3);
-        plit->compile();
+            ProgLit* plit = dynamic_cast<ProgLit*>(l3);
+            plit->compile();
         }
         else if(l3->getClass() == EXPLIT) {
             ExpLit* elit = dynamic_cast<ExpLit*>(l3);
-            Litteral* atom = Computer::getInstance().getAtomManager()->getLitteral(elit->getValue());
-            if (atom) {
-                if (atom->getClass() == PROGLIT) {
-                    ProgLit* plit = dynamic_cast<ProgLit*>(atom);
-                    plit->compile();
-                }
-                else {
-                    atom->exec();
-                }
+            try {
+                elit->compile();
             }
-            else {
+            catch(std::exception const& e) {
                 l2->exec();
                 l1->exec();
                 l3->exec();
-                throw ComputerException("Erreur l'expression a evaluer ne correspond a aucun programme ou variable");
+                return;
             }
+            delete elit;
         }
         else l3->exec();
         delete l1;
     }
     else {
         if(l1->getClass() == PROGLIT) {
-        ProgLit* plit = dynamic_cast<ProgLit*>(l1);
-        plit->compile();
+            ProgLit* plit = dynamic_cast<ProgLit*>(l1);
+            plit->compile();
         }
         else if(l1->getClass() == EXPLIT) {
             ExpLit* elit = dynamic_cast<ExpLit*>(l1);
-            Litteral* atom = Computer::getInstance().getAtomManager()->getLitteral(elit->getValue());
-            if (atom) {
-                if (atom->getClass() == PROGLIT) {
-                    ProgLit* plit = dynamic_cast<ProgLit*>(atom);
-                    plit->compile();
-                }
-                else {
-                    atom->exec();
-                }
+            try {
+                elit->compile();
             }
-            else {
+            catch(std::exception const& e) {
                 l2->exec();
                 l1->exec();
                 l3->exec();
-                throw ComputerException("Erreur l'expression a evaluer ne correspond a aucun programme ou variable");
+                return;
             }
+            delete elit;
         }
         else l1->exec();
         delete l3;
