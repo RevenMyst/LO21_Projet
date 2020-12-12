@@ -131,7 +131,6 @@ public:
 	}
 	LitType getClass() const { return PROGLIT; }
 	Operand* clone() { return new ProgLit(*this); }
-
 };
 
 class AtomLit : public Operator {

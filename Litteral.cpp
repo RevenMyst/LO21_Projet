@@ -170,17 +170,16 @@ Operand* IntLit::clone()
 
 void ExpLit::compile()
 {
-    const std::string s;
-    s = getValue();
+    const std::string s = getValue();
     Litteral* l1;
     l1 = Computer::getInstance().getAtomManager()->getLitteral(s);
     if(l1!=nullptr) {
         Operand* l2;
-        if(l1->getClass()=="INTLIT" || l1->getClass()=="REALLIT" || l1->getClass()=="RATIONALLIT") {
+        if(l1->getClass()== INTLIT || l1->getClass()== REALLIT || l1->getClass()== RATIONALLIT) {
             l2 = l1->clone();
             l2->exec();
         }
-        else if(l1->getClass()=="PROGLIT") {
+        else if(l1->getClass()== PROGLIT) {
             l2 = l1->clone();
             ProgLit* plit = dynamic_cast<ProgLit*>(l2);
             plit->compile();
@@ -193,8 +192,7 @@ void ExpLit::compile()
 
 void AtomLit::ope()
 {
-    const std::string s;
-    s = getValue();
+    const std::string s = getValue();
     ExpLit exp = ExpLit(s);
     try {
         exp.compile();
