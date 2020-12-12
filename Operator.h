@@ -86,6 +86,32 @@ class OpePlus : public Operator{
     std::string toString() const { return "+"; }
 
     };
+class OpeMul : public Operator{
+    public:
+    OpeMul() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeMul(*this); }
+    std::string toString() const { return "*"; }
+
+    };
+class OpeMoins : public Operator{
+    public:
+    OpeMoins() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeMoins(*this); }
+    std::string toString() const { return "-"; }
+
+    };
+
+class OpeDivision : public Operator{
+    public:
+    OpeDivision() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeDivision(*this); }
+    std::string toString() const { return "/"; }
+
+    };
+
 class OpeAND : public Operator {
 public:
     OpeAND() : Operator(2) {}

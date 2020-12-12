@@ -104,7 +104,7 @@ bool INTFactory::isTypeLit(std::string str)
 
 Operand* INTFactory::getLitteral(std::string str)
 {
-    return nullptr;
+    return new IntLit(stoi(str));
 }
 
 

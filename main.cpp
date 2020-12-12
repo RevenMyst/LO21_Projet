@@ -12,15 +12,22 @@ void afficherPile() {
 }
 
 int main() {
-	RealLit* l1 = new RealLit(5.3);
-	RationalLit* l2 = new RationalLit(4,7);
-	l2->exec();
-	l1->exec();
+
+	IntLit* a = new IntLit(5);
+	RealLit* b = new RealLit(5.3);
+	RationalLit* c = new RationalLit(2,5);
+
+    IntLit* d = new IntLit(8);
+	RealLit* e = new RealLit(3.8);
+	RationalLit*f = new RationalLit(6,7);
+
+	c->exec();
+	f->exec();
 	afficherPile();
-	OpePlus* o = new OpePlus();
+	OpeDivision* o = new OpeDivision();
 	o->exec();
 	afficherPile();
 
-	
+
 	return 0;
 }
