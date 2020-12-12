@@ -8,31 +8,26 @@ void afficherPile() {
 		i++;
 	}
 	std::cout << "========================" << std::endl;
+	std::cout<<std::endl;
 }
-int operator-(Litteral& l1, Litteral& l2) {
-	return 0;
-}
-int operator-(IntLit& l1, IntLit& l2) {
-	return l1.getValue()-l2.getValue();
-}
-int main() {
-	
 
-	RationalLit* int1 = new RationalLit(3,2);
-	int1->exec();
+int main() {
+
+	IntLit* a = new IntLit(5);
+	RealLit* b = new RealLit(5.3);
+	RationalLit* c = new RationalLit(2,5);
+
+    IntLit* d = new IntLit(8);
+	RealLit* e = new RealLit(3.8);
+	RationalLit*f = new RationalLit(6,7);
+
+	c->exec();
+	f->exec();
 	afficherPile();
-	std::cout << "Operator NEG" << endl;
-	OpeNEG* o = new OpeNEG();
+	OpeDivision* o = new OpeDivision();
 	o->exec();
 	afficherPile();
-	std::cout << "Operator NOT" << endl;
-	OpeNOT* o2 = new OpeNOT();
-	o2->exec();
-	afficherPile();
-	std::cout << "Operator NOT" << endl;
-	OpeNOT* o3 = new OpeNOT();
-	o3->exec();
-	afficherPile();
-	
+
+
 	return 0;
 }

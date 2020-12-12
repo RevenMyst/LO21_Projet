@@ -1,10 +1,12 @@
 #include "Litteral.h"
 #include <sstream>
+#include<iostream>
 #include "Visitor.h"
 #include "Computer.h"
 
 bool operator==(const Litteral& lit1, const Litteral& lit2)
 {
+
 	// si variable numeriques : cast et compare valeurs
 	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT) {
 		return (dynamic_cast<const NumLit&>(lit1).getValue() == dynamic_cast<const NumLit&>(lit2).getValue());
@@ -77,6 +79,19 @@ std::string RealLit::toString() const {
 void RealLit::accept(Visitor* visitor)
 {
 	visitor->visitRealLit(this);
+}
+
+
+void RealLit::exec()
+{
+	if (getMant() != 0) {
+		Litteral::exec();
+	}
+	else {
+		IntLit* lit = new IntLit(getInt());
+		lit->exec();
+		delete this;
+	}
 }
 
 /*******************************/

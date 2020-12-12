@@ -125,3 +125,26 @@ public:
     NEGFactory() = default;
     Operator* getOpe() override { return new OpeNEG(); }
 };
+class PLUSFactory : public OpeFactory {
+public:
+    PLUSFactory() = default;
+    Operator * getOpe() override {return new OpePlus();}
+};
+
+class MOINSFactory : public OpeFactory {
+public:
+    MOINSFactory() = default;
+    Operator * getOpe() override {return new OpeMoins();}
+};
+
+class MULFactory : public OpeFactory {
+public:
+    MULFactory() = default;
+    Operator * getOpe() override {return new OpeMul();}
+};
+
+class DIVISIONFactory : public OpeFactory {
+public:
+    DIVISIONFactory() = default;
+    Operator * getOpe() override {return new OpeDivision();}
+};

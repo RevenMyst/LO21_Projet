@@ -17,6 +17,8 @@ public:
 
 };
 
+
+
 class OpeDUP : public Operator {
 public:
 	OpeDUP() : Operator(1){}
@@ -75,6 +77,40 @@ public:
 	std::string toString() const { return "EVAL"; }
 	Operand* clone() { return new OpeEVAL(*this); }
 };
+
+class OpePlus : public Operator{
+    public:
+    OpePlus() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpePlus(*this); }
+    std::string toString() const { return "+"; }
+
+    };
+class OpeMul : public Operator{
+    public:
+    OpeMul() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeMul(*this); }
+    std::string toString() const { return "*"; }
+
+    };
+class OpeMoins : public Operator{
+    public:
+    OpeMoins() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeMoins(*this); }
+    std::string toString() const { return "-"; }
+
+    };
+
+class OpeDivision : public Operator{
+    public:
+    OpeDivision() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeDivision(*this); }
+    std::string toString() const { return "/"; }
+
+    };
 
 class OpeAND : public Operator {
 public:

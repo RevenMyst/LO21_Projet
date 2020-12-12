@@ -3,6 +3,7 @@
 #include "ComputerException.h"
 #include "Computer.h"
 #include "OpeFactory.h"
+#include "Action.h"
 #include <iostream>
 
 void OpeDUP::ope()
@@ -239,6 +240,104 @@ void OpeGT::ope()
 	delete l2;
 }
 
+
+void OpePlus::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l1->getClass(), l2->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l1, l2)->exec();
+	}
+	else {
+		// l'addition est commutative, pour limiter le nombre d'action on verifie si l'addition dans l'autre sens existe
+		get<1>(t) = l2->getClass();
+		get<2>(t) = l1->getClass();
+		if (Action::exist(t)) {
+			Action::getActions().at(t)->exec(l2, l1)->exec();
+		}
+		else {
+			//ces deux litterales ne possedent pas d'actions pour les additionner on reempile et on envoie une erreur
+			l2->exec();
+			l1->exec();
+			throw ComputerException("Erreur : ces deux litterales ne peuvent etre additionnées");
+
+		}
+	}
+
+}
+
+void OpeMul::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l1->getClass(), l2->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l1, l2)->exec();
+	}
+	else {
+		// la mulitplication est commutative, pour limiter le nombre d'action on verifie si la multiplication dans l'autre sens existe
+		get<1>(t) = l2->getClass();
+		get<2>(t) = l1->getClass();
+		if (Action::exist(t)) {
+			Action::getActions().at(t)->exec(l2, l1)->exec();
+		}
+		else {
+			//ces deux litterales ne possedent pas d'actions pour les mulitplier on reempile et on envoie une erreur
+			l2->exec();
+			l1->exec();
+			throw ComputerException("Erreur : ces deux litterales ne peuvent etre multipliées");
+
+		}
+	}
+
+}
+
+void OpeMoins::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l2, l1)->exec();
+	}
+
+    else {
+        //ces deux litterales ne possedent pas d'actions pour les soustraire on reempile et on envoie une erreur
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur : ces deux litterales ne peuvent etre soustraites");
+
+		}
+}
+
+
+void OpeDivision::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+
+	if(static_cast<IntLit*>(l1)!= nullptr && static_cast<IntLit*>(l1)->getValue()==0)
+    {
+        l2->exec();
+        l1->exec();
+        throw ComputerException("On ne peut pas diviser par zero");
+    }
+    else {
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l2, l1)->exec();
+	}
+
+    else {
+        //ces deux litterales ne possedent pas d'actions pour les soustraire on reempile et on envoie une erreur
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur : ces deux litterales ne peuvent etre divisees");
+
+		}
+}
+}
 void OpeLT::ope()
 {
 	Pile* p = Computer::getInstance().getPile();
@@ -291,7 +390,7 @@ void OpeNEG::ope()
 
 	l->accept(this);
 	delete l;
-    
+
 }
 
 void OpeNEG::visitIntLit(IntLit* l)
