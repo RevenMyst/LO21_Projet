@@ -167,3 +167,29 @@ Operand* IntLit::clone()
 {
 	return new IntLit(*this);
 }
+
+void AtomLit::ope()
+{
+    const std::string s;
+    s = getValue();
+    Litteral* l1;
+    l1 = Computer::getInstance().getAtomManager()->getLitteral(s);
+    if(l1!=nullptr) {
+        Operand* l2;
+        if(l1->getClass()=="INTLIT" || l1->getClass()=="REALLIT" || l1->getClass()=="RATIONALLIT") {
+            l2 = l1->clone();
+            l2->exec();
+        }
+        else if(l1->getClass()=="PROGLIT") {
+            l2 = l1->clone();
+            ProgLit* plit = dynamic_cast<ProgLit*>(l2);
+            plit->compile();
+        }
+
+    }
+    else {
+        Litteral* exp = new ExpLit(s);
+        exp->exec();
+    }
+    delete this;
+}
