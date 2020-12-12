@@ -49,11 +49,11 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	entry.second = new MOINSFactory();
 	factories.insert(entry);
 
-	entry.first = "/";
+	entry.first = "*";
 	entry.second = new MULFactory();
 	factories.insert(entry);
 
-	entry.first = "*";
+	entry.first = "/";
 	entry.second = new DIVFactory();
 	factories.insert(entry);
 
