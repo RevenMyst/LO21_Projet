@@ -28,8 +28,7 @@ bool operator<=(const Litteral& lit1, const Litteral& lit2);
 bool operator>(const Litteral& lit1, const Litteral& lit2);
 bool operator<(const Litteral& lit1, const Litteral& lit2);
 
-class NumLit : public Litteral
-{
+class NumLit : public Litteral {
 public:
 	virtual double getValue() const = 0;
 };
@@ -93,7 +92,6 @@ public:
 };
 
 class IntLit : public NumLit
-
 {
 	int value;
 public:

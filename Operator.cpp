@@ -5,6 +5,7 @@
 #include "OpeFactory.h"
 #include <iostream>
 #include <math.h>
+#include "Number.h"
 
 void OpeDUP::ope() {
     Litteral *l = Computer::getInstance().getPile()->pull();
@@ -308,11 +309,6 @@ void OpeDEN::visitRationalLit(RationalLit *l) {
     lit->exec();
 }
 
-bool OpeSQRT::isPerfectSquare(long double x) {
-    long double sr = sqrt(x);
-    return ((sr - floor(sr)) == 0);
-}
-
 void OpeSQRT::ope() {
     Litteral *l = Computer::getInstance().getPile()->pull();
     l->accept(this);
@@ -321,10 +317,11 @@ void OpeSQRT::ope() {
 
 void OpeSQRT::visitIntLit(IntLit *l) {
     NumLit *lit;
-    if (isPerfectSquare(l->getValue())) {
-        lit = new IntLit(sqrt(l->getValue()));
+    double res = sqrt(l->getValue());
+    if (Number::isInt(res)) {
+        lit = new IntLit(static_cast<int>(res));
     } else {
-        lit = new RealLit(sqrt(l->getValue()));
+        lit = new RealLit(res);
     }
     lit->exec();
 }
@@ -336,13 +333,13 @@ void OpeSQRT::visitRealLit(RealLit *l) {
 
 void OpeSQRT::visitRationalLit(RationalLit *l) {
     NumLit *lit;
-    bool isPerfectSquareNum = isPerfectSquare(l->getNum());
-    bool isPerfectSquareDen = isPerfectSquare(l->getDen());
-    if (isPerfectSquareNum && isPerfectSquareDen) {
-        lit = new RationalLit(sqrt(l->getNum()), sqrt(l->getDen()));
+    double sqrtNum = sqrt(l->getNum());
+    double sqrtDen = sqrt(l->getDen());
+    if (Number::isInt(sqrtNum) && Number::isInt(sqrtDen)) {
+        lit = new RationalLit(static_cast<int>(sqrtNum), static_cast<int>(sqrtDen));
     } else {
-        double res = static_cast<double>(l->getNum()) / static_cast<double>(l->getDen());
-        lit = new RealLit(sqrt(res));
+        double res = sqrtNum / sqrtDen;
+        lit = new RealLit(res);
     }
     lit->exec();
 }

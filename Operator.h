@@ -201,7 +201,6 @@ public:
     void ope() override;
     std::string toString() const { return "SQRT"; }
     Operand* clone() { return new OpeSQRT(*this); }
-    static bool isPerfectSquare(long double x);
     void visitIntLit(IntLit* l1) override;
     void visitRealLit(RealLit* l1) override;
     void visitRationalLit(RationalLit* l1) override;

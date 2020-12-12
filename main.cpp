@@ -19,8 +19,8 @@ int operator-(IntLit& l1, IntLit& l2) {
 int main() {
 	NumLit* numLit;
 //    numLit= new IntLit(4);
-    numLit = new RealLit(3.5);
-//    numLit = new RationalLit(4,6);
+//    numLit = new RealLit(3.5);
+    numLit = new RationalLit(4,9);
     numLit->exec();
 	afficherPile();
 	std::cout << "Operator SQRT" << endl;
