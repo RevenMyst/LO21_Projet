@@ -22,7 +22,6 @@ public:
 
 };
 
-Litteral* operator+(const Litteral& lit1,const Litteral & lit2);
 bool operator==(const Litteral& lit1, const Litteral& lit2);
 bool operator!=(const Litteral& lit1, const Litteral& lit2);
 bool operator>=(const Litteral& lit1, const Litteral& lit2);
@@ -34,12 +33,8 @@ class NumLit : public Litteral
 {
 public:
 	virtual double getValue() const = 0;
-    NumLit* operator+(const NumLit & l) const;
 
 };
-
-
-
 
 
 class ExpLit : public Litteral
@@ -70,10 +65,6 @@ public:
 	~RealLit() = default;
 	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
-    /*Litteral* operator+(const Litteral & l) const override;
-   /* Litteral* operator-(const Litteral & l) const override;
-    Litteral* operator*(const Litteral & l) const override;
-    Litteral* operator/(const Litteral & l) const override;*/
 
 };
 
@@ -100,10 +91,6 @@ public:
 	~RationalLit() = default;
 	LitType getClass() const { return RATIONALLIT; }
 	Operand* clone() { return new RationalLit(*this); }
-    /*Litteral* operator+(const Litteral & l) const override;
-    Litteral* operator-(const Litteral & l) const override;
-    Litteral* operator*(const Litteral & l) const override;
-    Litteral* operator/(const Litteral & l) const override;*/
 };
 
 class IntLit : public NumLit
@@ -122,22 +109,6 @@ public:
 	Operand* clone();
 
 };
-
-//Surcharge des operateurs arithm�tiques
-
-//**************OPEPLUS*****************
-//INTLIT--------------------------------
-NumLit* operator+(const IntLit & il,const IntLit & il2);
-NumLit* operator+(const IntLit & il,const RealLit & rl);
-NumLit* operator+(const IntLit & il,const RationalLit & rtl);
-//REALIT-------------------------------
-NumLit* operator+(const RealLit & rl,const RealLit & rl2);
-NumLit* operator+(const RealLit & rl,const RationalLit & rtl);
-NumLit* operator+(const RealLit & rl,const IntLit & il);
-//RATIONALLIT--------------------------
-NumLit* operator+(const RationalLit & rtl,const RationalLit & rtl2);
-NumLit* operator+(const RationalLit & rtl,const IntLit & il);
-NumLit* operator+(const RationalLit & rtl,const RealLit & rl);
 
 
 class ProgLit : public Litteral

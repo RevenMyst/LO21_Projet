@@ -176,7 +176,7 @@ bool Action::exist(tuple<string, LitType, LitType> t)
 // Action Addition -------
 Litteral* PlusSimpleAction::exec(Litteral* l1, Litteral* l2)
 {
-    //additions simples : int + int, int + reel, reel + int, reel + reel
+    //Additions simples : int + int, int + reel, reel + int, reel + reel, rationnel+reel, reel+rationnel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
     //si mantisse nulle le Reel est  simplifié à l'empilement
@@ -185,6 +185,7 @@ Litteral* PlusSimpleAction::exec(Litteral* l1, Litteral* l2)
 
 Litteral* PlusRatRatAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Additiion : Rationnel + Rationnel
     RationalLit* rtl1 = dynamic_cast<RationalLit*>(l1);
     RationalLit* rtl2 = dynamic_cast<RationalLit*>(l2);
     int newnum = rtl1->getNum()*rtl2->getDen() + rtl2->getNum()*rtl1->getDen();
@@ -195,6 +196,7 @@ Litteral* PlusRatRatAction::exec(Litteral* l1, Litteral* l2)
 
 Litteral* PlusRatIntAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Addition : Rationnel+Int, Int+rationnel
     RationalLit * rtl = dynamic_cast<RationalLit*>(l1);
     IntLit * i1 = dynamic_cast<IntLit*>(l2);
     int newnum = i1->getValue()*rtl->getDen() + rtl->getNum();
@@ -206,7 +208,7 @@ Litteral* PlusRatIntAction::exec(Litteral* l1, Litteral* l2)
 //Action Multiplication -----
 Litteral* MulSimpleAction::exec(Litteral* l1, Litteral* l2)
 {
-    //Multiplication simples : int * int, int * reel, reel * int, reel * reel
+    //Multiplication simples : int * int, int * reel, reel * int, reel * reel, rationnel*reel, reel*rationnel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
     //si mantisse nulle le Reel est  simplifié à l'empilement
@@ -215,6 +217,7 @@ Litteral* MulSimpleAction::exec(Litteral* l1, Litteral* l2)
 
 Litteral* MulRatRatAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Multiplication : Rationnel * Rationnel
     RationalLit* rtl1 = dynamic_cast<RationalLit*>(l1);
     RationalLit* rtl2 = dynamic_cast<RationalLit*>(l2);
     int newnum = rtl1->getNum()* rtl2->getNum();
@@ -225,6 +228,7 @@ Litteral* MulRatRatAction::exec(Litteral* l1, Litteral* l2)
 
 Litteral* MulRatIntAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Multiplication : Rationnel * Int, Int * Rationnel
     RationalLit * rtl = dynamic_cast<RationalLit*>(l1);
     IntLit * i1 = dynamic_cast<IntLit*>(l2);
     int newnum = i1->getValue()*rtl->getNum();
@@ -236,7 +240,7 @@ Litteral* MulRatIntAction::exec(Litteral* l1, Litteral* l2)
 //Actions Soustraction -----
 Litteral* MoinsSimpleAction::exec(Litteral* l1, Litteral* l2)
 {
-    //soustractions simples : int - int, int - reel, reel - int, reel - reel
+    //Soustractions simples : int - int, int - reel, reel - int, reel - reel, rationnel-reel, reel-rationnel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
     //si mantisse nulle le Reel est  simplifié à l'empilement
@@ -245,6 +249,7 @@ Litteral* MoinsSimpleAction::exec(Litteral* l1, Litteral* l2)
 
 Litteral* MoinsRatRatAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Soustraction : Rationnel - Rationnel
     RationalLit* rtl1 = dynamic_cast<RationalLit*>(l1);
     RationalLit* rtl2 = dynamic_cast<RationalLit*>(l2);
     int newnum = rtl1->getNum()*rtl2->getDen() - rtl2->getNum()*rtl1->getDen();
@@ -254,6 +259,7 @@ Litteral* MoinsRatRatAction::exec(Litteral* l1, Litteral* l2)
 }
 Litteral* MoinsRatIntAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Soustraction : Rationnel - Int
     RationalLit * rtl = dynamic_cast<RationalLit*>(l1);
     IntLit * i1 = dynamic_cast<IntLit*>(l2);
     int newnum = rtl->getNum() - i1->getValue()*rtl->getDen();
@@ -263,6 +269,7 @@ Litteral* MoinsRatIntAction::exec(Litteral* l1, Litteral* l2)
 }
 Litteral* MoinsIntRatAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Soustraction : Int - Rat
     RationalLit * rtl = dynamic_cast<RationalLit*>(l2);
     IntLit * i1 = dynamic_cast<IntLit*>(l1);
     int newnum = i1->getValue()*rtl->getDen() - rtl->getNum();
@@ -274,7 +281,7 @@ Litteral* MoinsIntRatAction::exec(Litteral* l1, Litteral* l2)
 //Actions Division -----
 Litteral* DivisionSimpleAction::exec(Litteral* l1, Litteral* l2)
 {
-    //division simples : int / int, int / reel, reel / int, reel / reel
+    //Divisions simples : int/int, int/reel, reel/int, reel/reel, reel/rationnel, rationnel/reel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
     //si mantisse nulle le Reel est  simplifié à l'empilement
@@ -283,6 +290,7 @@ Litteral* DivisionSimpleAction::exec(Litteral* l1, Litteral* l2)
 
 Litteral* DivisionRatRatAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Division : Rationnel / Rationnel
     RationalLit* rtl1 = dynamic_cast<RationalLit*>(l1);
     RationalLit* rtl2 = dynamic_cast<RationalLit*>(l2);
     int newnum = rtl1->getNum()*rtl2->getDen();
@@ -292,6 +300,7 @@ Litteral* DivisionRatRatAction::exec(Litteral* l1, Litteral* l2)
 }
 Litteral* DivisionRatIntAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Division : Rationnel/Int
     RationalLit * rtl = dynamic_cast<RationalLit*>(l1);
     IntLit * i1 = dynamic_cast<IntLit*>(l2);
     int newnum = rtl->getNum() ;
@@ -301,6 +310,7 @@ Litteral* DivisionRatIntAction::exec(Litteral* l1, Litteral* l2)
 }
 Litteral* DivisionIntRatAction::exec(Litteral* l1, Litteral* l2)
 {
+    //Division : Int/Rationnel
     RationalLit * rtl = dynamic_cast<RationalLit*>(l2);
     IntLit * i1 = dynamic_cast<IntLit*>(l1);
     int newnum = i1->getValue()*rtl->getDen();

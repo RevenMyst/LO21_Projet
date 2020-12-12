@@ -4,42 +4,6 @@
 #include "Visitor.h"
 #include "Computer.h"
 
-Litteral* operator+(const Litteral& lit1,const Litteral & lit2){
-LitType classe1 = lit1.getClass();
-LitType classe2 = lit2.getClass();
-switch(classe1)
-{
-    case RATIONALLIT: {
-        const RationalLit& nrtl =dynamic_cast<const RationalLit&>(lit1);
-        switch(classe2) {
-            case RATIONALLIT: {const RationalLit& nrtl2 =dynamic_cast<const RationalLit&>(lit2); return nrtl2+nrtl;} break;
-            case REALLIT: {const RealLit& nrl2 =dynamic_cast<const RealLit&>(lit2); return nrl2+nrtl;} break;
-            case INTLIT: {const IntLit& nil =dynamic_cast<const IntLit&>(lit2); return nil+nrtl;}  break;
-        }
-     } break;
-
-    case REALLIT: {
-        const RealLit& nrl =dynamic_cast<const RealLit&>(lit1);
-        switch(classe2) {
-            case RATIONALLIT: {const RationalLit& nrtl =dynamic_cast<const RationalLit&>(lit2); return nrl+nrtl;} break;
-            case REALLIT: {const RealLit& nrl2 =dynamic_cast<const RealLit&>(lit2); return nrl2+nrl;} break;
-            case INTLIT: {const IntLit& nil =dynamic_cast<const IntLit&>(lit2); return nil+nrl;}  break;
-        }
-        }break;
-
-    case INTLIT: {
-    const IntLit& nil =dynamic_cast<const IntLit&>(lit1);
-     switch(classe2) {
-            case RATIONALLIT: {const RationalLit& nrtl =dynamic_cast<const RationalLit&>(lit2); return nil+nrtl;} break;
-            case REALLIT: {const RealLit& nrl2 =dynamic_cast<const RealLit&>(lit2); return nrl2+nil;} break;
-            case INTLIT: {const IntLit& nil2 =dynamic_cast<const IntLit&>(lit2); return nil+nil2;}  break;
-        }
-    }break;
-
-    default : {throw ComputerException("Littérales non compatibles avec l'opérateur '+'");} break;
-}
-}
-
 bool operator==(const Litteral& lit1, const Litteral& lit2)
 {
 
@@ -115,80 +79,6 @@ std::string RealLit::toString() const {
 void RealLit::accept(Visitor* visitor)
 {
 	visitor->visitRealLit(this);
-}
-
-
-/*******************************/
-/**SURCHARGE OPE ARITHMETIQUES**/
-/*******************************/
-
-//************OPERATEUR'+'**************
-//INTLIT--------------------------------
-NumLit* operator+(const IntLit & il,const IntLit & il2){
-    /*Somme INTLIT-INLIT => INTLIT*/
-    IntLit * nil = new IntLit(il.getValue() + il2.getValue());
-    return nil;
-}
-
-NumLit* operator+(const IntLit & il,const RealLit & rl){
-    /*Somme INTLIT-REALLIT => REALLIT*/
-    RealLit * nrl = new RealLit(il.getValue() + rl.getValue());
-    return nrl;
-}
-
-NumLit* operator+(const IntLit & il,const RationalLit & rtl){
-    /*Somme INTLIT-RATIONALLIT => RATIONALLIT*/
-        int newnum = il.getValue()*rtl.getDen() + rtl.getNum();
-        int newden = rtl.getDen();
-        RationalLit * nrtl = new RationalLit(newnum,newden);
-        return nrtl;
-}
-
-//REALIT-------------------------------
-NumLit* operator+(const RealLit & rl,const RealLit & rl2){
-    /*Somme REALLIT-REALLIT => INTLIT SI MANTISSE = 0, REALLIT SINON*/
-
-        double val = rl.getValue() + rl2.getValue();
-        if(val-floor(val)==0){
-            IntLit * it = new IntLit(val);
-            return it;
-        }
-        else{
-            RealLit * nrl = new RealLit(val);
-            return nrl;
-        }
-}
-
-NumLit* operator+(const RealLit & rl,const RationalLit & rtl){
-    /*Somme REALLIT-REATIONALLIT => INTLIT SI MANTISSE = 0, REALLIT SINON*/
-    double val = rl.getValue() + rtl.getValue();
-        if(val-floor(val)==0){
-            IntLit * it = new IntLit(val);
-            return it;
-        }
-        else{
-            RealLit * nrl = new RealLit(val);
-            return nrl;
-        }
-}
-NumLit* operator+(const RealLit & rl,const IntLit & il){
-            return il+rl;
-}
-
-
-//RATIONALLIT--------------------------
-NumLit* operator+(const RationalLit & rtl,const RationalLit & rtl2){
-    /*Somme RATIONALLIT-RATIONALIT => RATIONALLIT */
-    int newnum = rtl.getNum()*rtl2.getDen() + rtl2.getNum()*rtl.getDen();
-    int newden= rtl2.getDen()*rtl.getDen();
-    RationalLit * nrtl = new RationalLit(newnum,newden);
-    return nrtl;
-}
-NumLit* operator+(const RationalLit & rtl,const IntLit & il){
-    return il+rtl;
-}
-NumLit* operator+(const RationalLit & rtl,const RealLit & rl){
-    return rl+rtl;
 }
 
 
