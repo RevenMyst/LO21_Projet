@@ -15,24 +15,22 @@ int operator-(Litteral& l1, Litteral& l2) {
 int operator-(IntLit& l1, IntLit& l2) {
 	return l1.getValue()-l2.getValue();
 }
-int main() {
-	
 
-	RationalLit* int1 = new RationalLit(3,2);
-	int1->exec();
+int main() {
+	NumLit* numLit;
+//    numLit= new IntLit(4);
+    numLit = new RealLit(3.5);
+//    numLit = new RationalLit(4,6);
+    numLit->exec();
 	afficherPile();
-	std::cout << "Operator NEG" << endl;
-	OpeNEG* o = new OpeNEG();
+	std::cout << "Operator SQRT" << endl;
+	Operator* o = new OpeSQRT();
 	o->exec();
 	afficherPile();
-	std::cout << "Operator NOT" << endl;
-	OpeNOT* o2 = new OpeNOT();
-	o2->exec();
-	afficherPile();
-	std::cout << "Operator NOT" << endl;
-	OpeNOT* o3 = new OpeNOT();
-	o3->exec();
-	afficherPile();
-	
+    std::cout << "Operator SQRT" << endl;
+    Operator* o1 = new OpeSQRT();
+    o1->exec();
+    afficherPile();
+
 	return 0;
 }

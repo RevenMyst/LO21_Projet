@@ -137,3 +137,9 @@ public:
     DENFactory() = default;
     Operator* getOpe() override { return new OpeDEN(); }
 };
+
+class SQRTFactory: public OpeFactory {
+public:
+    SQRTFactory() = default;
+    Operator * getOpe() override { return new OpeSQRT(); }
+};
