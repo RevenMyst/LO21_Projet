@@ -81,6 +81,14 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
     entry.second = new NEGFactory();
     factories.insert(entry);
 
+    entry.first = "NUM";
+    entry.second = new NUMFactory();
+    factories.insert(entry);
+
+    entry.first = "DEN";
+    entry.second = new DENFactory();
+    factories.insert(entry);
+
 	return factories;
 }
 

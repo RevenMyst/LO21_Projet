@@ -287,10 +287,8 @@ void OpeNOT::ope()
 void OpeNEG::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
-
 	l->accept(this);
 	delete l;
-
 }
 
 void OpeNEG::visitIntLit(IntLit* l)
@@ -307,9 +305,44 @@ void OpeNEG::visitRealLit(RealLit* l)
 
 void OpeNEG::visitRationalLit(RationalLit* l)
 {
-
 	RationalLit* lit = new RationalLit(-l->getNum(), l->getDen());
 	lit->exec();
 }
 
+void OpeNUM::ope()
+{
+    Litteral* l = Computer::getInstance().getPile()->pull();
+    l->accept(this);
+    delete l;
+}
 
+void OpeNUM::visitIntLit(IntLit* l)
+{
+    IntLit* lit = dynamic_cast<IntLit *>(l->clone());
+    lit->exec();
+}
+
+void OpeNUM::visitRationalLit(RationalLit* l)
+{
+    IntLit* lit = new IntLit(l->getNum());
+    lit->exec();
+}
+
+void OpeDEN::ope()
+{
+    Litteral* l = Computer::getInstance().getPile()->pull();
+    l->accept(this);
+    delete l;
+}
+
+void OpeDEN::visitIntLit(IntLit* l)
+{
+    IntLit* lit = new IntLit(1);
+    lit->exec();
+}
+
+void OpeDEN::visitRationalLit(RationalLit* l)
+{
+    IntLit* lit = new IntLit(l->getDen());
+    lit->exec();
+}

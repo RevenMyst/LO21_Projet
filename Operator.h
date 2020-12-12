@@ -175,3 +175,22 @@ public:
 	void visitRationalLit(RationalLit* l1) override;
 };
 
+class OpeNUM: public Operator, public Visitor {
+public:
+    OpeNUM(): Operator(1) {}
+    void ope() override;
+    std::string toString() const { return "NUM"; }
+    Operand* clone() { return new OpeNUM(*this); }
+    void visitIntLit(IntLit* l1) override;
+    void visitRationalLit(RationalLit* l1) override;
+};
+
+class OpeDEN: public Operator, public Visitor {
+public:
+    OpeDEN(): Operator(1) {}
+    void ope() override;
+    std::string toString() const { return "DEN"; }
+    Operand* clone() { return new OpeDEN(*this); }
+    void visitIntLit(IntLit* l1) override;
+    void visitRationalLit(RationalLit* l1) override;
+};
