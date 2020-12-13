@@ -4,7 +4,6 @@
 #include "Computer.h"
 #include "OpeFactory.h"
 #include <iostream>
-#include <math.h>
 #include "Number.h"
 
 void OpeDUP::ope() {
@@ -317,7 +316,7 @@ void OpeSQRT::ope() {
 
 void OpeSQRT::visitIntLit(IntLit *l) {
     NumLit *lit;
-    double res = sqrt(l->getValue());
+    double res = std::sqrt(l->getValue());
     if (Number::isInt(res)) {
         lit = new IntLit(static_cast<int>(res));
     } else {
@@ -327,14 +326,14 @@ void OpeSQRT::visitIntLit(IntLit *l) {
 }
 
 void OpeSQRT::visitRealLit(RealLit *l) {
-    RealLit *lit = new RealLit(sqrt(l->getValue()));
+    RealLit *lit = new RealLit(std::sqrt(l->getValue()));
     lit->exec();
 }
 
 void OpeSQRT::visitRationalLit(RationalLit *l) {
     NumLit *lit;
-    double sqrtNum = sqrt(l->getNum());
-    double sqrtDen = sqrt(l->getDen());
+    double sqrtNum = std::sqrt(l->getNum());
+    double sqrtDen = std::sqrt(l->getDen());
     if (Number::isInt(sqrtNum) && Number::isInt(sqrtDen)) {
         lit = new RationalLit(static_cast<int>(sqrtNum), static_cast<int>(sqrtDen));
     } else {
