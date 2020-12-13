@@ -1,12 +1,6 @@
 #pragma once
 #include "ComputerException.h"
-
-
-class IntLit;
-class ProgLit;
-class RealLit;
-class RationalLit;
-class ExpLit;
+#include "Litteral.h"
 
 class Visitor {
 public:

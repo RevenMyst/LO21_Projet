@@ -5,6 +5,10 @@
 #include <iterator>
 #include <sstream>
 #include <vector>
+#include "OpeFactory.h"
+#include "LitFactory.h"
+#include <regex>
+#include "Operand.h"
 using namespace std;
 
 bool AtomManager::addAtom(const std::string str, Litteral* o)
@@ -41,7 +45,7 @@ vector<string> Computer::parse(std::string str)
 	vector<string> res;
 	int prog = 0;
 	string p = "";
-	for (int i = 0; i < results.size(); i++) {
+	for (size_t i = 0; i < results.size(); i++) {
 		if (results[i] != "[" && prog == 0) {
 			res.push_back(results[i]);
 		}
@@ -56,7 +60,7 @@ vector<string> Computer::parse(std::string str)
 				p = p + results[i] + " ";
 				if (prog == 0) {
 					p = p.substr(0, p.size() - 1);
-					p = p.substr(2, p.size() - 4); //pour enlever les crochets
+					//p = p.substr(2, p.size() - 4); //pour enlever les crochets
 					res.push_back(p);
 					p = "";
 				}
@@ -68,3 +72,26 @@ vector<string> Computer::parse(std::string str)
 	}
 	return results;
 }
+
+Operand* Computer::createOperand(std::string str)
+{
+	if (OpeFactory::isOpe(str)) {
+		return OpeFactory::getOpeFactories().at(str)->getOpe();
+	}
+	else {
+		//c'est une litterale
+		for (LitFactory* l : LitFactory::getLitFactories()) {
+			//l.isTypeLit retourne true si le string correcpond a l'expression d'une litteral (regex)
+			if (l->isTypeLit(str)) {
+				// getLitteral retourne la litteral créée a partir du string
+				return l->getLitteral(str);
+			}
+		}
+	}
+	// si rien ne correspond au string on retourne une erreur
+	throw ComputerException("Erreur : Aucune Operand ne peut etre créée");
+}
+
+
+
+

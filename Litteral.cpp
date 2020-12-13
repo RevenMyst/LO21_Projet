@@ -1,10 +1,12 @@
 #include "Litteral.h"
 #include <sstream>
+#include<iostream>
 #include "Visitor.h"
 #include "Computer.h"
 
 bool operator==(const Litteral& lit1, const Litteral& lit2)
 {
+
 	// si variable numeriques : cast et compare valeurs
 	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT) {
 		return (dynamic_cast<const NumLit&>(lit1).getValue() == dynamic_cast<const NumLit&>(lit2).getValue());
@@ -13,7 +15,6 @@ bool operator==(const Litteral& lit1, const Litteral& lit2)
 		// sinon compare string value (2 programme identiques on la meme string value
 		return lit1.toString() == lit2.toString();
 	}
-	return false;
 }
 
 bool operator!=(const Litteral& lit1, const Litteral& lit2)
@@ -80,6 +81,19 @@ void RealLit::accept(Visitor* visitor)
 	visitor->visitRealLit(this);
 }
 
+
+void RealLit::exec()
+{
+	if (getMant() != 0) {
+		Litteral::exec();
+	}
+	else {
+		IntLit* lit = new IntLit(getInt());
+		lit->exec();
+		delete this;
+	}
+}
+
 /*******************************/
 /*********RATIONALLIT***********/
 /*******************************/
@@ -135,6 +149,14 @@ std::string ProgLit::toString() const
 	}
 	str += "]";
 	return str;
+}
+
+void ProgLit::compile()
+{
+	for (Operand* o : getOperands()) {
+		o->clone()->exec();
+	}
+	delete this;
 }
 
 void ProgLit::accept(Visitor* visitor)

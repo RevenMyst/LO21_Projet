@@ -41,6 +41,22 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	entry.second = new ORFactory();
 	factories.insert(entry);
 
+	entry.first = "+";
+	entry.second = new PLUSFactory();
+	factories.insert(entry);
+
+	entry.first = "-";
+	entry.second = new MOINSFactory();
+	factories.insert(entry);
+
+	entry.first = "*";
+	entry.second = new MULFactory();
+	factories.insert(entry);
+
+	entry.first = "/";
+	entry.second = new DIVFactory();
+	factories.insert(entry);
+
 	entry.first = "=";
 	entry.second = new EQUALFactory();
 	factories.insert(entry);
@@ -80,6 +96,14 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	entry.first = "IFTE";
 	entry.second = new IFTEFactory();
 	factories.insert(entry);
+
+  entry.first = "NOT";
+  entry.second = new NOTFactory();
+  factories.insert(entry);
+
+  entry.first = "NEG";
+  entry.second = new NEGFactory();
+  factories.insert(entry);
 
 	return factories;
 }

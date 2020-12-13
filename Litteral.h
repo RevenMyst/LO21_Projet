@@ -1,5 +1,6 @@
 #pragma once
 #include "Operand.h"
+#include "ComputerException.h"
 #include <list>
 #include <cmath>
 #include "ComputerException.h"
@@ -20,6 +21,7 @@ public:
 	virtual void accept(Visitor* visitor) = 0;
 	virtual LitType getClass() const = 0;
 	void exec() override;
+
 };
 
 bool operator==(const Litteral& lit1, const Litteral& lit2);
@@ -33,7 +35,9 @@ class NumLit : public Litteral
 {
 public:
 	virtual double getValue() const = 0;
+
 };
+
 
 class ExpLit : public Litteral
 {
@@ -51,21 +55,19 @@ public:
 
 class RealLit : public NumLit
 {
-	double value;
+	float value;
 public:
-	RealLit(double v) : value(v) {}
-	int getInt() const {
-		return (int) floor(value);
-	}
-	double getMant() const {
-		return value-getInt();
-	}
+	RealLit(float v) : value(v) {}
+	int getInt() const {return floor(value);}
+	double getMant() const {return value-getInt();}
 	double getValue() const { return value; }
 	std::string toString() const;
 	void accept(Visitor* visitor);
+	void exec() override;
 	~RealLit() = default;
 	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
+
 };
 
 class RationalLit : public NumLit
@@ -110,6 +112,7 @@ public:
 
 };
 
+
 class ProgLit : public Litteral
 {
 private:
@@ -122,6 +125,7 @@ public:
 		operands.push_back(o);
 	}
 	std::string toString() const;
+	void compile();
 	std::list<Operand*> getOperands() const { return operands; }
 	void accept(Visitor* visitor);
 	~ProgLit() {

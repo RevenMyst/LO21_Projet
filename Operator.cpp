@@ -3,6 +3,7 @@
 #include "ComputerException.h"
 #include "Computer.h"
 #include "OpeFactory.h"
+#include "Action.h"
 #include <iostream>
 
 void OpeDUP::ope()
@@ -55,61 +56,47 @@ void OpeSTO::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	if (l1->getClass() == EXPLIT && (l2->getClass()== PROGLIT || l2->getClass() == RATIONALLIT || l2->getClass() == INTLIT || l2->getClass() == REALLIT)) {
+	if (l1->getClass() == EXPLIT && l2->getClass()!= EXPLIT) {
 		ExpLit* lit = dynamic_cast<ExpLit*>(l1);
 		if (!OpeFactory::isOpe(lit->getValue())) {
+			//si ce n'est pas un nom reservé
 			Computer::getInstance().getAtomManager()->addAtom(lit->getValue(), l2);
 			delete lit;
 		}else{
 			l1->exec();
 			l2->exec();
-			throw ComputerException("Erreur Un op�rateur utilise deja ce nom");
+			throw ComputerException("Erreur Un operateur utilise deja ce nom");
 		}
 
 	}
 	else {
 		l1->exec();
 		l2->exec();
-		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et un litteral numerique ou programme.");
+		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et une litteral numerique ou programme.");
 	}
 }
 
 void OpeEVAL::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
+	l->accept(this);
+}
 
-	if (l->getClass() == PROGLIT) {
-		ProgLit* lit = dynamic_cast<ProgLit*>(l);
-		for (Operand* o : lit->getOperands()) {
-			o->clone()->exec();
-		}
-		delete lit;
-
-	}else
-	if (l->getClass() == EXPLIT) {
-		ExpLit* lit = dynamic_cast<ExpLit*>(l);
-		Litteral* atom = Computer::getInstance().getAtomManager()->getLitteral(lit->getValue());
-		if (atom) {
-			if (atom->getClass() == PROGLIT) {
-				ProgLit* plit = dynamic_cast<ProgLit*>(atom);
-				for (Operand* o : plit->getOperands()) {
-					o->clone()->exec();
-				}
-				delete plit;
-			}
-			else {
-				atom->exec();
-			}
-		}
-		else {
-			l->exec();
-			throw ComputerException("Erreur cet expression ne correspond a aucun programme ou variable");
-		}
+void OpeEVAL::visitExpLit(ExpLit* l)
+{
+	Litteral* lit = Computer::getInstance().getAtomManager()->getLitteral(l->getValue());
+	if (lit->getClass() == PROGLIT) {
+		dynamic_cast<ProgLit*>(lit)->compile();
 	}
 	else {
-		l->exec();
-		throw ComputerException("Erreur l'operateur EVAL doit recevoir une litteral expression ou programme.");
+		lit->exec();
+		delete lit;
 	}
+}
+
+void OpeEVAL::visitProgLit(ProgLit* l)
+{
+	l->compile();
 }
 
 void OpeAND::ope()
@@ -184,18 +171,14 @@ void OpeMOD::ope()
 
 void OpeFORGET::ope()
 {
-	Litteral* l = Computer::getInstance().getPile()->pull();
-	if (l->getClass() == EXPLIT) {
-		ExpLit* lit = dynamic_cast<ExpLit*>(l);
-		if (!Computer::getInstance().getAtomManager()->removeAtom(lit->getValue())) {
-			throw ComputerException("Aucune variable ou programme n'est associ� a cette expression");
-		}
-		delete l;
+	Computer::getInstance().getPile()->pull()->accept(this);
+}
+void OpeFORGET::visitExpLit(ExpLit* l)
+{
+	if (!Computer::getInstance().getAtomManager()->removeAtom(l->getValue())) {
+		throw ComputerException("Aucune variable ou programme n'est associ� a cette expression");
 	}
-	else {
-		l->exec();
-		throw ComputerException("Erreur, l'op�rateur forget doit s'appliquer sur une litterale expression");
-	}
+	delete l;
 }
 void OpeEQUAL::ope()
 {
@@ -257,6 +240,104 @@ void OpeGT::ope()
 	delete l2;
 }
 
+
+void OpePlus::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l1->getClass(), l2->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l1, l2)->exec();
+	}
+	else {
+		// l'addition est commutative, pour limiter le nombre d'action on verifie si l'addition dans l'autre sens existe
+		get<1>(t) = l2->getClass();
+		get<2>(t) = l1->getClass();
+		if (Action::exist(t)) {
+			Action::getActions().at(t)->exec(l2, l1)->exec();
+		}
+		else {
+			//ces deux litterales ne possedent pas d'actions pour les additionner on reempile et on envoie une erreur
+			l2->exec();
+			l1->exec();
+			throw ComputerException("Erreur : ces deux litterales ne peuvent etre additionnées");
+
+		}
+	}
+
+}
+
+void OpeMul::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l1->getClass(), l2->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l1, l2)->exec();
+	}
+	else {
+		// la mulitplication est commutative, pour limiter le nombre d'action on verifie si la multiplication dans l'autre sens existe
+		get<1>(t) = l2->getClass();
+		get<2>(t) = l1->getClass();
+		if (Action::exist(t)) {
+			Action::getActions().at(t)->exec(l2, l1)->exec();
+		}
+		else {
+			//ces deux litterales ne possedent pas d'actions pour les mulitplier on reempile et on envoie une erreur
+			l2->exec();
+			l1->exec();
+			throw ComputerException("Erreur : ces deux litterales ne peuvent etre multipliées");
+
+		}
+	}
+
+}
+
+void OpeMoins::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l2, l1)->exec();
+	}
+
+    else {
+        //ces deux litterales ne possedent pas d'actions pour les soustraire on reempile et on envoie une erreur
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur : ces deux litterales ne peuvent etre soustraites");
+
+		}
+}
+
+
+void OpeDivision::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+
+	if(static_cast<IntLit*>(l1)!= nullptr && static_cast<IntLit*>(l1)->getValue()==0)
+    {
+        l2->exec();
+        l1->exec();
+        throw ComputerException("On ne peut pas diviser par zero");
+    }
+    else {
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l2, l1)->exec();
+	}
+
+    else {
+        //ces deux litterales ne possedent pas d'actions pour les soustraire on reempile et on envoie une erreur
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur : ces deux litterales ne peuvent etre divisees");
+
+		}
+}
+}
 void OpeLT::ope()
 {
 	Pile* p = Computer::getInstance().getPile();
@@ -400,4 +481,48 @@ void OpeIFTE::ope()
         delete l3;
     }
     delete l2;
+}
+
+void OpeNOT::ope()
+{
+	Litteral* l = Computer::getInstance().getPile()->pull();
+	Litteral* tmp;
+	if (l->getClass() == INTLIT && dynamic_cast<IntLit*>(l)->getInt() == 0) {
+		tmp = new IntLit(1);
+	}
+	else {
+		tmp = new IntLit(0);
+	}
+	tmp->exec();
+	delete l;
+
+
+}
+
+void OpeNEG::ope()
+{
+	Litteral* l = Computer::getInstance().getPile()->pull();
+
+	l->accept(this);
+	delete l;
+
+}
+
+void OpeNEG::visitIntLit(IntLit* l)
+{
+	IntLit* lit = new IntLit(-l->getValue());
+	lit->exec();
+}
+
+void OpeNEG::visitRealLit(RealLit* l)
+{
+	RealLit* lit = new RealLit(-l->getValue());
+	lit->exec();
+}
+
+void OpeNEG::visitRationalLit(RationalLit* l)
+{
+
+	RationalLit* lit = new RationalLit(-l->getNum(), l->getDen());
+	lit->exec();
 }
