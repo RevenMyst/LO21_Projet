@@ -1,8 +1,10 @@
 #pragma once
 #include "Operand.h"
+#include "ComputerException.h"
 #include <list>
 #include <cmath>
 #include "ComputerException.h"
+#include "Operator.h"
 
 using namespace std;
 
@@ -19,6 +21,7 @@ public:
 	virtual void accept(Visitor* visitor) = 0;
 	virtual LitType getClass() const = 0;
 	void exec() override;
+
 };
 
 bool operator==(const Litteral& lit1, const Litteral& lit2);
@@ -31,7 +34,9 @@ bool operator<(const Litteral& lit1, const Litteral& lit2);
 class NumLit : public Litteral {
 public:
 	virtual double getValue() const = 0;
+
 };
+
 
 class ExpLit : public Litteral
 {
@@ -44,26 +49,24 @@ public:
 	~ExpLit() = default;
 	LitType getClass() const { return EXPLIT; }
 	Operand* clone() { return new ExpLit(*this); }
-
+    void compile();
 };
 
 class RealLit : public NumLit
 {
-	double value;
+	float value;
 public:
-	RealLit(double v) : value(v) {}
-	int getInt() const {
-		return (int) floor(value);
-	}
-	double getMant() const {
-		return value-getInt();
-	}
+	RealLit(float v) : value(v) {}
+	int getInt() const {return floor(value);}
+	double getMant() const {return value-getInt();}
 	double getValue() const { return value; }
 	std::string toString() const;
 	void accept(Visitor* visitor);
+	void exec() override;
 	~RealLit() = default;
 	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
+
 };
 
 class RationalLit : public NumLit
@@ -107,6 +110,7 @@ public:
 
 };
 
+
 class ProgLit : public Litteral
 {
 private:
@@ -129,5 +133,15 @@ public:
 	}
 	LitType getClass() const { return PROGLIT; }
 	Operand* clone() { return new ProgLit(*this); }
+};
 
+class AtomLit : public Operator {
+    std::string name;
+public:
+	AtomLit(std::string str): name(str), Operator(0){}
+	~AtomLit() = default;
+	void ope() override;
+	std::string toString() const { return name; }
+	const std::string getValue() const { return name; }
+	Operand* clone() { return new AtomLit(*this); }
 };

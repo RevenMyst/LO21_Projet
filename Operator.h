@@ -76,6 +76,40 @@ public:
 	Operand* clone() { return new OpeEVAL(*this); }
 };
 
+class OpePlus : public Operator{
+    public:
+    OpePlus() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpePlus(*this); }
+    std::string toString() const { return "+"; }
+
+    };
+class OpeMul : public Operator{
+    public:
+    OpeMul() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeMul(*this); }
+    std::string toString() const { return "*"; }
+
+    };
+class OpeMoins : public Operator{
+    public:
+    OpeMoins() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeMoins(*this); }
+    std::string toString() const { return "-"; }
+
+    };
+
+class OpeDivision : public Operator{
+    public:
+    OpeDivision() : Operator(2) {}
+    void ope()override;
+    Operand* clone() { return new OpeDivision(*this); }
+    std::string toString() const { return "/"; }
+
+    };
+
 class OpeAND : public Operator {
 public:
     OpeAND() : Operator(2) {}
@@ -156,12 +190,36 @@ public:
     Operand* clone() { return new OpeMOD(*this); }
 };
 
+class OpeIFT : public Operator {
+public:
+    OpeIFT() : Operator(2) {}
+    void ope() override;
+    std::string toString() const { return "IFT"; }
+    Operand* clone() { return new OpeIFT(*this); }
+};
+
+class OpeIFTE : public Operator {
+public:
+    OpeIFTE() : Operator(3) {}
+    void ope() override;
+    std::string toString() const { return "IFTE"; }
+    Operand* clone() { return new OpeIFTE(*this); }
+};
+
 class OpeNOT: public Operator {
 public:
     OpeNOT() : Operator(1) {}
     void ope() override;
     std::string toString() const { return "NOT"; }
     Operand* clone() { return new OpeNOT(*this); }
+};
+
+class OpeUNDO : public Operator {
+public:
+	OpeUNDO() : Operator(0) {}
+	void ope() override;
+	std::string toString() const { return "UNDO"; }
+	Operand* clone() { return new OpeUNDO(*this); }
 };
 
 class OpeNEG: public Operator, public Visitor {

@@ -8,29 +8,28 @@ void afficherPile() {
 		i++;
 	}
 	std::cout << "========================" << std::endl;
-}
-int operator-(Litteral& l1, Litteral& l2) {
-	return 0;
-}
-int operator-(IntLit& l1, IntLit& l2) {
-	return l1.getValue()-l2.getValue();
+	std::cout<<std::endl;
 }
 
 int main() {
-	NumLit* numLit;
-    numLit= new IntLit(4);
-//    numLit = new RealLit(3.5);
-//    numLit = new RationalLit(4,9);
-    numLit->exec();
-	afficherPile();
-	std::cout << "Operator SQRT" << endl;
-	Operator* o = new OpeSQRT();
-	o->exec();
-	afficherPile();
-    std::cout << "Operator SQRT" << endl;
-    Operator* o1 = new OpeSQRT();
-    o1->exec();
-    afficherPile();
+
+
+	try {
+		std::string command = "[ 'TEUB' DUP ] 'TEST' SWAP DUP EVAL";
+		Computer::getInstance().execCommand(command);
+		afficherPile();
+		command = "UNDO";
+		Computer::getInstance().execCommand(command);
+		afficherPile();
+
+	}
+	catch (exception& e) {
+		std::cout << e.what();
+	}
+
+
+
+
 
 	return 0;
 }
