@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
+
 class Operand;
-enum LitType;
 class LitFactory {
 public:
 	LitFactory() = default;

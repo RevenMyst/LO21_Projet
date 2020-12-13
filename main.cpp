@@ -8,31 +8,12 @@ void afficherPile() {
 		i++;
 	}
 	std::cout << "========================" << std::endl;
+	std::cout<<std::endl;
 }
 
 int main() {
-	
 
-	/*RationalLit* int1 = new RationalLit(3,2);
-	Computer::getInstance().save();
-	int1->exec();
-	RationalLit* int2 = new RationalLit(5, 2);
-	Computer::getInstance().save();
-	int2->exec();
-	RationalLit* int3 = new RationalLit(7, 2);
-	Computer::getInstance().save();
-	int3->exec();
-	OpeNEG* o = new OpeNEG();
-	Computer::getInstance().save();
-	o->exec();
-	afficherPile();
-	Computer::getInstance().save();
-	OpeUNDO* o2 = new OpeUNDO();
-	o2->exec();
-	afficherPile();
-	Computer::getInstance().save();
-	OpeUNDO* o3 = new OpeUNDO();
-	o3->exec();*/
+	
 	try {
 		std::string command = "[ 'TEUB' DUP ] 'TEST' SWAP DUP EVAL";
 		Computer::getInstance().execCommand(command);
@@ -47,5 +28,8 @@ int main() {
 	}
 		
 	
+
+
+
 	return 0;
 }
