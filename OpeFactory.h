@@ -124,6 +124,7 @@ class IFTEFactory : public OpeFactory {
 public:
 	IFTEFactory() = default;
 	Operator* getOpe() override { return new OpeIFTE(); }
+};
 
 class NOTFactory: public OpeFactory {
 public:
@@ -142,6 +143,7 @@ class UNDOFactory : public OpeFactory {
 public:
 	UNDOFactory() = default;
 	Operator* getOpe() override { return new OpeUNDO(); }
+};
 
 class PLUSFactory : public OpeFactory {
 public:

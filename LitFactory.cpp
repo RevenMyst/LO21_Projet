@@ -58,8 +58,7 @@ bool ATOMFactory::isTypeLit(std::string str)
 
 Operand* ATOMFactory::getLitteral(std::string str)
 {
-	//return new AtomLit(str);
-	return nullptr;
+	return new AtomLit(str);
 }
 
 bool REALFactory::isTypeLit(std::string str)

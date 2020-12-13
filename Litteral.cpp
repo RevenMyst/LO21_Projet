@@ -213,16 +213,3 @@ void ExpLit::compile()
     delete this;
 }
 
-void AtomLit::ope()
-{
-    const std::string s = getValue();
-    ExpLit* exp = new ExpLit(s);
-    try {
-        exp.compile();
-    }
-    catch(std::exception const& e) {
-        exp.exec();
-        delete exp;
-    }
-    delete this;
-}

@@ -17,7 +17,16 @@ public:
 
 };
 
-
+class AtomLit : public Operator {
+	std::string name;
+public:
+	AtomLit(std::string str) : name(str), Operator(0) {}
+	~AtomLit() = default;
+	void ope() override;
+	std::string toString() const { return name; }
+	const std::string getValue() const { return name; }
+	Operand* clone() { return new AtomLit(*this); }
+};
 
 class OpeDUP : public Operator {
 public:
