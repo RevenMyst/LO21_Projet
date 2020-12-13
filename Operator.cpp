@@ -5,13 +5,13 @@
 #include "OpeFactory.h"
 #include "Action.h"
 #include <iostream>
+#include "Number.h"
 
 void OpeDUP::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
 	Computer::getInstance().getPile()->push(l);
 	Computer::getInstance().getPile()->push(dynamic_cast<Litteral*>(l->clone()));
-
 }
 
 void OpeDROP::ope()
@@ -496,11 +496,9 @@ void OpeNOT::ope()
 
 void OpeNEG::ope()
 {
-	Litteral* l = Computer::getInstance().getPile()->pull();
-
-	l->accept(this);
-	delete l;
-
+    Litteral *l = Computer::getInstance().getPile()->pull();
+    l->accept(this);
+    delete l;
 }
 
 void OpeNEG::visitIntLit(IntLit* l)
@@ -515,11 +513,115 @@ void OpeNEG::visitRealLit(RealLit* l)
 	lit->exec();
 }
 
-void OpeNEG::visitRationalLit(RationalLit* l)
-{
+void OpeNEG::visitRationalLit(RationalLit *l) {
+    RationalLit *lit = new RationalLit(-l->getNum(), l->getDen());
+    lit->exec();
+}
 
-	RationalLit* lit = new RationalLit(-l->getNum(), l->getDen());
-	lit->exec();
+void OpeNUM::ope() {
+    Litteral *l = Computer::getInstance().getPile()->pull();
+    l->accept(this);
+    delete l;
+}
+
+void OpeNUM::visitIntLit(IntLit *l) {
+    IntLit *lit = dynamic_cast<IntLit *>(l->clone());
+    lit->exec();
+}
+
+void OpeNUM::visitRationalLit(RationalLit *l) {
+    IntLit *lit = new IntLit(l->getNum());
+    lit->exec();
+}
+
+void OpeDEN::ope() {
+    Litteral *l = Computer::getInstance().getPile()->pull();
+    l->accept(this);
+    delete l;
+}
+
+void OpeDEN::visitIntLit(IntLit *l) {
+    IntLit *lit = new IntLit(1);
+    lit->exec();
+}
+
+void OpeDEN::visitRationalLit(RationalLit *l) {
+    IntLit *lit = new IntLit(l->getDen());
+    lit->exec();
+}
+
+void OpeSQRT::ope() {
+    Litteral *l = Computer::getInstance().getPile()->pull();
+    l->accept(this);
+    delete l;
+}
+
+void OpeSQRT::visitIntLit(IntLit *l) {
+    NumLit *lit;
+    double res = std::sqrt(l->getValue());
+    if (Number::isInt(res)) {
+        lit = new IntLit(static_cast<int>(res));
+    } else {
+        lit = new RealLit(res);
+    }
+    lit->exec();
+}
+
+void OpeSQRT::visitRealLit(RealLit *l) {
+    RealLit *lit = new RealLit(std::sqrt(l->getValue()));
+    lit->exec();
+}
+
+void OpeSQRT::visitRationalLit(RationalLit *l) {
+    NumLit *lit;
+    double sqrtNum = std::sqrt(l->getNum());
+    double sqrtDen = std::sqrt(l->getDen());
+    if (Number::isInt(sqrtNum) && Number::isInt(sqrtDen)) {
+        lit = new RationalLit(static_cast<int>(sqrtNum), static_cast<int>(sqrtDen));
+    } else {
+        double res = sqrtNum / sqrtDen;
+        lit = new RealLit(res);
+    }
+    lit->exec();
+}
+
+void OpeTrigonometry::ope() {
+    Litteral *l = Computer::getInstance().getPile()->pull();
+    l->accept(this);
+    delete l;
+}
+
+void OpeTrigonometry::visitIntLit(IntLit *l1) {
+    NumLit *lit;
+    double res = getResult(l1->getValue());
+    if (Number::isInt(res)) {
+        lit = new IntLit(static_cast<int>(res));
+    } else {
+        lit = new RealLit(res);
+    }
+    lit->exec();
+}
+
+void OpeTrigonometry::visitRealLit(RealLit *l1) {
+    NumLit *lit;
+    double res = getResult(l1->getValue());
+    if (Number::isInt(res)) {
+        lit = new IntLit(static_cast<int>(res));
+    } else {
+        lit = new RealLit(res);
+    }
+    lit->exec();
+}
+
+void OpeTrigonometry::visitRationalLit(RationalLit *l1) {
+    NumLit *lit;
+    double res = getResult(l1->getValue());
+    if (Number::isInt(res)) {
+        lit = new IntLit(static_cast<int>(res));
+    } else {
+        lit = new RealLit(res);
+    }
+    lit->exec();
 }
 
 

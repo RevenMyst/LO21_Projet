@@ -109,6 +109,30 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	entry.second = new UNDOFactory();
 	factories.insert(entry);
 
+    entry.first = "NUM";
+    entry.second = new NUMFactory();
+    factories.insert(entry);
+
+    entry.first = "DEN";
+    entry.second = new DENFactory();
+    factories.insert(entry);
+
+    entry.first = "SQRT";
+    entry.second = new SQRTFactory();
+    factories.insert(entry);
+
+    entry.first = "SIN";
+    entry.second = new SINFactory();
+    factories.insert(entry);
+
+    entry.first = "COS";
+    entry.second = new COSFactory();
+    factories.insert(entry);
+
+    entry.first = "TAN";
+    entry.second = new TANFactory();
+    factories.insert(entry);
+
 	return factories;
 }
 

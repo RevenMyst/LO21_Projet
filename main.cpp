@@ -13,7 +13,7 @@ void afficherPile() {
 
 int main() {
 
-	
+
 	try {
 		std::string command = "45 NEG [ DUP 0 < [ 0 SWAP - ]  IFT ]";
 		Computer::getInstance().execCommand(command);
@@ -26,8 +26,8 @@ int main() {
 	catch (exception& e) {
 		std::cout << e.what();
 	}
-		
-	
+
+
 
 
 

@@ -138,7 +138,6 @@ public:
     Operator* getOpe() override { return new OpeNEG(); }
 };
 
-
 class UNDOFactory : public OpeFactory {
 public:
 	UNDOFactory() = default;
@@ -168,4 +167,40 @@ public:
     DIVISIONFactory() = default;
     Operator * getOpe() override {return new OpeDivision();}
 
+};
+
+class NUMFactory: public OpeFactory {
+public:
+    NUMFactory() = default;
+    Operator* getOpe() override { return new OpeNUM(); }
+};
+
+class DENFactory: public OpeFactory {
+public:
+    DENFactory() = default;
+    Operator* getOpe() override { return new OpeDEN(); }
+};
+
+class SQRTFactory: public OpeFactory {
+public:
+    SQRTFactory() = default;
+    Operator * getOpe() override { return new OpeSQRT(); }
+};
+
+class SINFactory: public OpeFactory {
+public:
+    SINFactory() = default;
+    Operator * getOpe() override { return new OpeSIN(); }
+};
+
+class COSFactory: public OpeFactory {
+public:
+    COSFactory() = default;
+    Operator * getOpe() override { return new OpeCOS(); }
+};
+
+class TANFactory: public OpeFactory {
+public:
+    TANFactory() = default;
+    Operator * getOpe() override { return new OpeTAN(); }
 };
