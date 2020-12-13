@@ -119,3 +119,10 @@ public:
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+class DivisionIntIntAction : public Action {
+	//division : int - rationnel
+public:
+	DivisionIntIntAction() = default;
+	Litteral* exec(Litteral* l1, Litteral* l2) override;
+};
+

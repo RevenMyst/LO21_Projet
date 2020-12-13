@@ -119,11 +119,6 @@ map<tuple<string, LitType, LitType>, Action*> Action::getActions()
 
 
     //Actions Division
-     t = make_tuple("/", INTLIT, INTLIT);
-    entry.first = t;
-    entry.second = new DivisionSimpleAction();
-    actions.insert(entry);
-
     t = make_tuple("/", REALLIT, INTLIT);
     entry.first = t;
     entry.second = new DivisionSimpleAction();
@@ -162,6 +157,11 @@ map<tuple<string, LitType, LitType>, Action*> Action::getActions()
     t = make_tuple("/", INTLIT, RATIONALLIT);
     entry.first = t;
     entry.second = new DivisionIntRatAction();
+    actions.insert(entry);
+
+    t = make_tuple("/", INTLIT, INTLIT);
+    entry.first = t;
+    entry.second = new DivisionIntIntAction();
     actions.insert(entry);
 
     return actions;
@@ -281,7 +281,7 @@ Litteral* MoinsIntRatAction::exec(Litteral* l1, Litteral* l2)
 //Actions Division -----
 Litteral* DivisionSimpleAction::exec(Litteral* l1, Litteral* l2)
 {
-    //Divisions simples : int/int, int/reel, reel/int, reel/reel, reel/rationnel, rationnel/reel
+    //Divisions simples : int/reel, reel/int, reel/reel, reel/rationnel, rationnel/reel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
     //si mantisse nulle le Reel est  simplifié à l'empilement
@@ -317,4 +317,24 @@ Litteral* DivisionIntRatAction::exec(Litteral* l1, Litteral* l2)
     int newden = rtl->getNum();
     RationalLit * nrtl = new RationalLit(newnum,newden);
     return nrtl;
+}
+
+Litteral* DivisionIntIntAction::exec(Litteral* l1, Litteral* l2)
+{
+    //Division : Int/Int
+    IntLit* lit1 = dynamic_cast<IntLit*>(l1);
+    IntLit* lit2 = dynamic_cast<IntLit*>(l2);
+
+    //Si mantisse nulle : creation d'un Int
+    double val = lit1->getValue()/lit2->getValue();
+    if((val - floor(val))==0){
+       IntLit * nil = new IntLit(val);
+       return nil;
+
+       }
+    //Sinon : creation d'un Rationnel
+    else{
+        RationalLit * nrtl = new RationalLit(lit1->getValue(),lit2->getValue());
+        return nrtl;
+    }
 }
