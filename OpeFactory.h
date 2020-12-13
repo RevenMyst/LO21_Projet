@@ -136,6 +136,13 @@ public:
     NEGFactory() = default;
     Operator* getOpe() override { return new OpeNEG(); }
 };
+
+
+class UNDOFactory : public OpeFactory {
+public:
+	UNDOFactory() = default;
+	Operator* getOpe() override { return new OpeUNDO(); }
+
 class PLUSFactory : public OpeFactory {
 public:
     PLUSFactory() = default;
@@ -158,4 +165,5 @@ class DIVISIONFactory : public OpeFactory {
 public:
     DIVISIONFactory() = default;
     Operator * getOpe() override {return new OpeDivision();}
+
 };

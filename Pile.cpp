@@ -1,6 +1,15 @@
 #include "Pile.h"
 #include <iostream>
 #include "ComputerException.h"
+#include "Litteral.h"
+
+Pile::Pile(Pile& p)
+{
+	for (Litteral* l : p.litterals) {
+		
+		litterals.push_back(dynamic_cast<Litteral*>(l->clone()));
+	}
+}
 
 void Pile::push(Litteral* lit)
 {

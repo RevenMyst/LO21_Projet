@@ -521,3 +521,10 @@ void OpeNEG::visitRationalLit(RationalLit* l)
 	RationalLit* lit = new RationalLit(-l->getNum(), l->getDen());
 	lit->exec();
 }
+
+
+void OpeUNDO::ope()
+{
+	Computer::getInstance().backup();
+}
+

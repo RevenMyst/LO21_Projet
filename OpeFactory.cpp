@@ -105,6 +105,10 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
   entry.second = new NEGFactory();
   factories.insert(entry);
 
+	entry.first = "UNDO";
+	entry.second = new UNDOFactory();
+	factories.insert(entry);
+
 	return factories;
 }
 

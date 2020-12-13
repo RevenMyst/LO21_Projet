@@ -79,6 +79,7 @@ bool EXPFactory::isTypeLit(std::string str)
 
 Operand* EXPFactory::getLitteral(std::string str)
 {
+	str = str.substr(1, str.size() - 2);
 	return new ExpLit(str);
 }
 
@@ -90,6 +91,8 @@ bool PROGFactory::isTypeLit(std::string str)
 Operand* PROGFactory::getLitteral(std::string str)
 {
 	ProgLit* lit = new ProgLit();
+	//on retire les crochets
+	str = str.substr(2, str.size() - 4);
 	std::vector<std::string> tab = Computer::parse(str);
 	for (std::string s : tab) {
 		lit->addOperand(Computer::createOperand(s));
