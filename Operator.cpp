@@ -5,7 +5,6 @@
 #include "OpeFactory.h"
 #include "Action.h"
 #include <iostream>
-#include "Number.h"
 
 void OpeDUP::ope()
 {
@@ -557,32 +556,47 @@ void OpeSQRT::ope() {
 }
 
 void OpeSQRT::visitIntLit(IntLit *l) {
-    NumLit *lit;
-    double res = std::sqrt(l->getValue());
-    if (Number::isInt(res)) {
-        lit = new IntLit(static_cast<int>(res));
-    } else {
-        lit = new RealLit(res);
-    }
-    lit->exec();
+	if (l->getValue() >= 0) {
+		//le reel est automatiquement converti en IntLit si mantisse nulle
+		RealLit* lit = new RealLit(std::sqrt(l->getValue()));
+		lit->exec();
+	}
+	else {
+		l->exec(); 
+		throw ComputerException("Erreur : racine carrée négative.");
+	}
+    
 }
 
 void OpeSQRT::visitRealLit(RealLit *l) {
-    RealLit *lit = new RealLit(std::sqrt(l->getValue()));
-    lit->exec();
+	if (l->getValue() >= 0) {
+		//le reel est automatiquement converti en IntLit si mantisse nulle
+		RealLit* lit = new RealLit(std::sqrt(l->getValue()));
+		lit->exec();
+	}
+	else {
+		
+	}
 }
 
 void OpeSQRT::visitRationalLit(RationalLit *l) {
-    NumLit *lit;
-    double sqrtNum = std::sqrt(l->getNum());
-    double sqrtDen = std::sqrt(l->getDen());
-    if (Number::isInt(sqrtNum) && Number::isInt(sqrtDen)) {
-        lit = new RationalLit(static_cast<int>(sqrtNum), static_cast<int>(sqrtDen));
-    } else {
-        double res = sqrtNum / sqrtDen;
-        lit = new RealLit(res);
-    }
-    lit->exec();
+	if (l->getValue() >= 0) {
+		NumLit* lit;
+		double sqrtNum = std::sqrt(l->getNum());
+		double sqrtDen = std::sqrt(l->getDen());
+		if (sqrtNum - static_cast<int>(sqrtNum) == 0 && sqrtDen - static_cast<int>(sqrtDen) == 0) {
+			lit = new RationalLit(static_cast<int>(sqrtNum), static_cast<int>(sqrtDen));
+		}
+		else {
+			double res = sqrtNum / sqrtDen;
+			lit = new RealLit(res);
+		}
+		lit->exec();
+	}
+	else {
+		l->exec();
+		throw ComputerException("Erreur : racine carrée négative.");
+	}
 }
 
 void OpeTrigonometry::ope() {
@@ -594,34 +608,25 @@ void OpeTrigonometry::ope() {
 void OpeTrigonometry::visitIntLit(IntLit *l1) {
     NumLit *lit;
     double res = getResult(l1->getValue());
-    if (Number::isInt(res)) {
-        lit = new IntLit(static_cast<int>(res));
-    } else {
-        lit = new RealLit(res);
-    }
+    //reel automatiquement convertit en int si mantisse nulle dasn exec
+    lit = new RealLit(res);
     lit->exec();
 }
 
 void OpeTrigonometry::visitRealLit(RealLit *l1) {
     NumLit *lit;
     double res = getResult(l1->getValue());
-    if (Number::isInt(res)) {
-        lit = new IntLit(static_cast<int>(res));
-    } else {
-        lit = new RealLit(res);
-    }
+	//reel automatiquement convertit en int si mantisse nulle dasn exec
+	lit = new RealLit(res);
     lit->exec();
 }
 
 void OpeTrigonometry::visitRationalLit(RationalLit *l1) {
     NumLit *lit;
     double res = getResult(l1->getValue());
-    if (Number::isInt(res)) {
-        lit = new IntLit(static_cast<int>(res));
-    } else {
-        lit = new RealLit(res);
-    }
-    lit->exec();
+	//reel automatiquement convertit en int si mantisse nulle dasn exec
+	lit = new RealLit(res);
+	lit->exec();
 }
 
 

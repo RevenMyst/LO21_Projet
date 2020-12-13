@@ -15,10 +15,10 @@ int main() {
 
 
 	try {
-		std::string command = "45 NEG [ DUP 0 < [ 0 SWAP - ]  IFT ]";
+		std::string command = "25";
 		Computer::getInstance().execCommand(command);
 		afficherPile();
-		command = "EVAL";
+		command = "DEN";
 		Computer::getInstance().execCommand(command);
 		afficherPile();
 
