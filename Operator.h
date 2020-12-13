@@ -192,6 +192,22 @@ public:
     Operand* clone() { return new OpeMOD(*this); }
 };
 
+class OpeIFT : public Operator {
+public:
+    OpeIFT() : Operator(2) {}
+    void ope() override;
+    std::string toString() const { return "IFT"; }
+    Operand* clone() { return new OpeIFT(*this); }
+};
+
+class OpeIFTE : public Operator {
+public:
+    OpeIFTE() : Operator(3) {}
+    void ope() override;
+    std::string toString() const { return "IFTE"; }
+    Operand* clone() { return new OpeIFTE(*this); }
+};
+
 class OpeNOT: public Operator {
 public:
     OpeNOT() : Operator(1) {}
@@ -210,4 +226,3 @@ public:
 	void visitRealLit(RealLit* l1) override;
 	void visitRationalLit(RationalLit* l1) override;
 };
-

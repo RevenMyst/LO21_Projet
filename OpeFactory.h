@@ -114,6 +114,17 @@ public:
 	Operator* getOpe() override { return new OpeMOD(); }
 };
 
+class IFTFactory : public OpeFactory {
+public:
+	IFTFactory() = default;
+	Operator* getOpe() override { return new OpeIFT(); }
+};
+
+class IFTEFactory : public OpeFactory {
+public:
+	IFTEFactory() = default;
+	Operator* getOpe() override { return new OpeIFTE(); }
+
 class NOTFactory: public OpeFactory {
 public:
     NOTFactory() = default;

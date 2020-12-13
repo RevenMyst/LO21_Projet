@@ -3,6 +3,8 @@
 #include "ComputerException.h"
 #include <list>
 #include <cmath>
+#include "ComputerException.h"
+#include "Operator.h"
 
 using namespace std;
 
@@ -48,7 +50,7 @@ public:
 	~ExpLit() = default;
 	LitType getClass() const { return EXPLIT; }
 	Operand* clone() { return new ExpLit(*this); }
-
+    void compile();
 };
 
 class RealLit : public NumLit
@@ -94,7 +96,6 @@ public:
 };
 
 class IntLit : public NumLit
-
 {
 	int value;
 public:
@@ -133,5 +134,15 @@ public:
 	}
 	LitType getClass() const { return PROGLIT; }
 	Operand* clone() { return new ProgLit(*this); }
+};
 
+class AtomLit : public Operator {
+    std::string name;
+public:
+	AtomLit(std::string str): name(str), Operator(0){}
+	~AtomLit() = default;
+	void ope() override;
+	std::string toString() const { return name; }
+	const std::string getValue() const { return name; }
+	Operand* clone() { return new AtomLit(*this); }
 };

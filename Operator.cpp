@@ -368,6 +368,116 @@ void OpeDIF::ope()
 	delete l2;
 }
 
+void OpeIFT::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+    if(l2->getClass() == PROGLIT) {
+        ProgLit* plit = dynamic_cast<ProgLit*>(l2);
+        plit->compile();
+        l2 = Computer::getInstance().getPile()->pull();
+    }
+    else if(l2->getClass() == EXPLIT) {
+        ExpLit* elit = dynamic_cast<ExpLit*>(l2);
+        try {
+            elit->compile();
+        }
+        catch(std::exception const& e) {
+            l2->exec();
+            l1->exec();
+            return;
+        }
+        l2 = Computer::getInstance().getPile()->pull();
+    }
+    if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)
+        delete l1;
+    else {
+        if(l1->getClass() == PROGLIT) {
+            ProgLit* plit = dynamic_cast<ProgLit*>(l1);
+            plit->compile();
+        }
+        else if(l1->getClass() == EXPLIT) {
+            ExpLit* elit = dynamic_cast<ExpLit*>(l1);
+            try {
+                elit->compile();
+            }
+            catch(std::exception const& e) {
+                l2->exec();
+                l1->exec();
+                return;
+            }
+        }
+        else l1->exec();
+    }
+    delete l2;
+}
+
+void OpeIFTE::ope()
+{
+    Litteral* l3 = Computer::getInstance().getPile()->pull();
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+    if(l2->getClass() == PROGLIT) {
+        ProgLit* plit = dynamic_cast<ProgLit*>(l2);
+        plit->compile();
+        l2 = Computer::getInstance().getPile()->pull();
+    }
+    else if(l2->getClass() == EXPLIT) {
+        ExpLit* elit = dynamic_cast<ExpLit*>(l2);
+        try {
+            elit->compile();
+        }
+        catch(std::exception const& e) {
+            l2->exec();
+            l1->exec();
+            l3->exec();
+            return;
+        }
+        l2 = Computer::getInstance().getPile()->pull();
+    }
+    if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0) {
+        if(l3->getClass() == PROGLIT) {
+            ProgLit* plit = dynamic_cast<ProgLit*>(l3);
+            plit->compile();
+        }
+        else if(l3->getClass() == EXPLIT) {
+            ExpLit* elit = dynamic_cast<ExpLit*>(l3);
+            try {
+                elit->compile();
+            }
+            catch(std::exception const& e) {
+                l2->exec();
+                l1->exec();
+                l3->exec();
+                return;
+            }
+        }
+        else l3->exec();
+        delete l1;
+    }
+    else {
+        if(l1->getClass() == PROGLIT) {
+            ProgLit* plit = dynamic_cast<ProgLit*>(l1);
+            plit->compile();
+        }
+        else if(l1->getClass() == EXPLIT) {
+            ExpLit* elit = dynamic_cast<ExpLit*>(l1);
+            try {
+                elit->compile();
+            }
+            catch(std::exception const& e) {
+                l2->exec();
+                l1->exec();
+                l3->exec();
+                return;
+            }
+        }
+        else l1->exec();
+        delete l3;
+    }
+    delete l2;
+}
+
 void OpeNOT::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
@@ -411,5 +521,3 @@ void OpeNEG::visitRationalLit(RationalLit* l)
 	RationalLit* lit = new RationalLit(-l->getNum(), l->getDen());
 	lit->exec();
 }
-
-
