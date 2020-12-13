@@ -343,3 +343,42 @@ void OpeSQRT::visitRationalLit(RationalLit *l) {
     }
     lit->exec();
 }
+
+void OpeTrigonometry::ope() {
+    Litteral *l = Computer::getInstance().getPile()->pull();
+    l->accept(this);
+    delete l;
+}
+
+void OpeTrigonometry::visitIntLit(IntLit *l1) {
+    NumLit *lit;
+    double res = getResult(l1->getValue());
+    if (Number::isInt(res)) {
+        lit = new IntLit(static_cast<int>(res));
+    } else {
+        lit = new RealLit(res);
+    }
+    lit->exec();
+}
+
+void OpeTrigonometry::visitRealLit(RealLit *l1) {
+    NumLit *lit;
+    double res = getResult(l1->getValue());
+    if (Number::isInt(res)) {
+        lit = new IntLit(static_cast<int>(res));
+    } else {
+        lit = new RealLit(res);
+    }
+    lit->exec();
+}
+
+void OpeTrigonometry::visitRationalLit(RationalLit *l1) {
+    NumLit *lit;
+    double res = getResult(l1->getValue());
+    if (Number::isInt(res)) {
+        lit = new IntLit(static_cast<int>(res));
+    } else {
+        lit = new RealLit(res);
+    }
+    lit->exec();
+}

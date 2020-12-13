@@ -205,3 +205,35 @@ public:
     void visitRealLit(RealLit* l1) override;
     void visitRationalLit(RationalLit* l1) override;
 };
+
+class OpeTrigonometry: public Operator, public Visitor {
+protected:
+    virtual double getResult(double x) = 0;
+public:
+    OpeTrigonometry(): Operator(1) {}
+    void ope() override;
+    void visitIntLit(IntLit* l1) override;
+    void visitRealLit(RealLit* l1) override;
+    void visitRationalLit(RationalLit* l1) override;
+};
+
+class OpeSIN: public OpeTrigonometry {
+public:
+    double getResult(double x) override { return std::sin(x); }
+    std::string toString() const { return "SIN"; }
+    Operand* clone() { return new OpeSIN(*this); }
+};
+
+class OpeCOS: public OpeTrigonometry {
+public:
+    double getResult(double x) override { return std::cos(x); }
+    std::string toString() const { return "COS"; }
+    Operand* clone() { return new OpeCOS(*this); }
+};
+
+class OpeTAN: public OpeTrigonometry {
+public:
+    double getResult(double x) override { return std::tan(x); }
+    std::string toString() const { return "TAN"; }
+    Operand* clone() { return new OpeTAN(*this); }
+};

@@ -143,3 +143,21 @@ public:
     SQRTFactory() = default;
     Operator * getOpe() override { return new OpeSQRT(); }
 };
+
+class SINFactory: public OpeFactory {
+public:
+    SINFactory() = default;
+    Operator * getOpe() override { return new OpeSIN(); }
+};
+
+class COSFactory: public OpeFactory {
+public:
+    COSFactory() = default;
+    Operator * getOpe() override { return new OpeCOS(); }
+};
+
+class TANFactory: public OpeFactory {
+public:
+    TANFactory() = default;
+    Operator * getOpe() override { return new OpeTAN(); }
+};

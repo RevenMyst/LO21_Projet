@@ -93,6 +93,18 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
     entry.second = new SQRTFactory();
     factories.insert(entry);
 
+    entry.first = "SIN";
+    entry.second = new SINFactory();
+    factories.insert(entry);
+
+    entry.first = "COS";
+    entry.second = new COSFactory();
+    factories.insert(entry);
+
+    entry.first = "TAN";
+    entry.second = new TANFactory();
+    factories.insert(entry);
+
 	return factories;
 }
 

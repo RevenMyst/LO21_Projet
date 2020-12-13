@@ -18,19 +18,21 @@ int operator-(IntLit& l1, IntLit& l2) {
 
 int main() {
 	NumLit* numLit;
-//    numLit= new IntLit(4);
+    numLit= new IntLit(60);
 //    numLit = new RealLit(3.5);
-    numLit = new RationalLit(4,9);
+//    numLit = new RationalLit(4,9);
     numLit->exec();
 	afficherPile();
-	std::cout << "Operator SQRT" << endl;
-	Operator* o = new OpeSQRT();
+	std::cout << "Operator SIN" << endl;
+	Operator* o = new OpeSIN();
 	o->exec();
 	afficherPile();
-    std::cout << "Operator SQRT" << endl;
-    Operator* o1 = new OpeSQRT();
+    std::cout << "Operator COS" << endl;
+    Operator* o1 = new OpeCOS();
     o1->exec();
     afficherPile();
+
+    std::cout << "sin:" << std::sin(60) << "... cos:" << std::cos(std::sin(60)) << std::endl;
 
 	return 0;
 }
