@@ -197,30 +197,32 @@ void ExpLit::compile()
     l1 = Computer::getInstance().getAtomManager()->getLitteral(s);
     if(l1!=nullptr) {
         Operand* l2;
-        if(l1->getClass()== INTLIT || l1->getClass()== REALLIT || l1->getClass()== RATIONALLIT) {
-            l2 = l1->clone();
-            l2->exec();
-        }
-        else if(l1->getClass()== PROGLIT) {
+        if(l1->getClass()== PROGLIT) {
             l2 = l1->clone();
             ProgLit* plit = dynamic_cast<ProgLit*>(l2);
             plit->compile();
+        }
+        else {
+            l2 = l1->clone();
+            l2->exec();
         }
     }
     else {
         throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
     }
+    delete this;
 }
 
 void AtomLit::ope()
 {
     const std::string s = getValue();
-    ExpLit exp = ExpLit(s);
+    ExpLit* exp = new ExpLit(s);
     try {
         exp.compile();
     }
     catch(std::exception const& e) {
         exp.exec();
+        delete exp;
     }
     delete this;
 }

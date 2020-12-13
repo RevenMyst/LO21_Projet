@@ -96,7 +96,6 @@ public:
 };
 
 class IntLit : public NumLit
-
 {
 	int value;
 public:
@@ -139,9 +138,8 @@ public:
 
 class AtomLit : public Operator {
     std::string name;
-	unsigned int arite = 0;
 public:
-	AtomLit(std::string str): name(str) {}
+	AtomLit(std::string str): name(str), Operator(0){}
 	~AtomLit() = default;
 	void ope() override;
 	std::string toString() const { return name; }

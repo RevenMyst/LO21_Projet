@@ -387,7 +387,6 @@ void OpeIFT::ope()
             l1->exec();
             return;
         }
-        delete elit;
         l2 = Computer::getInstance().getPile()->pull();
     }
     if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)
@@ -407,7 +406,6 @@ void OpeIFT::ope()
                 l1->exec();
                 return;
             }
-            delete elit;
         }
         else l1->exec();
     }
@@ -435,7 +433,6 @@ void OpeIFTE::ope()
             l3->exec();
             return;
         }
-        delete elit;
         l2 = Computer::getInstance().getPile()->pull();
     }
     if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0) {
@@ -454,7 +451,6 @@ void OpeIFTE::ope()
                 l3->exec();
                 return;
             }
-            delete elit;
         }
         else l3->exec();
         delete l1;
@@ -475,7 +471,6 @@ void OpeIFTE::ope()
                 l3->exec();
                 return;
             }
-            delete elit;
         }
         else l1->exec();
         delete l3;

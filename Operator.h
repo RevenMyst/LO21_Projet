@@ -193,18 +193,16 @@ public:
 };
 
 class OpeIFT : public Operator {
-    unsigned int arite = 2;
 public:
-    OpeIFT() = default;
+    OpeIFT() : Operator(2) {}
     void ope() override;
     std::string toString() const { return "IFT"; }
     Operand* clone() { return new OpeIFT(*this); }
 };
 
 class OpeIFTE : public Operator {
-    unsigned int arite = 3;
 public:
-    OpeIFTE() = default;
+    OpeIFTE() : Operator(3) {}
     void ope() override;
     std::string toString() const { return "IFTE"; }
     Operand* clone() { return new OpeIFTE(*this); }
