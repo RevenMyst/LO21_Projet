@@ -1,5 +1,9 @@
 #include <iostream>
 #include "Master.h"
+#include <QApplication>
+#include<QWidget>
+#include<QIcon>
+#include "interface.h"
 void afficherPile() {
 	std::cout << "==========PILE==========" << std::endl;
 	int i = 0;
@@ -11,25 +15,14 @@ void afficherPile() {
 	std::cout<<std::endl;
 }
 
-int main() {
-
-
-	try {
-		std::string command = "25";
-		Computer::getInstance().execCommand(command);
-		afficherPile();
-		command = "DEN";
-		Computer::getInstance().execCommand(command);
-		afficherPile();
-
-	}
-	catch (exception& e) {
-		std::cout << e.what();
-	}
-
-
-
-
-
-	return 0;
+int main(int argc,char*argv[]) {
+    QApplication app(argc, argv);
+    Interface fenetre;
+    fenetre.setWindowIcon(QIcon("icon.png"));
+    //...
+    fenetre.show();
+    return app.exec();
 }
+
+
+
