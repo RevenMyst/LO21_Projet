@@ -14,21 +14,17 @@ void afficherPile() {
 int main() {
 
 
-	try {
-		std::string command = "45 NEG [ DUP 0 < [ 0 SWAP - ]  IFT ]";
-		Computer::getInstance().execCommand(command);
-		afficherPile();
-		command = "EVAL";
-		Computer::getInstance().execCommand(command);
-		afficherPile();
 
-	}
-	catch (exception& e) {
-		std::cout << e.what();
-	}
+    IntLit * a = new IntLit(25);
+    IntLit * b = new IntLit(5);
+    a->exec();
+    afficherPile();
+    b->exec();
+    afficherPile();
 
-
-
+    OpeDivision * o = new OpeDivision();
+    o->exec();
+    afficherPile();
 
 
 	return 0;
