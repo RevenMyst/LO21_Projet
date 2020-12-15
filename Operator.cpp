@@ -550,6 +550,27 @@ void OpeDEN::visitRationalLit(RationalLit *l) {
     lit->exec();
 }
 
+void OpePOW::ope(){
+
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l2, l1)->exec();
+	}
+
+    else {
+        //ces deux litterales ne possedent pas d'actions avec une puissance on reempile et on envoie une erreur
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur : ces deux litterales ne peuvent etre mises à la puissance");
+
+		}
+
+
+}
+
+
 void OpeSQRT::ope() {
     Litteral *l = Computer::getInstance().getPile()->pull();
     l->accept(this);
