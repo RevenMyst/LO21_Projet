@@ -5,7 +5,6 @@
 #include "OpeFactory.h"
 #include "Action.h"
 #include <iostream>
-#include "Number.h"
 
 void OpeDUP::ope()
 {
