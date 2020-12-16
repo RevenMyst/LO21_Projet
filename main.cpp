@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "Master.h"
 void afficherPile() {
 	std::cout << "==========PILE==========" << std::endl;
@@ -13,16 +14,19 @@ void afficherPile() {
 
 int main() {
 
+    IntLit * a = new IntLit(9);
+    IntLit * b = new IntLit(2);
+    RealLit * c = new RealLit(0.3);
+    RealLit * d = new RealLit(3.5);
+    RationalLit * e = new RationalLit(1,3);
+    RationalLit * f = new RationalLit(27,8);
 
-
-    IntLit * a = new IntLit(25);
-    IntLit * b = new IntLit(5);
-    a->exec();
+    f->exec();
     afficherPile();
-    b->exec();
+    c->exec();
     afficherPile();
 
-    OpeDivision * o = new OpeDivision();
+    OpePOW * o = new OpePOW();
     o->exec();
     afficherPile();
 

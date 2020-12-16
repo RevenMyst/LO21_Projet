@@ -1,6 +1,7 @@
 #include "Action.h"
 #include "Litteral.h"
 #include<iostream>
+#include<math.h>
 
 map<tuple<string, LitType, LitType>, Action*> Action::getActions()
 {
@@ -162,6 +163,52 @@ map<tuple<string, LitType, LitType>, Action*> Action::getActions()
     t = make_tuple("/", INTLIT, INTLIT);
     entry.first = t;
     entry.second = new DivisionIntIntAction();
+    actions.insert(entry);
+
+    //Action Puissance (POW)
+    t = make_tuple("POW", INTLIT, RATIONALLIT);
+    entry.first = t;
+    entry.second = new POWSimpleAction();
+    actions.insert(entry);
+
+    t = make_tuple("POW", RATIONALLIT, RATIONALLIT);
+    entry.first = t;
+    entry.second = new POWRatRatRatRealAction();
+    actions.insert(entry);
+
+    t = make_tuple("POW", REALLIT, RATIONALLIT);
+    entry.first = t;
+    entry.second = new POWSimpleAction();
+    actions.insert(entry);
+
+    t = make_tuple("POW", INTLIT, REALLIT);
+    entry.first = t;
+    entry.second = new POWSimpleAction();
+    actions.insert(entry);
+
+    t = make_tuple("POW", RATIONALLIT, REALLIT);
+    entry.first = t;
+    entry.second = new POWRatRatRatRealAction();
+    actions.insert(entry);
+
+    t = make_tuple("POW", REALLIT, REALLIT);
+    entry.first = t;
+    entry.second = new POWSimpleAction();
+    actions.insert(entry);
+
+    t = make_tuple("POW", REALLIT, INTLIT);
+    entry.first = t;
+    entry.second = new POWSimpleAction();
+    actions.insert(entry);
+
+    t = make_tuple("POW", INTLIT, INTLIT);
+    entry.first = t;
+    entry.second = new POWIntIntAction();
+    actions.insert(entry);
+
+    t = make_tuple("POW", RATIONALLIT, INTLIT);
+    entry.first = t;
+    entry.second = new POWRatIntAction();
     actions.insert(entry);
 
     return actions;
@@ -337,4 +384,70 @@ Litteral* DivisionIntIntAction::exec(Litteral* l1, Litteral* l2)
         RationalLit * nrtl = new RationalLit(lit1->getValue(),lit2->getValue());
         return nrtl;
     }
+}
+Litteral* POWSimpleAction::exec(Litteral* l1, Litteral* l2)
+{
+    //Puissance : Int^Rationnel, Real^Rationnel, Int^Real, Real^Real, Real^Int
+    NumLit* lit1 = dynamic_cast<NumLit*>(l1);
+    NumLit* lit2 = dynamic_cast<NumLit*>(l2);
+
+    return new RealLit(pow(lit1->getValue(),lit2->getValue()));
+}
+
+
+Litteral* POWIntIntAction::exec(Litteral* l1, Litteral* l2)
+{
+    //Puissance : Int ^ Int
+    IntLit* lit1 = dynamic_cast<IntLit*>(l1);
+    IntLit* lit2 = dynamic_cast<IntLit*>(l2);
+
+    if(lit2->getValue()<0)
+    {
+        std::cout<<"neg"<<std::endl;
+        int puissance = lit2->getValue()*(-1);
+        int denominateur = pow(lit1->getValue(),puissance);
+        return new RationalLit(1, denominateur);
+
+    }
+    else
+    return new RealLit(pow(lit1->getValue(),lit2->getValue()));
+}
+
+Litteral* POWRatIntAction::exec(Litteral* l1, Litteral* l2)
+{
+    //Puissance : Rationnel ^ Int
+    RationalLit* rtl = dynamic_cast<RationalLit*>(l1);
+    IntLit* lit = dynamic_cast<IntLit*>(l2);
+
+    if(lit->getValue()<0)
+    {
+        int puissance = lit->getValue()*(-1);
+        int numerateur = pow(rtl->getDen(),puissance);
+        int denominateur = pow(rtl->getNum(),puissance);
+        return new RationalLit(numerateur,denominateur);
+    }
+
+else
+{
+    int numerateur = pow(rtl->getNum(),lit->getValue());
+    int denominateur = pow(rtl->getDen(),lit->getValue());
+    return new RationalLit(numerateur,denominateur);
+}
+}
+
+Litteral* POWRatRatRatRealAction::exec(Litteral* l1, Litteral* l2)
+{
+    //Puissance : Rationnel^Rationnel, Rationnel^Real
+    RationalLit* lit1 = dynamic_cast<RationalLit*>(l1);
+    NumLit* lit2 = dynamic_cast<NumLit*>(l2);
+    double numerateur= pow(lit1->getNum(),lit2->getValue());
+    double denominateur= pow(lit1->getDen(),lit2->getValue());
+
+    //Cas de la racine carrée, cubique ect
+    if((denominateur- floor(denominateur)==0)&&(numerateur - floor(numerateur)==0))
+        return new RationalLit(numerateur,denominateur);
+
+    else
+          return new RealLit(pow(lit1->getValue(),lit2->getValue()));
+
 }

@@ -264,6 +264,15 @@ public:
     void visitRationalLit(RationalLit* l1) override;
 };
 
+
+class OpePOW : public Operator {
+public:
+    OpePOW() : Operator(2) {}
+    void ope() override;
+    std::string toString() const { return "POW"; }
+    Operand* clone() { return new OpePOW(*this); }
+};
+
 class OpeSQRT: public Operator, public Visitor {
 public:
     OpeSQRT(): Operator(1) {}
