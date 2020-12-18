@@ -97,6 +97,10 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	entry.second = new IFTEFactory();
 	factories.insert(entry);
 
+    entry.first = "WHILE";
+    entry.second = new WHILEFactory();
+    factories.insert(entry);
+
 	entry.first = "NOT";
 	entry.second = new NOTFactory();
 	factories.insert(entry);

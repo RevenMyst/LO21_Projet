@@ -217,6 +217,14 @@ public:
     Operand* clone() { return new OpeIFTE(*this); }
 };
 
+class OpeWHILE : public Operator {
+public:
+    OpeWHILE() : Operator(2) {}
+    void ope() override;
+    std::string toString() const { return "WHILE"; }
+    Operand* clone() { return new OpeWHILE(*this); }
+};
+
 class OpeNOT: public Operator {
 public:
     OpeNOT() : Operator(1) {}
