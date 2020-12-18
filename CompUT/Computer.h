@@ -3,9 +3,13 @@
 #include <map>
 #include "Pile.h"
 #include <vector>
+#include <QObject>
 
 class Operand;
-class AtomManager {
+class AtomManager : public QObject
+{
+    Q_OBJECT
+private:
 	std::map<std::string, Litteral*> atoms;
 public:
 	AtomManager() = default;
@@ -14,11 +18,15 @@ public:
 	bool addAtom(const std::string, Litteral*);
 	bool removeAtom(const std::string str);
 	Litteral* getLitteral(const std::string str);
-	unsigned int size() { return atoms.size(); }
+    size_t size() { return atoms.size(); }
+    std::map<std::string, Litteral*> getAtoms(){return atoms;}
+signals:
+    void modifAtom();
 };
 
-class Computer
+class Computer : public QObject
 {
+    Q_OBJECT
 private:
 	std::list<AtomManager*> atomHistory;
 	std::list<Pile*> pileHistory;
@@ -40,6 +48,9 @@ public:
 	void execCommand(std::string str);
 	void save();
 	void backup();
+signals:
+    void modifEtat();
+    void error(const char* err,std::string);
 };
 
 

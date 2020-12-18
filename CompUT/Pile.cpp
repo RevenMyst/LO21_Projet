@@ -7,13 +7,13 @@ Pile::Pile(Pile& p)
 {
 	for (Litteral* l : p.litterals) {
 		
-		litterals.push_back(dynamic_cast<Litteral*>(l->clone()));
+        litterals.push_front(dynamic_cast<Litteral*>(l->clone()));
 	}
 }
 
 void Pile::push(Litteral* lit)
 {
-	litterals.push_back(lit);
+    litterals.push_front(lit);
 }
 
 Litteral* Pile::pull()
@@ -21,8 +21,8 @@ Litteral* Pile::pull()
 	if (size() > 0) {
 
 		Litteral* lit = nullptr;
-		lit = litterals.back();
-		litterals.pop_back();
+        lit = litterals.front();
+        litterals.pop_front();
 		return lit;
 	}
 	else {

@@ -2,6 +2,7 @@
 #include "Litteral.h"
 #include "Operator.h"
 #include "Computer.h"
+#include <iostream>
 #include <regex>
 
 std::vector<LitFactory*> LitFactory::getLitFactories()
@@ -58,6 +59,7 @@ bool ATOMFactory::isTypeLit(std::string str)
 
 Operand* ATOMFactory::getLitteral(std::string str)
 {
+    std::cout<<"-"<<str<<"-"<<std::endl;
 	return new AtomLit(str);
 }
 

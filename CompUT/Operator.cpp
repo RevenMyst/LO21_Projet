@@ -83,14 +83,13 @@ void OpeEVAL::ope()
 
 void OpeEVAL::visitExpLit(ExpLit* l)
 {
-	Litteral* lit = Computer::getInstance().getAtomManager()->getLitteral(l->getValue());
-	if (lit->getClass() == PROGLIT) {
-		dynamic_cast<ProgLit*>(lit)->compile();
-	}
-	else {
-		lit->exec();
-		delete lit;
-	}
+
+    try {
+        l->compile();
+    }
+    catch (std::exception const& e) {
+        l->exec();
+    }
 }
 
 void OpeEVAL::visitProgLit(ProgLit* l)
@@ -644,8 +643,6 @@ void AtomLit::ope()
 		exp->compile();
 	}
 	catch (std::exception const& e) {
-		exp->exec();
-		delete exp;
-	}
-	delete this;
+        exp->exec();
+    }
 }

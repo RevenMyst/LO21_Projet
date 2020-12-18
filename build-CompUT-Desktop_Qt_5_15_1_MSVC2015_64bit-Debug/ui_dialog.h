@@ -37,22 +37,10 @@ public:
     QLabel *label_7;
     QScrollArea *scrollArea_2;
     QWidget *scrollFun1;
-    QVBoxLayout *verticalLayout_4;
-    QPushButton *pushButton_71;
-    QPushButton *pushButton_72;
-    QPushButton *pushButton_74;
-    QPushButton *pushButton_75;
-    QPushButton *pushButton_76;
-    QPushButton *pushButton_77;
-    QPushButton *pushButton_78;
-    QPushButton *pushButton_79;
-    QPushButton *pushButton_80;
-    QPushButton *pushButton_81;
-    QPushButton *pushButton_82;
-    QPushButton *pushButton_83;
+    QVBoxLayout *scrollFun1Layout;
     QScrollArea *scrollArea_5;
     QWidget *scrollVar1;
-    QVBoxLayout *verticalLayout_6;
+    QVBoxLayout *scrollVar1Layout;
     QPushButton *ClearButton;
     QPushButton *DelButton;
     QPushButton *SpaceButton;
@@ -106,6 +94,8 @@ public:
     QPushButton *pushButton_13;
     QPushButton *pushButton_20;
     QPushButton *pushButton_21;
+    QPushButton *pushButton_47;
+    QPushButton *pushButton_59;
     QWidget *tabAlpha;
     QPushButton *pushButton_44;
     QPushButton *pushButton_48;
@@ -134,6 +124,8 @@ public:
     QPushButton *pushButton_108;
     QPushButton *pushButton_109;
     QPushButton *pushButton_110;
+    QPushButton *pushButton_111;
+    QPushButton *pushButton_112;
     QWidget *Parametres;
     QFrame *frame;
     QCheckBox *checkBox;
@@ -141,50 +133,26 @@ public:
     QSpinBox *spinBox;
     QLabel *label_4;
     QFrame *frame_2;
-    QLineEdit *lineEdit;
-    QLineEdit *lineEdit_3;
+    QLineEdit *varName;
+    QLineEdit *varValue;
     QLabel *label_8;
     QLabel *label_9;
-    QPushButton *pushButton_59;
-    QScrollArea *scrollArea_4;
-    QWidget *scrollAreaWidgetContents_4;
+    QPushButton *varSave;
+    QScrollArea *scrollAreaVar2;
+    QWidget *scrollVar2;
     QVBoxLayout *verticalLayout_5;
-    QPushButton *pushButton_84;
-    QPushButton *pushButton_85;
-    QPushButton *pushButton_86;
-    QPushButton *pushButton_87;
-    QPushButton *pushButton_88;
-    QPushButton *pushButton_89;
-    QPushButton *pushButton_90;
-    QPushButton *pushButton_91;
-    QPushButton *pushButton_92;
-    QPushButton *pushButton_93;
-    QPushButton *pushButton_94;
-    QPushButton *pushButton_95;
     QLabel *label;
     QLabel *label_2;
     QLabel *label_3;
     QFrame *frame_3;
-    QLineEdit *lineEdit_4;
-    QLineEdit *lineEdit_5;
+    QLineEdit *funName;
+    QLineEdit *funValue;
     QLabel *label_10;
     QLabel *label_11;
-    QPushButton *pushButton_73;
-    QScrollArea *scrollArea_3;
-    QWidget *scrollAreaWidgetContents_3;
+    QPushButton *funSave;
+    QScrollArea *scrollAreaFun2;
+    QWidget *scrollFun2;
     QVBoxLayout *verticalLayout_3;
-    QPushButton *pushButton_60;
-    QPushButton *pushButton_47;
-    QPushButton *pushButton_61;
-    QPushButton *pushButton_62;
-    QPushButton *pushButton_63;
-    QPushButton *pushButton_64;
-    QPushButton *pushButton_65;
-    QPushButton *pushButton_66;
-    QPushButton *pushButton_67;
-    QPushButton *pushButton_68;
-    QPushButton *pushButton_69;
-    QPushButton *pushButton_70;
     QLineEdit *errorLine;
     QPushButton *closeErrorLine;
 
@@ -207,6 +175,7 @@ public:
         Calculateur->setObjectName(QString::fromUtf8("Calculateur"));
         commandLine = new QLineEdit(Calculateur);
         commandLine->setObjectName(QString::fromUtf8("commandLine"));
+        commandLine->setEnabled(true);
         commandLine->setGeometry(QRect(400, 490, 361, 31));
         commandLine->setReadOnly(true);
         atomKeyboard = new QFrame(Calculateur);
@@ -231,82 +200,22 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollFun1 = new QWidget();
         scrollFun1->setObjectName(QString::fromUtf8("scrollFun1"));
-        scrollFun1->setGeometry(QRect(0, 0, 295, 528));
+        scrollFun1->setGeometry(QRect(0, 0, 309, 159));
         scrollFun1->setStyleSheet(QString::fromUtf8("QPushButton{height:25px; }"));
-        verticalLayout_4 = new QVBoxLayout(scrollFun1);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        pushButton_71 = new QPushButton(scrollFun1);
-        pushButton_71->setObjectName(QString::fromUtf8("pushButton_71"));
-
-        verticalLayout_4->addWidget(pushButton_71);
-
-        pushButton_72 = new QPushButton(scrollFun1);
-        pushButton_72->setObjectName(QString::fromUtf8("pushButton_72"));
-
-        verticalLayout_4->addWidget(pushButton_72);
-
-        pushButton_74 = new QPushButton(scrollFun1);
-        pushButton_74->setObjectName(QString::fromUtf8("pushButton_74"));
-
-        verticalLayout_4->addWidget(pushButton_74);
-
-        pushButton_75 = new QPushButton(scrollFun1);
-        pushButton_75->setObjectName(QString::fromUtf8("pushButton_75"));
-
-        verticalLayout_4->addWidget(pushButton_75);
-
-        pushButton_76 = new QPushButton(scrollFun1);
-        pushButton_76->setObjectName(QString::fromUtf8("pushButton_76"));
-
-        verticalLayout_4->addWidget(pushButton_76);
-
-        pushButton_77 = new QPushButton(scrollFun1);
-        pushButton_77->setObjectName(QString::fromUtf8("pushButton_77"));
-
-        verticalLayout_4->addWidget(pushButton_77);
-
-        pushButton_78 = new QPushButton(scrollFun1);
-        pushButton_78->setObjectName(QString::fromUtf8("pushButton_78"));
-
-        verticalLayout_4->addWidget(pushButton_78);
-
-        pushButton_79 = new QPushButton(scrollFun1);
-        pushButton_79->setObjectName(QString::fromUtf8("pushButton_79"));
-
-        verticalLayout_4->addWidget(pushButton_79);
-
-        pushButton_80 = new QPushButton(scrollFun1);
-        pushButton_80->setObjectName(QString::fromUtf8("pushButton_80"));
-
-        verticalLayout_4->addWidget(pushButton_80);
-
-        pushButton_81 = new QPushButton(scrollFun1);
-        pushButton_81->setObjectName(QString::fromUtf8("pushButton_81"));
-
-        verticalLayout_4->addWidget(pushButton_81);
-
-        pushButton_82 = new QPushButton(scrollFun1);
-        pushButton_82->setObjectName(QString::fromUtf8("pushButton_82"));
-
-        verticalLayout_4->addWidget(pushButton_82);
-
-        pushButton_83 = new QPushButton(scrollFun1);
-        pushButton_83->setObjectName(QString::fromUtf8("pushButton_83"));
-
-        verticalLayout_4->addWidget(pushButton_83);
-
+        scrollFun1Layout = new QVBoxLayout(scrollFun1);
+        scrollFun1Layout->setObjectName(QString::fromUtf8("scrollFun1Layout"));
         scrollArea_2->setWidget(scrollFun1);
         scrollArea_5 = new QScrollArea(atomKeyboard);
         scrollArea_5->setObjectName(QString::fromUtf8("scrollArea_5"));
         scrollArea_5->setGeometry(QRect(20, 50, 311, 161));
-        scrollArea_5->setStyleSheet(QString::fromUtf8("QPushButton{height:20px;margin:5px;}\342\231\246"));
+        scrollArea_5->setStyleSheet(QString::fromUtf8("QPushButton{height:20px;margin:5px;}"));
         scrollArea_5->setWidgetResizable(true);
         scrollVar1 = new QWidget();
         scrollVar1->setObjectName(QString::fromUtf8("scrollVar1"));
         scrollVar1->setGeometry(QRect(0, 0, 309, 159));
         scrollVar1->setStyleSheet(QString::fromUtf8("QPushButton{height:25px; }"));
-        verticalLayout_6 = new QVBoxLayout(scrollVar1);
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        scrollVar1Layout = new QVBoxLayout(scrollVar1);
+        scrollVar1Layout->setObjectName(QString::fromUtf8("scrollVar1Layout"));
         scrollArea_5->setWidget(scrollVar1);
         ClearButton = new QPushButton(Calculateur);
         ClearButton->setObjectName(QString::fromUtf8("ClearButton"));
@@ -324,8 +233,6 @@ public:
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
         listWidget->setGeometry(QRect(400, 30, 421, 431));
         listWidget->setFont(font);
-        listWidget->setStyleSheet(QString::fromUtf8("QListWidget{color:white;background-color:#52acb5; border:1px solid #48828c;\n"
-"display:flex;justify-content:flex-end;flex-direction:column-reverse;}"));
         tabOpeAlpha = new QTabWidget(Calculateur);
         tabOpeAlpha->setObjectName(QString::fromUtf8("tabOpeAlpha"));
         tabOpeAlpha->setGeometry(QRect(20, 10, 351, 461));
@@ -403,6 +310,7 @@ public:
         pushButton_3 = new QPushButton(tabOpe);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
         pushButton_3->setGeometry(QRect(150, 260, 51, 31));
+        pushButton_3->setFocusPolicy(Qt::NoFocus);
         pushButton_3->setAutoFillBackground(false);
         pushButton_8 = new QPushButton(tabOpe);
         pushButton_8->setObjectName(QString::fromUtf8("pushButton_8"));
@@ -470,6 +378,14 @@ public:
         pushButton_21 = new QPushButton(tabOpe);
         pushButton_21->setObjectName(QString::fromUtf8("pushButton_21"));
         pushButton_21->setGeometry(QRect(150, 180, 51, 31));
+        pushButton_47 = new QPushButton(tabOpe);
+        pushButton_47->setObjectName(QString::fromUtf8("pushButton_47"));
+        pushButton_47->setGeometry(QRect(90, 20, 51, 31));
+        pushButton_47->setFocusPolicy(Qt::NoFocus);
+        pushButton_59 = new QPushButton(tabOpe);
+        pushButton_59->setObjectName(QString::fromUtf8("pushButton_59"));
+        pushButton_59->setGeometry(QRect(30, 20, 51, 31));
+        pushButton_59->setFocusPolicy(Qt::NoFocus);
         tabOpeAlpha->addTab(tabOpe, QString());
         tabAlpha = new QWidget();
         tabAlpha->setObjectName(QString::fromUtf8("tabAlpha"));
@@ -550,10 +466,16 @@ public:
         pushButton_108->setGeometry(QRect(270, 250, 51, 31));
         pushButton_109 = new QPushButton(tabAlpha);
         pushButton_109->setObjectName(QString::fromUtf8("pushButton_109"));
-        pushButton_109->setGeometry(QRect(90, 290, 51, 31));
+        pushButton_109->setGeometry(QRect(30, 290, 51, 31));
         pushButton_110 = new QPushButton(tabAlpha);
         pushButton_110->setObjectName(QString::fromUtf8("pushButton_110"));
-        pushButton_110->setGeometry(QRect(210, 290, 51, 31));
+        pushButton_110->setGeometry(QRect(150, 290, 51, 31));
+        pushButton_111 = new QPushButton(tabAlpha);
+        pushButton_111->setObjectName(QString::fromUtf8("pushButton_111"));
+        pushButton_111->setGeometry(QRect(210, 290, 51, 31));
+        pushButton_112 = new QPushButton(tabAlpha);
+        pushButton_112->setObjectName(QString::fromUtf8("pushButton_112"));
+        pushButton_112->setGeometry(QRect(270, 290, 51, 31));
         tabOpeAlpha->addTab(tabAlpha, QString());
         tabWidget->addTab(Calculateur, QString());
         Parametres = new QWidget();
@@ -577,9 +499,10 @@ public:
         spinBox = new QSpinBox(frame);
         spinBox->setObjectName(QString::fromUtf8("spinBox"));
         spinBox->setGeometry(QRect(10, 100, 42, 31));
+        spinBox->setValue(10);
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(60, 100, 291, 31));
+        label_4->setGeometry(QRect(60, 100, 281, 31));
         QFont font2;
         font2.setPointSize(12);
         font2.setKerning(true);
@@ -592,12 +515,12 @@ public:
         frame_2->setStyleSheet(QString::fromUtf8(""));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
-        lineEdit = new QLineEdit(frame_2);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(10, 50, 331, 31));
-        lineEdit_3 = new QLineEdit(frame_2);
-        lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
-        lineEdit_3->setGeometry(QRect(10, 120, 331, 31));
+        varName = new QLineEdit(frame_2);
+        varName->setObjectName(QString::fromUtf8("varName"));
+        varName->setGeometry(QRect(10, 50, 331, 31));
+        varValue = new QLineEdit(frame_2);
+        varValue->setObjectName(QString::fromUtf8("varValue"));
+        varValue->setGeometry(QRect(10, 120, 331, 31));
         label_8 = new QLabel(frame_2);
         label_8->setObjectName(QString::fromUtf8("label_8"));
         label_8->setGeometry(QRect(10, 20, 71, 21));
@@ -606,81 +529,21 @@ public:
         label_9->setObjectName(QString::fromUtf8("label_9"));
         label_9->setGeometry(QRect(10, 90, 101, 21));
         label_9->setFont(font1);
-        pushButton_59 = new QPushButton(frame_2);
-        pushButton_59->setObjectName(QString::fromUtf8("pushButton_59"));
-        pushButton_59->setGeometry(QRect(250, 460, 80, 21));
-        scrollArea_4 = new QScrollArea(frame_2);
-        scrollArea_4->setObjectName(QString::fromUtf8("scrollArea_4"));
-        scrollArea_4->setGeometry(QRect(10, 160, 331, 291));
-        scrollArea_4->setStyleSheet(QString::fromUtf8(""));
-        scrollArea_4->setWidgetResizable(true);
-        scrollAreaWidgetContents_4 = new QWidget();
-        scrollAreaWidgetContents_4->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_4"));
-        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 315, 828));
-        scrollAreaWidgetContents_4->setStyleSheet(QString::fromUtf8("QPushButton{height:50px; margin:5px;}"));
-        verticalLayout_5 = new QVBoxLayout(scrollAreaWidgetContents_4);
+        varSave = new QPushButton(frame_2);
+        varSave->setObjectName(QString::fromUtf8("varSave"));
+        varSave->setGeometry(QRect(250, 460, 80, 21));
+        scrollAreaVar2 = new QScrollArea(frame_2);
+        scrollAreaVar2->setObjectName(QString::fromUtf8("scrollAreaVar2"));
+        scrollAreaVar2->setGeometry(QRect(10, 160, 331, 291));
+        scrollAreaVar2->setStyleSheet(QString::fromUtf8("QPushButton{height:20px;margin:5px;}"));
+        scrollAreaVar2->setWidgetResizable(true);
+        scrollVar2 = new QWidget();
+        scrollVar2->setObjectName(QString::fromUtf8("scrollVar2"));
+        scrollVar2->setGeometry(QRect(0, 0, 329, 289));
+        scrollVar2->setStyleSheet(QString::fromUtf8("QPushButton{height:20px;margin:5px;}"));
+        verticalLayout_5 = new QVBoxLayout(scrollVar2);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        pushButton_84 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_84->setObjectName(QString::fromUtf8("pushButton_84"));
-
-        verticalLayout_5->addWidget(pushButton_84);
-
-        pushButton_85 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_85->setObjectName(QString::fromUtf8("pushButton_85"));
-
-        verticalLayout_5->addWidget(pushButton_85);
-
-        pushButton_86 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_86->setObjectName(QString::fromUtf8("pushButton_86"));
-
-        verticalLayout_5->addWidget(pushButton_86);
-
-        pushButton_87 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_87->setObjectName(QString::fromUtf8("pushButton_87"));
-
-        verticalLayout_5->addWidget(pushButton_87);
-
-        pushButton_88 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_88->setObjectName(QString::fromUtf8("pushButton_88"));
-
-        verticalLayout_5->addWidget(pushButton_88);
-
-        pushButton_89 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_89->setObjectName(QString::fromUtf8("pushButton_89"));
-
-        verticalLayout_5->addWidget(pushButton_89);
-
-        pushButton_90 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_90->setObjectName(QString::fromUtf8("pushButton_90"));
-
-        verticalLayout_5->addWidget(pushButton_90);
-
-        pushButton_91 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_91->setObjectName(QString::fromUtf8("pushButton_91"));
-
-        verticalLayout_5->addWidget(pushButton_91);
-
-        pushButton_92 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_92->setObjectName(QString::fromUtf8("pushButton_92"));
-
-        verticalLayout_5->addWidget(pushButton_92);
-
-        pushButton_93 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_93->setObjectName(QString::fromUtf8("pushButton_93"));
-
-        verticalLayout_5->addWidget(pushButton_93);
-
-        pushButton_94 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_94->setObjectName(QString::fromUtf8("pushButton_94"));
-
-        verticalLayout_5->addWidget(pushButton_94);
-
-        pushButton_95 = new QPushButton(scrollAreaWidgetContents_4);
-        pushButton_95->setObjectName(QString::fromUtf8("pushButton_95"));
-
-        verticalLayout_5->addWidget(pushButton_95);
-
-        scrollArea_4->setWidget(scrollAreaWidgetContents_4);
+        scrollAreaVar2->setWidget(scrollVar2);
         label = new QLabel(Parametres);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(40, 10, 111, 16));
@@ -700,12 +563,12 @@ public:
         frame_3->setStyleSheet(QString::fromUtf8(""));
         frame_3->setFrameShape(QFrame::StyledPanel);
         frame_3->setFrameShadow(QFrame::Raised);
-        lineEdit_4 = new QLineEdit(frame_3);
-        lineEdit_4->setObjectName(QString::fromUtf8("lineEdit_4"));
-        lineEdit_4->setGeometry(QRect(10, 50, 331, 31));
-        lineEdit_5 = new QLineEdit(frame_3);
-        lineEdit_5->setObjectName(QString::fromUtf8("lineEdit_5"));
-        lineEdit_5->setGeometry(QRect(10, 120, 331, 31));
+        funName = new QLineEdit(frame_3);
+        funName->setObjectName(QString::fromUtf8("funName"));
+        funName->setGeometry(QRect(10, 50, 331, 31));
+        funValue = new QLineEdit(frame_3);
+        funValue->setObjectName(QString::fromUtf8("funValue"));
+        funValue->setGeometry(QRect(10, 120, 331, 31));
         label_10 = new QLabel(frame_3);
         label_10->setObjectName(QString::fromUtf8("label_10"));
         label_10->setGeometry(QRect(10, 20, 71, 21));
@@ -714,83 +577,25 @@ public:
         label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setGeometry(QRect(10, 90, 101, 21));
         label_11->setFont(font1);
-        pushButton_73 = new QPushButton(frame_3);
-        pushButton_73->setObjectName(QString::fromUtf8("pushButton_73"));
-        pushButton_73->setGeometry(QRect(250, 460, 80, 21));
-        scrollArea_3 = new QScrollArea(frame_3);
-        scrollArea_3->setObjectName(QString::fromUtf8("scrollArea_3"));
-        scrollArea_3->setGeometry(QRect(10, 160, 331, 291));
-        scrollArea_3->setWidgetResizable(true);
-        scrollAreaWidgetContents_3 = new QWidget();
-        scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 315, 828));
-        scrollAreaWidgetContents_3->setStyleSheet(QString::fromUtf8("QPushButton{height:50px; margin:5px;}"));
-        verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_3);
+        funSave = new QPushButton(frame_3);
+        funSave->setObjectName(QString::fromUtf8("funSave"));
+        funSave->setGeometry(QRect(250, 460, 80, 21));
+        scrollAreaFun2 = new QScrollArea(frame_3);
+        scrollAreaFun2->setObjectName(QString::fromUtf8("scrollAreaFun2"));
+        scrollAreaFun2->setGeometry(QRect(10, 160, 331, 291));
+        scrollAreaFun2->setStyleSheet(QString::fromUtf8("QPushButton{height:20px;margin:5px;}"));
+        scrollAreaFun2->setWidgetResizable(true);
+        scrollFun2 = new QWidget();
+        scrollFun2->setObjectName(QString::fromUtf8("scrollFun2"));
+        scrollFun2->setGeometry(QRect(0, 0, 329, 289));
+        scrollFun2->setStyleSheet(QString::fromUtf8("QPushButton{height:20px;margin:5px;}"));
+        verticalLayout_3 = new QVBoxLayout(scrollFun2);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        pushButton_60 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_60->setObjectName(QString::fromUtf8("pushButton_60"));
-
-        verticalLayout_3->addWidget(pushButton_60);
-
-        pushButton_47 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_47->setObjectName(QString::fromUtf8("pushButton_47"));
-
-        verticalLayout_3->addWidget(pushButton_47);
-
-        pushButton_61 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_61->setObjectName(QString::fromUtf8("pushButton_61"));
-
-        verticalLayout_3->addWidget(pushButton_61);
-
-        pushButton_62 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_62->setObjectName(QString::fromUtf8("pushButton_62"));
-
-        verticalLayout_3->addWidget(pushButton_62);
-
-        pushButton_63 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_63->setObjectName(QString::fromUtf8("pushButton_63"));
-
-        verticalLayout_3->addWidget(pushButton_63);
-
-        pushButton_64 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_64->setObjectName(QString::fromUtf8("pushButton_64"));
-
-        verticalLayout_3->addWidget(pushButton_64);
-
-        pushButton_65 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_65->setObjectName(QString::fromUtf8("pushButton_65"));
-
-        verticalLayout_3->addWidget(pushButton_65);
-
-        pushButton_66 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_66->setObjectName(QString::fromUtf8("pushButton_66"));
-
-        verticalLayout_3->addWidget(pushButton_66);
-
-        pushButton_67 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_67->setObjectName(QString::fromUtf8("pushButton_67"));
-
-        verticalLayout_3->addWidget(pushButton_67);
-
-        pushButton_68 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_68->setObjectName(QString::fromUtf8("pushButton_68"));
-
-        verticalLayout_3->addWidget(pushButton_68);
-
-        pushButton_69 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_69->setObjectName(QString::fromUtf8("pushButton_69"));
-
-        verticalLayout_3->addWidget(pushButton_69);
-
-        pushButton_70 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_70->setObjectName(QString::fromUtf8("pushButton_70"));
-
-        verticalLayout_3->addWidget(pushButton_70);
-
-        scrollArea_3->setWidget(scrollAreaWidgetContents_3);
+        scrollAreaFun2->setWidget(scrollFun2);
         tabWidget->addTab(Parametres, QString());
         errorLine = new QLineEdit(Dialog);
         errorLine->setObjectName(QString::fromUtf8("errorLine"));
+        errorLine->setEnabled(true);
         errorLine->setGeometry(QRect(260, 10, 721, 31));
         errorLine->setLayoutDirection(Qt::RightToLeft);
         errorLine->setStyleSheet(QString::fromUtf8("background:#f44455;color:white;border-radius:0px;border:none;font-weight:bold;padding-left:20px;padding-top:5px;padding-bottom:5px;font-family:Arial;"));
@@ -805,7 +610,7 @@ public:
 
         tabWidget->setCurrentIndex(0);
         listWidget->setCurrentRow(-1);
-        tabOpeAlpha->setCurrentIndex(1);
+        tabOpeAlpha->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Dialog);
@@ -816,18 +621,6 @@ public:
         Dialog->setWindowTitle(QCoreApplication::translate("Dialog", "CompUT", nullptr));
         label_6->setText(QCoreApplication::translate("Dialog", "Variables", nullptr));
         label_7->setText(QCoreApplication::translate("Dialog", "Fonctions", nullptr));
-        pushButton_71->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_72->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_74->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_75->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_76->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_77->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_78->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_79->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_80->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_81->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_82->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_83->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
         ClearButton->setText(QCoreApplication::translate("Dialog", "EFFACER", nullptr));
         DelButton->setText(QCoreApplication::translate("Dialog", "\342\206\220", nullptr));
         SpaceButton->setText(QCoreApplication::translate("Dialog", "ESPACE", nullptr));
@@ -878,6 +671,8 @@ public:
         pushButton_13->setText(QCoreApplication::translate("Dialog", "+", nullptr));
         pushButton_20->setText(QCoreApplication::translate("Dialog", "COS", nullptr));
         pushButton_21->setText(QCoreApplication::translate("Dialog", "SIN", nullptr));
+        pushButton_47->setText(QCoreApplication::translate("Dialog", "FORGET", nullptr));
+        pushButton_59->setText(QCoreApplication::translate("Dialog", "STO", nullptr));
         tabOpeAlpha->setTabText(tabOpeAlpha->indexOf(tabOpe), QCoreApplication::translate("Dialog", "Operateurs", nullptr));
         pushButton_44->setText(QCoreApplication::translate("Dialog", "A", nullptr));
         pushButton_48->setText(QCoreApplication::translate("Dialog", "B", nullptr));
@@ -906,6 +701,8 @@ public:
         pushButton_108->setText(QCoreApplication::translate("Dialog", "Y", nullptr));
         pushButton_109->setText(QCoreApplication::translate("Dialog", "Z", nullptr));
         pushButton_110->setText(QCoreApplication::translate("Dialog", "'", nullptr));
+        pushButton_111->setText(QCoreApplication::translate("Dialog", "[", nullptr));
+        pushButton_112->setText(QCoreApplication::translate("Dialog", "]", nullptr));
         tabOpeAlpha->setTabText(tabOpeAlpha->indexOf(tabAlpha), QCoreApplication::translate("Dialog", "Alphabet", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(Calculateur), QCoreApplication::translate("Dialog", "Calculateur", nullptr));
         checkBox->setText(QCoreApplication::translate("Dialog", "Masquer le clavier d'operateurs", nullptr));
@@ -913,39 +710,15 @@ public:
         label_4->setText(QCoreApplication::translate("Dialog", "Nombre d'\303\251l\303\251ments de la pile affich\303\251s", nullptr));
         label_8->setText(QCoreApplication::translate("Dialog", "Nom", nullptr));
         label_9->setText(QCoreApplication::translate("Dialog", "Valeur", nullptr));
-        pushButton_59->setText(QCoreApplication::translate("Dialog", "Sauvegarder", nullptr));
-        pushButton_84->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_85->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_86->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_87->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_88->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_89->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_90->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_91->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_92->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_93->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_94->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_95->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
+        varSave->setText(QCoreApplication::translate("Dialog", "Sauvegarder", nullptr));
         label->setText(QCoreApplication::translate("Dialog", "Parametres", nullptr));
         label_2->setText(QCoreApplication::translate("Dialog", "Variables", nullptr));
         label_3->setText(QCoreApplication::translate("Dialog", "Fonctions", nullptr));
         label_10->setText(QCoreApplication::translate("Dialog", "Nom", nullptr));
         label_11->setText(QCoreApplication::translate("Dialog", "Valeur", nullptr));
-        pushButton_73->setText(QCoreApplication::translate("Dialog", "Sauvegarder", nullptr));
-        pushButton_60->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_47->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_61->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_62->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_63->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_64->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_65->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_66->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_67->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_68->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_69->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
-        pushButton_70->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
+        funSave->setText(QCoreApplication::translate("Dialog", "Sauvegarder", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(Parametres), QCoreApplication::translate("Dialog", "Parametres", nullptr));
-        errorLine->setText(QCoreApplication::translate("Dialog", "Erreur : Ces deux litterales ne peuvent etre additionn\303\251e", nullptr));
+        errorLine->setText(QString());
         closeErrorLine->setText(QCoreApplication::translate("Dialog", "X", nullptr));
     } // retranslateUi
 

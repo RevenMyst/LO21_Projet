@@ -44,10 +44,10 @@ public:
 	ExpLit(std::string str) :name(str) {}
 	std::string toString() const override{ return "'"+name+"'"; }
 	const std::string getValue() const { return name; }
-	void accept(Visitor* visitor);
+    void accept(Visitor* visitor) override;
 	~ExpLit() = default;
-	LitType getClass() const { return EXPLIT; }
-	Operand* clone() { return new ExpLit(*this); }
+    LitType getClass() const override{ return EXPLIT; }
+    Operand* clone() override{ return new ExpLit(*this); }
     void compile();
 };
 
@@ -58,13 +58,13 @@ public:
 	RealLit(float v) : value(v) {}
 	int getInt() const {return floor(value);}
 	double getMant() const {return value-getInt();}
-	double getValue() const { return value; }
-	std::string toString() const;
-	void accept(Visitor* visitor);
+    double getValue() const override{ return value; }
+    std::string toString() const override;
+    void accept(Visitor* visitor) override;
 	void exec() override;
 	~RealLit() = default;
-	LitType getClass() const { return REALLIT; }
-	Operand* clone() { return new RealLit(*this); }
+    LitType getClass() const override{ return REALLIT; }
+    Operand* clone() override{ return new RealLit(*this); }
 
 };
 
