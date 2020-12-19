@@ -626,37 +626,21 @@ void OpeTrigonometry::ope() {
     delete l;
 }
 
-void OpeTrigonometry::visitIntLit(IntLit *l1) {
-    NumLit *lit;
-    double res = getResult(l1->getValue());
-    if (Number::isInt(res)) {
-        lit = new IntLit(static_cast<int>(res));
-    } else {
-        lit = new RealLit(res);
-    }
+void OpeTrigonometry::pushValue(double x) {
+    RealLit *lit = new RealLit(x);
     lit->exec();
+}
+
+void OpeTrigonometry::visitIntLit(IntLit *l1) {
+    pushValue(getResult(l1->getValue()));
 }
 
 void OpeTrigonometry::visitRealLit(RealLit *l1) {
-    NumLit *lit;
-    double res = getResult(l1->getValue());
-    if (Number::isInt(res)) {
-        lit = new IntLit(static_cast<int>(res));
-    } else {
-        lit = new RealLit(res);
-    }
-    lit->exec();
+    pushValue(getResult(l1->getValue()));
 }
 
 void OpeTrigonometry::visitRationalLit(RationalLit *l1) {
-    NumLit *lit;
-    double res = getResult(l1->getValue());
-    if (Number::isInt(res)) {
-        lit = new IntLit(static_cast<int>(res));
-    } else {
-        lit = new RealLit(res);
-    }
-    lit->exec();
+    pushValue(getResult(l1->getValue()));
 }
 
 

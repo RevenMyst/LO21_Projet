@@ -285,6 +285,7 @@ public:
 };
 
 class OpeTrigonometry: public Operator, public Visitor {
+    void pushValue(double x);
 protected:
     virtual double getResult(double x) = 0;
 public:
@@ -314,4 +315,25 @@ public:
     double getResult(double x) override { return std::tan(x); }
     std::string toString() const { return "TAN"; }
     Operand* clone() { return new OpeTAN(*this); }
+};
+
+class OpeARCSIN: public OpeTrigonometry {
+public:
+    double getResult(double x) override { return std::asin(x); }
+    std::string toString() const { return "ARCSIN"; }
+    Operand* clone() { return new OpeARCSIN(*this); }
+};
+
+class OpeARCCOS: public OpeTrigonometry {
+public:
+    double getResult(double x) override { return std::acos(x); }
+    std::string toString() const { return "ARCCOS"; }
+    Operand* clone() { return new OpeARCCOS(*this); }
+};
+
+class OpeARCTAN: public OpeTrigonometry {
+public:
+    double getResult(double x) override { return std::atan(x); }
+    std::string toString() const { return "ARCTAN"; }
+    Operand* clone() { return new OpeARCTAN(*this); }
 };
