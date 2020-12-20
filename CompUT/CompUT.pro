@@ -14,7 +14,6 @@ SOURCES += \
     LitFactory.cpp \
     Litteral.cpp \
     OpeFactory.cpp \
-    Operand.cpp \
     Operator.cpp \
     Pile.cpp \
     main.cpp \
