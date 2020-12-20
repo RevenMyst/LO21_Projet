@@ -5,6 +5,7 @@
 #include "OpeFactory.h"
 #include "Action.h"
 #include <iostream>
+#include <cmath>
 
 void OpeDUP::ope()
 {
@@ -183,11 +184,11 @@ void OpeEQUAL::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	CompLit* lit1 = dynamic_cast<CompLit>(l1);
- 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+    CompLit* lit1 = dynamic_cast<CompLit*>(l1);
+    CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l1->getComparableValue() == l2->getComparableValue()) {
+            if (lit1->getComparableValue() == lit2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -210,11 +211,11 @@ void OpeLTE::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	CompLit* lit1 = dynamic_cast<CompLit>(l1);
- 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+    CompLit* lit1 = dynamic_cast<CompLit*>(l1);
+    CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l1->getComparableValue() <= l2->getComparableValue()) {
+            if (lit1->getComparableValue() <= lit2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -226,6 +227,7 @@ void OpeLTE::ope()
 			l1->exec();
 			l2->exec();
 			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
+    }
 }
 
 void OpeGTE::ope()
@@ -233,11 +235,11 @@ void OpeGTE::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	CompLit* lit1 = dynamic_cast<CompLit>(l1);
- 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+    CompLit* lit1 = dynamic_cast<CompLit*>(l1);
+    CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l1->getComparableValue() >= l2->getComparableValue()) {
+            if (lit1->getComparableValue() >= lit2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -249,6 +251,7 @@ void OpeGTE::ope()
 			l1->exec();
 			l2->exec();
 			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
+    }
 }
 
 void OpeGT::ope()
@@ -256,11 +259,11 @@ void OpeGT::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	CompLit* lit1 = dynamic_cast<CompLit>(l1);
- 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+    CompLit* lit1 = dynamic_cast<CompLit*>(l1);
+    CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l1->getComparableValue() > l2->getComparableValue()) {
+            if (lit1->getComparableValue() > lit2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -272,18 +275,18 @@ void OpeGT::ope()
 			l1->exec();
 			l2->exec();
 			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
+    }
 }
-
 void OpeLT::ope()
 {
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	CompLit* lit1 = dynamic_cast<CompLit>(l1);
- 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+    CompLit* lit1 = dynamic_cast<CompLit*>(l1);
+    CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l1->getComparableValue() < l2->getComparableValue()) {
+            if (lit1->getComparableValue() < lit2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -303,11 +306,11 @@ void OpeDIF::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	CompLit* lit1 = dynamic_cast<CompLit>(l1);
- 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+    CompLit* lit1 = dynamic_cast<CompLit*>(l1);
+    CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l1->getComparableValue() != l2->getComparableValue()) {
+            if (lit1->getComparableValue() != lit2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -628,22 +631,23 @@ void OpePOW::ope(){
 
 void OpeEXP::ope() {
 		Litteral *l = Computer::getInstance().getPile()->pull();
+        std::cout<<"EXP";
 		l->accept(this);
 		delete l;
 }
 
 void OpeEXP::visitIntLit(IntLit *l){
-		IntLit *lit = new IntLit(exp(l->getValue()));
+        RealLit *lit = new RealLit(exp(l->getValue()));
 		lit->exec();
 }
 
 void OpeEXP::visitRationalLit(RationalLit *l){
-		RationalLit *lit = new RationalLit(exp(l->getValue()));
+        RealLit *lit = new RealLit(exp(l->getValue()));
 		lit->exec();
 }
 
 void OpeEXP::visitRealLit(RealLit *l){
-		RealLit *lit = new RealLit(exp((l->getValue()));
+        RealLit *lit = new RealLit(exp(l->getValue()));
 		lit->exec();
 }
 

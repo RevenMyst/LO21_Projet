@@ -17,7 +17,7 @@ std::vector<LitFactory*> LitFactory::getLitFactories()
 
 	litteraux.push_back(new PROGFactory());
 
-	litteraux.push_back(new EXPFactory());
+    litteraux.push_back(new ExpressionFactory());
 
 	//litteraux.push_back(new RATFactory());
 	//La commande ne peux creer directement une litterale rationnelle
@@ -73,12 +73,12 @@ Operand* REALFactory::getLitteral(std::string str)
     return nullptr;
 }
 
-bool EXPFactory::isTypeLit(std::string str)
+bool ExpressionFactory::isTypeLit(std::string str)
 {
 	return std::regex_match(str, std::regex("'([A-Z]+[0-9]*)+'"));;
 }
 
-Operand* EXPFactory::getLitteral(std::string str)
+Operand* ExpressionFactory::getLitteral(std::string str)
 {
 	str = str.substr(1, str.size() - 2);
 	return new ExpLit(str);

@@ -33,9 +33,9 @@ public:
 	Operand* getLitteral(std::string str);
 };
 
-class EXPFactory : public LitFactory {
+class ExpressionFactory : public LitFactory {
 public:
-	EXPFactory() = default;
+    ExpressionFactory() = default;
 	bool isTypeLit(std::string str);
 	Operand* getLitteral(std::string str);
 };

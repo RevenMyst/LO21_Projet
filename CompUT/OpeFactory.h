@@ -229,3 +229,11 @@ public:
     Operator * getOpe() override { return new OpeARCTAN(); }
 };
 
+class EXPFactory: public OpeFactory {
+public:
+    EXPFactory() = default;
+    Operator * getOpe() override { return new OpeEXP(); }
+};
+
+
+

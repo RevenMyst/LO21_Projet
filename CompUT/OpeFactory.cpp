@@ -149,6 +149,10 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
     entry.second = new ARCTANFactory();
     factories.insert(entry);
 
+    entry.first = "EXP";
+    entry.second = new EXPFactory();
+    factories.insert(entry);
+
 	return factories;
 }
 
