@@ -221,10 +221,12 @@ void OpeLTE::ope()
 			else {
 				p->push(new IntLit(0));
 			}
-	}
-
-	delete l1;
-	delete l2;
+			delete l1;
+			delete l2;
+	} else {
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
 }
 
 void OpeGTE::ope()
@@ -242,10 +244,12 @@ void OpeGTE::ope()
 			else {
 				p->push(new IntLit(0));
 			}
-	}
-
-	delete l1;
-	delete l2;
+			delete l1;
+			delete l2;
+	} else {
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
 }
 
 void OpeGT::ope()
@@ -263,9 +267,12 @@ void OpeGT::ope()
 			else {
 				p->push(new IntLit(0));
 			}
-	}
-	delete l1;
-	delete l2;
+			delete l1;
+			delete l2;
+	} else {
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
 }
 
 void OpeLT::ope()
@@ -283,9 +290,13 @@ void OpeLT::ope()
 			else {
 				p->push(new IntLit(0));
 			}
+			delete l1;
+			delete l2;
+	} else {
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
 	}
-	delete l1;
-	delete l2;
 }
 
 void OpeDIF::ope()
