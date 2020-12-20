@@ -141,6 +141,18 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
     entry.second = new TANFactory();
     factories.insert(entry);
 
+    entry.first = "ARCSIN";
+    entry.second = new ARCSINFactory();
+    factories.insert(entry);
+
+    entry.first = "ARCCOS";
+    entry.second = new ARCCOSFactory();
+    factories.insert(entry);
+
+    entry.first = "ARCTAN";
+    entry.second = new ARCTANFactory();
+    factories.insert(entry);
+
 	return factories;
 }
 

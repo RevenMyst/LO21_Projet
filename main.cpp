@@ -14,22 +14,37 @@ void afficherPile() {
 
 int main() {
 
-    IntLit * a = new IntLit(9);
+    IntLit * a = new IntLit(30);
     IntLit * b = new IntLit(2);
-    RealLit * c = new RealLit(0.3);
+    RealLit * c = new RealLit(0.5);
     RealLit * d = new RealLit(3.5);
     RationalLit * e = new RationalLit(1,3);
     RationalLit * f = new RationalLit(27,8);
 
-    f->exec();
-    afficherPile();
+	try {
+		std::string command = "25";
+		Computer::getInstance().execCommand(command);
+		afficherPile();
+		command = "DEN";
+		Computer::getInstance().execCommand(command);
+		afficherPile();
+
+	}
+	catch (exception& e) {
+		std::cout << e.what();
+	}
+
+
+
+    Operator* oper1 = new OpeARCSIN();
+    Operator* oper2 = new OpeARCCOS();
+
     c->exec();
     afficherPile();
-
-    OpePOW * o = new OpePOW();
-    o->exec();
+    oper1->exec();
     afficherPile();
-
+    oper2->exec();
+    afficherPile();
 
 	return 0;
 }

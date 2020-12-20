@@ -216,3 +216,24 @@ public:
     TANFactory() = default;
     Operator * getOpe() override { return new OpeTAN(); }
 };
+
+
+class ARCSINFactory: public OpeFactory {
+public:
+    ARCSINFactory() = default;
+    Operator * getOpe() override { return new OpeARCSIN(); }
+};
+
+class ARCCOSFactory: public OpeFactory {
+public:
+    ARCCOSFactory() = default;
+    Operator * getOpe() override { return new OpeARCCOS(); }
+};
+
+class ARCTANFactory: public OpeFactory {
+public:
+    ARCTANFactory() = default;
+    Operator * getOpe() override { return new OpeARCTAN(); }
+};
+
+
