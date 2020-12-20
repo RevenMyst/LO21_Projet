@@ -273,6 +273,17 @@ public:
     Operand* clone() { return new OpePOW(*this); }
 };
 
+class OpeLN : public Operator {
+public:
+		opeLN() : Operator(1) {}
+		void ope() override;
+		std::string toString() const { return "LN"; }
+		Operand* clone() { return new OpeLN(*this); }
+		void visitIntLit(IntLit* l1) override;
+		void visitRealLit(RealLit* l1) override;
+		void visitRationalLit(RationalLit* l1) override;
+};
+
 class OpeSQRT: public Operator, public Visitor {
 public:
     OpeSQRT(): Operator(1) {}
