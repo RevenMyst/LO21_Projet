@@ -1,0 +1,3 @@
+﻿  main.cpp
+E:\Mes Documents\amaury\Developpement\C++\LO21_Projet\Litteral.h(59,34): warning C4244: 'return' : conversion de 'float' en 'int', perte possible de données
+  LO21_Projet.vcxproj -> E:\Mes Documents\amaury\Developpement\C++\LO21_Projet\Debug\LO21_Projet.exe
