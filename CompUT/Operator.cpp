@@ -183,11 +183,23 @@ void OpeEQUAL::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	if (*l2 == *l1) {
-		p->push(new IntLit(1));
-	}
-	else {
-		p->push(new IntLit(0));
+	CompLit* lit1 = dynamic_cast<CompLit>(l1);
+ 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+	if(lit1 != nullptr && lit2 != nullptr)
+	{
+			if (l1->getComparableValue() == l2->getComparableValue()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
+	}else{
+			if(l1->toString() == l2->toString()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
 	}
 	delete l1;
 	delete l2;
@@ -198,14 +210,22 @@ void OpeLTE::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	if (*l2 <= *l1) {
-		p->push(new IntLit(1));
-	}
-	else {
-		p->push(new IntLit(0));
-	}
-	delete l1;
-	delete l2;
+	CompLit* lit1 = dynamic_cast<CompLit>(l1);
+ 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+	if(lit1 != nullptr && lit2 != nullptr)
+	{
+			if (l1->getComparableValue() <= l2->getComparableValue()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
+			delete l1;
+			delete l2;
+	} else {
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
 }
 
 void OpeGTE::ope()
@@ -213,14 +233,22 @@ void OpeGTE::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	if (*l2 >= *l1) {
-		p->push(new IntLit(1));
-	}
-	else {
-		p->push(new IntLit(0));
-	}
-	delete l1;
-	delete l2;
+	CompLit* lit1 = dynamic_cast<CompLit>(l1);
+ 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+	if(lit1 != nullptr && lit2 != nullptr)
+	{
+			if (l1->getComparableValue() >= l2->getComparableValue()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
+			delete l1;
+			delete l2;
+	} else {
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
 }
 
 void OpeGT::ope()
@@ -228,16 +256,74 @@ void OpeGT::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	if (*l2 > *l1) {
-		p->push(new IntLit(1));
+	CompLit* lit1 = dynamic_cast<CompLit>(l1);
+ 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+	if(lit1 != nullptr && lit2 != nullptr)
+	{
+			if (l1->getComparableValue() > l2->getComparableValue()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
+			delete l1;
+			delete l2;
+	} else {
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
+}
+
+void OpeLT::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	CompLit* lit1 = dynamic_cast<CompLit>(l1);
+ 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+	if(lit1 != nullptr && lit2 != nullptr)
+	{
+			if (l1->getComparableValue() < l2->getComparableValue()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
+			delete l1;
+			delete l2;
+	} else {
+			l1->exec();
+			l2->exec();
+			throw ComputerException("Erreur: ces deux litterales ne sont pas comparables");
 	}
-	else {
-		p->push(new IntLit(0));
+}
+
+void OpeDIF::ope()
+{
+	Pile* p = Computer::getInstance().getPile();
+	Litteral* l1 = p->pull();
+	Litteral* l2 = p->pull();
+	CompLit* lit1 = dynamic_cast<CompLit>(l1);
+ 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+	if(lit1 != nullptr && lit2 != nullptr)
+	{
+			if (l1->getComparableValue() != l2->getComparableValue()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
+	}else{
+			if(l1->toString() == l2->toString()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
 	}
 	delete l1;
 	delete l2;
 }
-
 
 void OpePlus::ope()
 {
@@ -336,35 +422,7 @@ void OpeDivision::ope()
 		}
 }
 }
-void OpeLT::ope()
-{
-	Pile* p = Computer::getInstance().getPile();
-	Litteral* l1 = p->pull();
-	Litteral* l2 = p->pull();
-	if (*l2 < *l1) {
-		p->push(new IntLit(1));
-	}
-	else {
-		p->push(new IntLit(0));
-	}
-	delete l1;
-	delete l2;
-}
 
-void OpeDIF::ope()
-{
-	Pile* p = Computer::getInstance().getPile();
-	Litteral* l1 = p->pull();
-	Litteral* l2 = p->pull();
-	if (*l2 != *l1) {
-		p->push(new IntLit(1));
-	}
-	else {
-		p->push(new IntLit(0));
-	}
-	delete l1;
-	delete l2;
-}
 
 void OpeIFT::ope()
 {
@@ -548,6 +606,48 @@ void OpeDEN::visitRationalLit(RationalLit *l) {
     lit->exec();
 }
 
+void OpePOW::ope(){
+
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
+	if (Action::exist(t)) {
+		Action::getActions().at(t)->exec(l2, l1)->exec();
+	}
+
+    else {
+        //ces deux litterales ne possedent pas d'actions avec une puissance on reempile et on envoie une erreur
+        l2->exec();
+        l1->exec();
+        throw ComputerException("Erreur : ces deux litterales ne peuvent etre mises à la puissance");
+
+		}
+
+
+}
+
+void OpeEXP::ope() {
+		Litteral *l = Computer::getInstance().getPile()->pull();
+		l->accept(this);
+		delete l;
+}
+
+void OpeEXP::visitIntLit(IntLit *l){
+		IntLit *lit = new IntLit(exp(l->getValue()));
+		lit->exec();
+}
+
+void OpeEXP::visitRationalLit(RationalLit *l){
+		RationalLit *lit = new RationalLit(exp(l->getValue()));
+		lit->exec();
+}
+
+void OpeEXP::visitRealLit(RealLit *l){
+		RealLit *lit = new RealLit(exp((l->getValue()));
+		lit->exec();
+}
+
+
 void OpeSQRT::ope() {
     Litteral *l = Computer::getInstance().getPile()->pull();
     l->accept(this);
@@ -574,7 +674,8 @@ void OpeSQRT::visitRealLit(RealLit *l) {
 		lit->exec();
 	}
 	else {
-		
+		l->exec(); 
+		throw ComputerException("Erreur : racine carrée négative.");
 	}
 }
 
@@ -604,28 +705,21 @@ void OpeTrigonometry::ope() {
     delete l;
 }
 
-void OpeTrigonometry::visitIntLit(IntLit *l1) {
-    NumLit *lit;
-    double res = getResult(l1->getValue());
-    //reel automatiquement convertit en int si mantisse nulle dasn exec
-    lit = new RealLit(res);
+void OpeTrigonometry::pushValue(double x) {
+    RealLit *lit = new RealLit(x);
     lit->exec();
+}
+
+void OpeTrigonometry::visitIntLit(IntLit *l1) {
+    pushValue(getResult(l1->getValue()));
 }
 
 void OpeTrigonometry::visitRealLit(RealLit *l1) {
-    NumLit *lit;
-    double res = getResult(l1->getValue());
-	//reel automatiquement convertit en int si mantisse nulle dasn exec
-	lit = new RealLit(res);
-    lit->exec();
+    pushValue(getResult(l1->getValue()));
 }
 
 void OpeTrigonometry::visitRationalLit(RationalLit *l1) {
-    NumLit *lit;
-    double res = getResult(l1->getValue());
-	//reel automatiquement convertit en int si mantisse nulle dasn exec
-	lit = new RealLit(res);
-	lit->exec();
+    pushValue(getResult(l1->getValue()));
 }
 
 

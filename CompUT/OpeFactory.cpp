@@ -117,6 +117,10 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
     entry.second = new DENFactory();
     factories.insert(entry);
 
+    entry.first = "POW";
+    entry.second = new POWFactory();
+    factories.insert(entry);
+
     entry.first = "SQRT";
     entry.second = new SQRTFactory();
     factories.insert(entry);
@@ -131,6 +135,18 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 
     entry.first = "TAN";
     entry.second = new TANFactory();
+    factories.insert(entry);
+
+    entry.first = "ARCSIN";
+    entry.second = new ARCSINFactory();
+    factories.insert(entry);
+
+    entry.first = "ARCCOS";
+    entry.second = new ARCCOSFactory();
+    factories.insert(entry);
+
+    entry.first = "ARCTAN";
+    entry.second = new ARCTANFactory();
     factories.insert(entry);
 
 	return factories;

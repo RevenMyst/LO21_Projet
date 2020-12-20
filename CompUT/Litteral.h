@@ -23,12 +23,11 @@ public:
 
 };
 
-bool operator==(const Litteral& lit1, const Litteral& lit2);
-bool operator!=(const Litteral& lit1, const Litteral& lit2);
-bool operator>=(const Litteral& lit1, const Litteral& lit2);
-bool operator<=(const Litteral& lit1, const Litteral& lit2);
-bool operator>(const Litteral& lit1, const Litteral& lit2);
-bool operator<(const Litteral& lit1, const Litteral& lit2);
+
+class CompLit{
+public:
+	virtual double getComparableValue() = 0;
+};
 
 class NumLit : public Litteral {
 public:
@@ -51,7 +50,7 @@ public:
     void compile();
 };
 
-class RealLit : public NumLit
+class RealLit : public CompLit, public NumLit
 {
 	float value;
 public:
@@ -63,12 +62,14 @@ public:
     void accept(Visitor* visitor) override;
 	void exec() override;
 	~RealLit() = default;
-    LitType getClass() const override{ return REALLIT; }
-    Operand* clone() override{ return new RealLit(*this); }
+	LitType getClass() const { return REALLIT; }
+	Operand* clone() { return new RealLit(*this); }
+	double getComparableValue() { return value; }
+
 
 };
 
-class RationalLit : public NumLit
+class RationalLit : public CompLit, public NumLit
 {
 	int numerateur;
 	int denominateur;
@@ -91,9 +92,10 @@ public:
 	~RationalLit() = default;
 	LitType getClass() const { return RATIONALLIT; }
 	Operand* clone() { return new RationalLit(*this); }
+	double getComparableValue() { return (numerateur / denominateur); }
 };
 
-class IntLit : public NumLit
+class IntLit : public CompLit, public NumLit
 {
 	int value;
 public:
@@ -106,6 +108,8 @@ public:
 	~IntLit() = default;
 	LitType getClass() const { return INTLIT; }
 	Operand* clone();
+	double getComparableValue() { return value; }
+
 
 };
 
@@ -133,5 +137,3 @@ public:
 	LitType getClass() const { return PROGLIT; }
 	Operand* clone() { return new ProgLit(*this); }
 };
-
-

@@ -92,30 +92,67 @@ public:
 
 //Classe Division Actions ---
 class DivisionSimpleAction : public Action {
-	//division simples : int - int, int - reel, reel - int, reel - reel, reel - rationnel, rationnel - reel
+	//division simples : int / int, int / reel, reel / int, reel / reel, reel / rationnel, rationnel / reel
 public:
 	DivisionSimpleAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
 class DivisionRatRatAction : public Action {
-	//division : rationnel - rationnel
+	//division : rationnel / rationnel
 public:
 	DivisionRatRatAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
 class DivisionRatIntAction : public Action {
-	//division: rationnel - int
+	//division: rationnel / int
 public:
 	DivisionRatIntAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
 class DivisionIntRatAction : public Action {
-	//division : int - rationnel
+	//division : int / rationnel
 public:
 	DivisionIntRatAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+class DivisionIntIntAction : public Action {
+	//division : int / int
+public:
+	DivisionIntIntAction() = default;
+	Litteral* exec(Litteral* l1, Litteral* l2) override;
+};
+
+
+//Classe Puissance Actions ---
+class POWSimpleAction : public Action {
+    //Puissance : Int^Rationnel, Real^Rationnel, Int^Real, Real^Real, Real^Int
+public:
+	POWSimpleAction() = default;
+	Litteral* exec(Litteral* l1, Litteral* l2) override;
+};
+
+
+class POWIntIntAction : public Action {
+	//Puissance: int ^ int
+public:
+	POWIntIntAction() = default;
+	Litteral* exec(Litteral* l1, Litteral* l2) override;
+};
+
+class POWRatIntAction : public Action {
+	//Puissance: Rationnel ^ int
+public:
+	POWRatIntAction() = default;
+	Litteral* exec(Litteral* l1, Litteral* l2) override;
+};
+
+class POWRatRatRatRealAction : public Action {
+	//Puissance: Rationnel ^ Rationnel, Rationnal^Real
+public:
+	POWRatRatRatRealAction() = default;
+	Litteral* exec(Litteral* l1, Litteral* l2) override;
+};
