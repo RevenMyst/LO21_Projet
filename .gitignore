@@ -1,2 +1,3 @@
 *.obj
 *.tlog
+build-CompUT-Desktop_Qt_5_15_1_MSVC2015_64bit-Debug/debug/*

@@ -175,7 +175,7 @@ void OpeFORGET::ope()
 void OpeFORGET::visitExpLit(ExpLit* l)
 {
 	if (!Computer::getInstance().getAtomManager()->removeAtom(l->getValue())) {
-		throw ComputerException("Aucune variable ou programme n'est associ� a cette expression");
+        throw ComputerException("Aucune variable ou programme n'est associé a cette expression");
 	}
 	delete l;
 }
