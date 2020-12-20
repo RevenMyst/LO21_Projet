@@ -184,11 +184,23 @@ void OpeEQUAL::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	if (*l2 == *l1) {
-		p->push(new IntLit(1));
-	}
-	else {
-		p->push(new IntLit(0));
+	CompLit* lit1 = dynamic_cast<CompLit>(l1);
+ 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+	if(lit1 != nullptr && lit2 != nullptr)
+	{
+			if (l1->getComparableValue() == l2->getComparableValue()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
+	}else{
+			if(l1->toString() == l2->toString()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
 	}
 	delete l1;
 	delete l2;
@@ -203,7 +215,7 @@ void OpeLTE::ope()
  	CompLit* lit2 = dynamic_cast<CompLit>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l2->getComparableValue() <= l1->getComparableValue()) {
+			if (l1->getComparableValue() <= l2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -224,7 +236,7 @@ void OpeGTE::ope()
  	CompLit* lit2 = dynamic_cast<CompLit>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l2->getComparableValue() >= l1->getComparableValue()) {
+			if (l1->getComparableValue() >= l2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -245,7 +257,7 @@ void OpeGT::ope()
  	CompLit* lit2 = dynamic_cast<CompLit>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l2->getComparableValue() > l1->getComparableValue()) {
+			if (l1->getComparableValue() > l2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -265,12 +277,12 @@ void OpeLT::ope()
  	CompLit* lit2 = dynamic_cast<CompLit>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-			if (l2->getComparableValue() < l1->getComparableValue()) {
+			if (l1->getComparableValue() < l2->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
 				p->push(new IntLit(0));
-			}		
+			}
 	}
 	delete l1;
 	delete l2;
@@ -281,11 +293,23 @@ void OpeDIF::ope()
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
-	if (*l2 != *l1) {
-		p->push(new IntLit(1));
-	}
-	else {
-		p->push(new IntLit(0));
+	CompLit* lit1 = dynamic_cast<CompLit>(l1);
+ 	CompLit* lit2 = dynamic_cast<CompLit>(l2);
+	if(lit1 != nullptr && lit2 != nullptr)
+	{
+			if (l1->getComparableValue() != l2->getComparableValue()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
+	}else{
+			if(l1->toString() == l2->toString()) {
+				p->push(new IntLit(1));
+			}
+			else {
+				p->push(new IntLit(0));
+			}
 	}
 	delete l1;
 	delete l2;
