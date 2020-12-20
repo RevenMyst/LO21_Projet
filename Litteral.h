@@ -23,12 +23,6 @@ public:
 
 };
 
-//bool operator==(const Litteral& lit1, const Litteral& lit2);
-//bool operator!=(const Litteral& lit1, const Litteral& lit2);
-//bool operator>=(const Litteral& lit1, const Litteral& lit2);
-//bool operator<=(const Litteral& lit1, const Litteral& lit2);
-//bool operator>(const Litteral& lit1, const Litteral& lit2);
-//bool operator<(const Litteral& lit1, const Litteral& lit2);
 
 class CompLit{
 public:
