@@ -56,7 +56,7 @@ public:
     void compile();
 };
 
-class RealLit : public NumLit
+class RealLit : public CompLit
 {
 	float value;
 public:
@@ -72,9 +72,10 @@ public:
 	Operand* clone() { return new RealLit(*this); }
 	double getComparableValue() { return value; }
 
+
 };
 
-class RationalLit : public NumLit
+class RationalLit : public CompLit
 {
 	int numerateur;
 	int denominateur;
@@ -100,7 +101,7 @@ public:
 	double getComparableValue() { return (numerateur / denominateur); }
 };
 
-class IntLit : public NumLit
+class IntLit : public CompLit
 {
 	int value;
 public:
@@ -114,6 +115,7 @@ public:
 	LitType getClass() const { return INTLIT; }
 	Operand* clone();
 	double getComparableValue() { return value; }
+
 
 };
 
