@@ -23,12 +23,17 @@ public:
 
 };
 
-bool operator==(const Litteral& lit1, const Litteral& lit2);
-bool operator!=(const Litteral& lit1, const Litteral& lit2);
-bool operator>=(const Litteral& lit1, const Litteral& lit2);
-bool operator<=(const Litteral& lit1, const Litteral& lit2);
-bool operator>(const Litteral& lit1, const Litteral& lit2);
-bool operator<(const Litteral& lit1, const Litteral& lit2);
+//bool operator==(const Litteral& lit1, const Litteral& lit2);
+//bool operator!=(const Litteral& lit1, const Litteral& lit2);
+//bool operator>=(const Litteral& lit1, const Litteral& lit2);
+//bool operator<=(const Litteral& lit1, const Litteral& lit2);
+//bool operator>(const Litteral& lit1, const Litteral& lit2);
+//bool operator<(const Litteral& lit1, const Litteral& lit2);
+
+class CompLit : public NumLit{
+public:
+	virtual double getComparableValue() = 0;
+};
 
 class NumLit : public Litteral {
 public:
@@ -65,6 +70,7 @@ public:
 	~RealLit() = default;
 	LitType getClass() const { return REALLIT; }
 	Operand* clone() { return new RealLit(*this); }
+	double getComparableValue() { return value; }
 
 };
 
@@ -91,6 +97,7 @@ public:
 	~RationalLit() = default;
 	LitType getClass() const { return RATIONALLIT; }
 	Operand* clone() { return new RationalLit(*this); }
+	double getComparableValue() { return (numerateur / denominateur); }
 };
 
 class IntLit : public NumLit
@@ -106,6 +113,7 @@ public:
 	~IntLit() = default;
 	LitType getClass() const { return INTLIT; }
 	Operand* clone();
+	double getComparableValue() { return value; }
 
 };
 
@@ -133,5 +141,3 @@ public:
 	LitType getClass() const { return PROGLIT; }
 	Operand* clone() { return new ProgLit(*this); }
 };
-
-
