@@ -54,7 +54,7 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 	factories.insert(entry);
 
 	entry.first = "/";
-	entry.second = new DIVFactory();
+    entry.second = new DIVISIONFactory();
 	factories.insert(entry);
 
 	entry.first = "=";

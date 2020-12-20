@@ -7,7 +7,7 @@ Pile::Pile(Pile& p)
 {
 	for (Litteral* l : p.litterals) {
 		
-        litterals.push_front(dynamic_cast<Litteral*>(l->clone()));
+        litterals.push_back(dynamic_cast<Litteral*>(l->clone()));
 	}
 }
 

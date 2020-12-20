@@ -71,24 +71,24 @@ class RationalLit : public CompLit, public NumLit
 	int denominateur;
 public:
 	RationalLit(int n, int d) : numerateur(n), denominateur(d) {
-		ReductionRational();
+        ReductionRational();
 		if (denominateur == 0) throw ComputerException("erreur, pas possible d'avoir un division par 0");
 		if (denominateur < 0) {
 			denominateur *= -1;
 			numerateur *= -1;
 		}
 	}
-
-	void accept(Visitor* visitor);
+    void exec() override;
+    void accept(Visitor* visitor) override;
 	void ReductionRational();
 	int getNum() const { return numerateur; }
 	int getDen() const { return denominateur; }
-	double getValue() const;
-	std::string toString() const;
+    double getValue() const override;
+    std::string toString() const override;
 	~RationalLit() = default;
-	LitType getClass() const { return RATIONALLIT; }
-	Operand* clone() { return new RationalLit(*this); }
-	double getComparableValue() { return (numerateur / denominateur); }
+    LitType getClass() const override{ return RATIONALLIT; }
+    Operand* clone() override{ return new RationalLit(*this); }
+    double getComparableValue() override{ return (numerateur / denominateur); }
 };
 
 class IntLit : public CompLit, public NumLit

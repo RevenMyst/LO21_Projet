@@ -4,56 +4,7 @@
 #include "Visitor.h"
 #include "Computer.h"
 
-bool operator==(const Litteral& lit1, const Litteral& lit2)
-{
 
-	// si variable numeriques : cast et compare valeurs
-	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT) {
-		return (dynamic_cast<const NumLit&>(lit1).getValue() == dynamic_cast<const NumLit&>(lit2).getValue());
-	}
-	else {
-		// sinon compare string value (2 programme identiques on la meme string value
-		return lit1.toString() == lit2.toString();
-	}
-}
-
-bool operator!=(const Litteral& lit1, const Litteral& lit2)
-{
-	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT) {
-		return (dynamic_cast<const NumLit&>(lit1).getValue() != dynamic_cast<const NumLit&>(lit2).getValue());
-	}
-	else {
-		return lit1.toString() != lit2.toString();
-	}
-}
-// pour les operateurs < > <= >= on ne peux comparer que les variables numeriques
-bool operator>=(const Litteral& lit1, const Litteral& lit2)
-{
-	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT)
-		return (dynamic_cast<const NumLit&>(lit1).getValue() >= dynamic_cast<const NumLit&>(lit2).getValue());
-	return false;
-}
-
-bool operator<=(const Litteral& lit1, const Litteral& lit2)
-{
-	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT)
-		return (dynamic_cast<const NumLit&>(lit1).getValue() <= dynamic_cast<const NumLit&>(lit2).getValue());
-	return false;
-}
-
-bool operator<(const Litteral& lit1, const Litteral& lit2)
-{
-	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT)
-		return (dynamic_cast<const NumLit&>(lit1).getValue() < dynamic_cast<const NumLit&>(lit2).getValue());
-	return false;
-}
-
-bool operator>(const Litteral& lit1, const Litteral& lit2)
-{
-	if (lit1.getClass() != EXPLIT && lit2.getClass() != EXPLIT && lit1.getClass() != PROGLIT && lit2.getClass() != PROGLIT)
-		return (dynamic_cast<const NumLit&>(lit1).getValue() > dynamic_cast<const NumLit&>(lit2).getValue());
-	return false;
-}
 
 /*******************************/
 /***********REALLIT*************/
@@ -107,12 +58,24 @@ void RationalLit::accept(Visitor* visitor)
 void RationalLit::ReductionRational() {
 	for (int i = numerateur * denominateur; i > 1; i--) {
 		if ((denominateur % i == 0) && (numerateur % i == 0)) {
+            std::cout<<i<<" "<<denominateur % i<<" "<<numerateur % i<<endl;
 			denominateur /= i;
 			numerateur /= i;
 		}
 	}
 }
-
+void RationalLit::exec()
+{
+    if(denominateur == 1){
+        Computer::getInstance().getPile()->push(new IntLit(numerateur));
+        delete this;
+    }else if(numerateur == 0){
+        Computer::getInstance().getPile()->push(new IntLit(0));
+        delete this;
+    }else{
+        Computer::getInstance().getPile()->push(this);
+    }
+}
 double RationalLit::getValue() const {
 
 	return (numerateur / (double)denominateur);

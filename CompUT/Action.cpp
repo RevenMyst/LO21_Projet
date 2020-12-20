@@ -328,6 +328,7 @@ Litteral* MoinsIntRatAction::exec(Litteral* l1, Litteral* l2)
 //Actions Division -----
 Litteral* DivisionSimpleAction::exec(Litteral* l1, Litteral* l2)
 {
+    std::cout<<"Division Simple"<<endl;
     //Divisions simples : int/reel, reel/int, reel/reel, reel/rationnel, rationnel/reel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
@@ -337,6 +338,7 @@ Litteral* DivisionSimpleAction::exec(Litteral* l1, Litteral* l2)
 
 Litteral* DivisionRatRatAction::exec(Litteral* l1, Litteral* l2)
 {
+    std::cout<<"Division Rat Rat"<<endl;
     //Division : Rationnel / Rationnel
     RationalLit* rtl1 = dynamic_cast<RationalLit*>(l1);
     RationalLit* rtl2 = dynamic_cast<RationalLit*>(l2);
@@ -347,6 +349,7 @@ Litteral* DivisionRatRatAction::exec(Litteral* l1, Litteral* l2)
 }
 Litteral* DivisionRatIntAction::exec(Litteral* l1, Litteral* l2)
 {
+    std::cout<<"Division Rat Int"<<endl;
     //Division : Rationnel/Int
     RationalLit * rtl = dynamic_cast<RationalLit*>(l1);
     IntLit * i1 = dynamic_cast<IntLit*>(l2);
@@ -357,6 +360,7 @@ Litteral* DivisionRatIntAction::exec(Litteral* l1, Litteral* l2)
 }
 Litteral* DivisionIntRatAction::exec(Litteral* l1, Litteral* l2)
 {
+    std::cout<<"Division Int Rat"<<endl;
     //Division : Int/Rationnel
     RationalLit * rtl = dynamic_cast<RationalLit*>(l2);
     IntLit * i1 = dynamic_cast<IntLit*>(l1);
@@ -368,22 +372,13 @@ Litteral* DivisionIntRatAction::exec(Litteral* l1, Litteral* l2)
 
 Litteral* DivisionIntIntAction::exec(Litteral* l1, Litteral* l2)
 {
+    std::cout<<"Division Int Int"<<endl;
     //Division : Int/Int
     IntLit* lit1 = dynamic_cast<IntLit*>(l1);
     IntLit* lit2 = dynamic_cast<IntLit*>(l2);
+    RationalLit * nrtl = new RationalLit(lit1->getValue(),lit2->getValue());
+    return nrtl;
 
-    //Si mantisse nulle : creation d'un Int
-    double val = lit1->getValue()/lit2->getValue();
-    if((val - floor(val))==0){
-       IntLit * nil = new IntLit(val);
-       return nil;
-
-       }
-    //Sinon : creation d'un Rationnel
-    else{
-        RationalLit * nrtl = new RationalLit(lit1->getValue(),lit2->getValue());
-        return nrtl;
-    }
 }
 Litteral* POWSimpleAction::exec(Litteral* l1, Litteral* l2)
 {
