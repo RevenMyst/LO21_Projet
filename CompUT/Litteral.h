@@ -13,14 +13,10 @@ enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT, ATOMLIT };
 class Visitor;
 class Litteral : public Operand
 {
-protected:
-	unsigned int arite = 0;
 public:
-
 	virtual void accept(Visitor* visitor) = 0;
 	virtual LitType getClass() const = 0;
 	void exec() override;
-
 };
 
 
@@ -55,16 +51,16 @@ class RealLit : public CompLit, public NumLit
 	float value;
 public:
 	RealLit(float v) : value(v) {}
-	int getInt() const {return floor(value);}
+    int getInt() const {return (int)floor(value);}
 	double getMant() const {return value-getInt();}
     double getValue() const override{ return value; }
     std::string toString() const override;
     void accept(Visitor* visitor) override;
 	void exec() override;
 	~RealLit() = default;
-	LitType getClass() const { return REALLIT; }
-	Operand* clone() { return new RealLit(*this); }
-	double getComparableValue() { return value; }
+    LitType getClass() const override{ return REALLIT; }
+    Operand* clone() override{ return new RealLit(*this); }
+    double getComparableValue() override{ return value; }
 
 
 };
