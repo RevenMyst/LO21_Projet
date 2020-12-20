@@ -181,6 +181,12 @@ public:
     Operator* getOpe() override { return new OpeDEN(); }
 };
 
+class POWFactory: public OpeFactory {
+public:
+    POWFactory() = default;
+    Operator * getOpe() override { return new OpePOW(); }
+};
+
 class SQRTFactory: public OpeFactory {
 public:
     SQRTFactory() = default;
@@ -204,3 +210,22 @@ public:
     TANFactory() = default;
     Operator * getOpe() override { return new OpeTAN(); }
 };
+
+class ARCSINFactory: public OpeFactory {
+public:
+    ARCSINFactory() = default;
+    Operator * getOpe() override { return new OpeARCSIN(); }
+};
+
+class ARCCOSFactory: public OpeFactory {
+public:
+    ARCCOSFactory() = default;
+    Operator * getOpe() override { return new OpeARCCOS(); }
+};
+
+class ARCTANFactory: public OpeFactory {
+public:
+    ARCTANFactory() = default;
+    Operator * getOpe() override { return new OpeARCTAN(); }
+};
+
