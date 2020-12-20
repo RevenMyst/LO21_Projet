@@ -1,14 +1,2 @@
-#block all files
-
-*
-
-#allow only git files and .cpp .h .md files
-
-
-!.gitattributes
-!.gitignore
-!*.md
-!.gitkeep
-!*.h
-!*.cpp
-!*/
+*.obj
+*.tlog
