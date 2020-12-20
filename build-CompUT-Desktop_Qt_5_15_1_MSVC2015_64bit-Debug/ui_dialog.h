@@ -96,6 +96,7 @@ public:
     QPushButton *pushButton_21;
     QPushButton *pushButton_47;
     QPushButton *pushButton_59;
+    QPushButton *UNDObutton_2;
     QWidget *tabAlpha;
     QPushButton *pushButton_44;
     QPushButton *pushButton_48;
@@ -341,7 +342,7 @@ public:
         pushButton_4->setGeometry(QRect(30, 300, 51, 31));
         UNDObutton = new QPushButton(tabOpe);
         UNDObutton->setObjectName(QString::fromUtf8("UNDObutton"));
-        UNDObutton->setGeometry(QRect(270, 20, 51, 31));
+        UNDObutton->setGeometry(QRect(210, 20, 51, 31));
         pushButton_10 = new QPushButton(tabOpe);
         pushButton_10->setObjectName(QString::fromUtf8("pushButton_10"));
         pushButton_10->setGeometry(QRect(30, 380, 51, 31));
@@ -386,6 +387,9 @@ public:
         pushButton_59->setObjectName(QString::fromUtf8("pushButton_59"));
         pushButton_59->setGeometry(QRect(30, 20, 51, 31));
         pushButton_59->setFocusPolicy(Qt::NoFocus);
+        UNDObutton_2 = new QPushButton(tabOpe);
+        UNDObutton_2->setObjectName(QString::fromUtf8("UNDObutton_2"));
+        UNDObutton_2->setGeometry(QRect(270, 20, 51, 31));
         tabOpeAlpha->addTab(tabOpe, QString());
         tabAlpha = new QWidget();
         tabAlpha->setObjectName(QString::fromUtf8("tabAlpha"));
@@ -673,6 +677,7 @@ public:
         pushButton_21->setText(QCoreApplication::translate("Dialog", "SIN", nullptr));
         pushButton_47->setText(QCoreApplication::translate("Dialog", "FORGET", nullptr));
         pushButton_59->setText(QCoreApplication::translate("Dialog", "STO", nullptr));
+        UNDObutton_2->setText(QCoreApplication::translate("Dialog", "WHILE", nullptr));
         tabOpeAlpha->setTabText(tabOpeAlpha->indexOf(tabOpe), QCoreApplication::translate("Dialog", "Operateurs", nullptr));
         pushButton_44->setText(QCoreApplication::translate("Dialog", "A", nullptr));
         pushButton_48->setText(QCoreApplication::translate("Dialog", "B", nullptr));

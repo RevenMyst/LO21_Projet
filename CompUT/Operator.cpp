@@ -215,7 +215,7 @@ void OpeLTE::ope()
     CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-            if (lit1->getComparableValue() <= lit2->getComparableValue()) {
+            if (lit2->getComparableValue() <= lit1->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -239,7 +239,7 @@ void OpeGTE::ope()
     CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-            if (lit1->getComparableValue() >= lit2->getComparableValue()) {
+            if (lit2->getComparableValue() >= lit1->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -263,7 +263,7 @@ void OpeGT::ope()
     CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-            if (lit1->getComparableValue() > lit2->getComparableValue()) {
+            if (lit2->getComparableValue() > lit1->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -286,7 +286,7 @@ void OpeLT::ope()
     CompLit* lit2 = dynamic_cast<CompLit*>(l2);
 	if(lit1 != nullptr && lit2 != nullptr)
 	{
-            if (lit1->getComparableValue() < lit2->getComparableValue()) {
+            if (lit2->getComparableValue() < lit1->getComparableValue()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -317,7 +317,7 @@ void OpeDIF::ope()
 				p->push(new IntLit(0));
 			}
 	}else{
-			if(l1->toString() == l2->toString()) {
+            if(l1->toString() != l2->toString()) {
 				p->push(new IntLit(1));
 			}
 			else {
@@ -541,8 +541,10 @@ void OpeWHILE::ope()
 {
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
+    std::cout << "WHILE"<<endl;
 	bool stop = false;
 	while(stop != true) {
+        std::cout << "boucle :"<<endl;
         Litteral* l3 = dynamic_cast<Litteral*>(l1->clone());
         Litteral* l4 = dynamic_cast<Litteral*>(l2->clone());
         if(l4->getClass() == PROGLIT) {
@@ -565,6 +567,7 @@ void OpeWHILE::ope()
             l4 = Computer::getInstance().getPile()->pull();
         }
         if(l4->getClass() == INTLIT && dynamic_cast<IntLit*>(l4)->getInt() == 0) {
+            std::cout << "STOP"<<endl;
             stop = true;
             delete l1;
             delete l2;

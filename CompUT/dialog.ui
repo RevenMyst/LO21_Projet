@@ -694,7 +694,7 @@ QLineEdit{background-color:#363e3f;border:1px solid #252c2d;color:white;padding:
       <widget class="QPushButton" name="UNDObutton">
        <property name="geometry">
         <rect>
-         <x>270</x>
+         <x>210</x>
          <y>20</y>
          <width>51</width>
          <height>31</height>
@@ -890,6 +890,19 @@ QLineEdit{background-color:#363e3f;border:1px solid #252c2d;color:white;padding:
        </property>
        <property name="text">
         <string>STO</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="UNDObutton_2">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>20</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>WHILE</string>
        </property>
       </widget>
      </widget>
