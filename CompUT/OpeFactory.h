@@ -126,6 +126,12 @@ public:
 	Operator* getOpe() override { return new OpeIFTE(); }
 };
 
+class WHILEFactory: public OpeFactory {
+public:
+    WHILEFactory() = default;
+    Operator * getOpe() override { return new OpeWHILE(); }
+};
+
 class NOTFactory: public OpeFactory {
 public:
     NOTFactory() = default;
@@ -210,6 +216,7 @@ public:
     TANFactory() = default;
     Operator * getOpe() override { return new OpeTAN(); }
 };
+
 
 class ARCSINFactory: public OpeFactory {
 public:

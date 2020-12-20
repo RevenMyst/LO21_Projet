@@ -70,7 +70,7 @@ bool REALFactory::isTypeLit(std::string str)
 
 Operand* REALFactory::getLitteral(std::string str)
 {
-    return nullptr;
+    return new RealLit(stof(str));
 }
 
 bool ExpressionFactory::isTypeLit(std::string str)

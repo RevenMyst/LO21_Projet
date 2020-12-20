@@ -537,6 +537,65 @@ void OpeIFTE::ope()
     delete l2;
 }
 
+void OpeWHILE::ope()
+{
+    Litteral* l1 = Computer::getInstance().getPile()->pull();
+	Litteral* l2 = Computer::getInstance().getPile()->pull();
+	bool stop = false;
+	while(stop != true) {
+        Litteral* l3 = dynamic_cast<Litteral*>(l1->clone());
+        Litteral* l4 = dynamic_cast<Litteral*>(l2->clone());
+        if(l4->getClass() == PROGLIT) {
+            ProgLit* plit = dynamic_cast<ProgLit*>(l4);
+            plit->compile();
+            l4 = Computer::getInstance().getPile()->pull();
+        }
+        else if(l4->getClass() == EXPLIT) {
+            ExpLit* elit = dynamic_cast<ExpLit*>(l4);
+            try {
+                elit->compile();
+            }
+            catch(std::exception const& e) {
+                delete l3;
+                delete l4;
+                l2->exec();
+                l1->exec();
+                return;
+            }
+            l4 = Computer::getInstance().getPile()->pull();
+        }
+        if(l4->getClass() == INTLIT && dynamic_cast<IntLit*>(l4)->getInt() == 0) {
+            stop = true;
+            delete l1;
+            delete l2;
+            delete l3;
+        }
+        else {
+            if(l3->getClass() == PROGLIT) {
+                ProgLit* plit = dynamic_cast<ProgLit*>(l3);
+                plit->compile();
+                delete l3;
+            }
+            else if(l3->getClass() == EXPLIT) {
+                ExpLit* elit = dynamic_cast<ExpLit*>(l3);
+                try {
+                    elit->compile();
+                    delete l3;
+                }
+                catch(std::exception const& e) {
+                    delete l3;
+                    delete l4;
+                    l2->exec();
+                    l1->exec();
+                    return;
+                }
+            }
+            else l3->exec();
+        }
+        delete l4;
+	}
+}
+
 void OpeNOT::ope()
 {
 	Litteral* l = Computer::getInstance().getPile()->pull();
@@ -665,10 +724,10 @@ void OpeSQRT::visitIntLit(IntLit *l) {
 		lit->exec();
 	}
 	else {
-		l->exec(); 
+		l->exec();
 		throw ComputerException("Erreur : racine carrée négative.");
 	}
-    
+
 }
 
 void OpeSQRT::visitRealLit(RealLit *l) {
