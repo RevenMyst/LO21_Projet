@@ -30,7 +30,7 @@ public:
 //bool operator>(const Litteral& lit1, const Litteral& lit2);
 //bool operator<(const Litteral& lit1, const Litteral& lit2);
 
-class CompLit : public NumLit{
+class CompLit{
 public:
 	virtual double getComparableValue() = 0;
 };
@@ -56,7 +56,7 @@ public:
     void compile();
 };
 
-class RealLit : public CompLit
+class RealLit : public CompLit, public NumLit
 {
 	float value;
 public:
@@ -75,7 +75,7 @@ public:
 
 };
 
-class RationalLit : public CompLit
+class RationalLit : public CompLit, public NumLit
 {
 	int numerateur;
 	int denominateur;
@@ -101,7 +101,7 @@ public:
 	double getComparableValue() { return (numerateur / denominateur); }
 };
 
-class IntLit : public CompLit
+class IntLit : public CompLit, public NumLit
 {
 	int value;
 public:
