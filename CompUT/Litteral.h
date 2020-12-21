@@ -13,7 +13,10 @@ enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT};
 class Visitor;
 class Litteral : public Operand
 {
+protected:
+    std::string reduceString();
 public:
+    virtual std::string toPileString();
 	virtual void accept(Visitor* visitor) = 0;
 	virtual LitType getClass() const = 0;
 	void exec() override;
@@ -38,6 +41,7 @@ class ExpLit : public Litteral
 public:
 	ExpLit(std::string str) :name(str) {}
 	std::string toString() const override{ return "'"+name+"'"; }
+    std::string toPileString() override;
 	const std::string getValue() const { return name; }
     void accept(Visitor* visitor) override;
 	~ExpLit() = default;
@@ -121,15 +125,16 @@ public:
 	void addOperand(Operand* o) {
 		operands.push_back(o);
 	}
-	std::string toString() const;
+    std::string toPileString() override;
+    std::string toString() const override;
 	void compile();
 	std::list<Operand*> getOperands() const { return operands; }
-	void accept(Visitor* visitor);
+    void accept(Visitor* visitor) override;
 	~ProgLit() {
 		for (Operand* o : operands) {
 			delete o;
 		}
 	}
-	LitType getClass() const { return PROGLIT; }
-	Operand* clone() { return new ProgLit(*this); }
+    LitType getClass() const override{ return PROGLIT; }
+    Operand* clone() override{ return new ProgLit(*this); }
 };

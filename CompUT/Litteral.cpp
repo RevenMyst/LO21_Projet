@@ -3,8 +3,24 @@
 #include<iostream>
 #include "Visitor.h"
 #include "Computer.h"
+#include<QFont>
+#include<QFontMetrics>
 
-
+std::string Litteral::toPileString(){
+    return reduceString();
+}
+std::string Litteral::reduceString(){
+    string str = toString();
+    while(QFontMetrics(QFont("Segoe UI",15)).horizontalAdvance(str.c_str())>320){
+        str = str.substr(0, str.size()-1);
+    }
+    str+="...";
+    return str;
+}
+void Litteral::exec()
+{
+    Computer::getInstance().getPile()->push(this);
+}
 
 /*******************************/
 /***********REALLIT*************/
@@ -127,32 +143,21 @@ void ProgLit::accept(Visitor* visitor)
 	visitor->visitProgLit(this);
 }
 
-void Litteral::exec()
-{
-	Computer::getInstance().getPile()->push(this);
+std::string ProgLit::toPileString(){
+    if(QFontMetrics(QFont("Segoe UI",15)).horizontalAdvance(toString().c_str())>320){
+      return reduceString()+"]";
+    }else{
+        return toString();
+    }
 }
 
+/*******************************/
+/************EXPLIT*************/
+/*******************************/
 void ExpLit::accept(Visitor* visitor)
 {
 	visitor->visitExpLit(this);
 }
-
-void IntLit::accept(Visitor* visitor)
-{
-	visitor->visitIntLit(this);
-}
-
-std::string IntLit::toString() const
-{
-	std::string res = std::to_string(getInt());
-	return(res);
-}
-
-Operand* IntLit::clone()
-{
-	return new IntLit(*this);
-}
-
 void ExpLit::compile()
 {
     const std::string s = getValue();
@@ -175,4 +180,36 @@ void ExpLit::compile()
     }
     delete this;
 }
+
+std::string ExpLit::toPileString(){
+
+    if(QFontMetrics(QFont("Segoe UI",15)).horizontalAdvance(toString().c_str())>320){
+      return reduceString()+"'";
+    }else{
+        return toString();
+    }
+
+}
+
+/*******************************/
+/************INTLIT*************/
+/*******************************/
+
+void IntLit::accept(Visitor* visitor)
+{
+	visitor->visitIntLit(this);
+}
+
+std::string IntLit::toString() const
+{
+	std::string res = std::to_string(getInt());
+	return(res);
+}
+
+Operand* IntLit::clone()
+{
+	return new IntLit(*this);
+}
+
+
 
