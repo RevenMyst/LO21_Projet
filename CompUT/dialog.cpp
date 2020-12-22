@@ -1,17 +1,10 @@
 #include "dialog.h"
-
 #include "ui_dialog.h"
-
 #include <QSignalMapper>
-
 #include <iostream>
-
 #include <QDebug>
-
 #include <QKeyEvent>
-
 #include <sstream>
-
 #include "Litteral.h"
 
 

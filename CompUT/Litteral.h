@@ -11,6 +11,7 @@ enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT};
 
 
 class Visitor;
+
 class Litteral : public Operand
 {
 protected:
@@ -28,7 +29,7 @@ public:
 	virtual double getComparableValue() = 0;
 };
 
-class NumLit : public Litteral {
+class NumLit {
 public:
 	virtual double getValue() const = 0;
 
@@ -50,7 +51,7 @@ public:
     void compile();
 };
 
-class RealLit : public CompLit, public NumLit
+class RealLit : public Litteral, public CompLit, public NumLit
 {
 	float value;
 public:
@@ -69,7 +70,7 @@ public:
 
 };
 
-class RationalLit : public CompLit, public NumLit
+class RationalLit : public Litteral, public CompLit, public NumLit
 {
 	int numerateur;
 	int denominateur;
@@ -95,7 +96,7 @@ public:
     double getComparableValue() override{ return (numerateur / denominateur); }
 };
 
-class IntLit : public CompLit, public NumLit
+class IntLit : public Litteral, public CompLit, public NumLit
 {
 	int value;
 public:
