@@ -228,8 +228,8 @@ class OpeWHILE : public Operator {
 public:
     OpeWHILE() : Operator(2) {}
     void ope() override;
-    std::string toString() const { return "WHILE"; }
-    Operand* clone() { return new OpeWHILE(*this); }
+    std::string toString() const override { return "WHILE"; }
+    Operand* clone() override { return new OpeWHILE(*this); }
 };
 
 class OpeNOT: public Operator {
