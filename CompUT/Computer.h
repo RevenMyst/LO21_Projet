@@ -52,8 +52,3 @@ signals:
     void modifEtat();
     void error(const char* err,std::string);
 };
-
-
-
-
-

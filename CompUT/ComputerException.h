@@ -10,5 +10,3 @@ public:
 	virtual ~ComputerException() noexcept {};
 	const char* what() const noexcept{ return info.c_str(); }
 };
-
-

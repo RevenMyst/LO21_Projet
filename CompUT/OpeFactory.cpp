@@ -157,6 +157,10 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
     entry.second = new EXPFactory();
     factories.insert(entry);
 
+    entry.first = "LN";
+    entry.second = new LNFactory();
+    factories.insert(entry);
+
 	return factories;
 }
 

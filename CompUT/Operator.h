@@ -228,8 +228,8 @@ class OpeWHILE : public Operator {
 public:
     OpeWHILE() : Operator(2) {}
     void ope() override;
-    std::string toString() const { return "WHILE"; }
-    Operand* clone() { return new OpeWHILE(*this); }
+    std::string toString() const override { return "WHILE"; }
+    Operand* clone() override { return new OpeWHILE(*this); }
 };
 
 class OpeNOT: public Operator {
@@ -297,6 +297,17 @@ public:
 		void visitIntLit(IntLit* l1) override;
 		void visitRealLit(RealLit* l1) override;
 		void visitRationalLit(RationalLit* l1) override;
+};
+
+class OpeLN : public Operator, public Visitor {
+public:
+        OpeLN() : Operator(1) {}
+        void ope() override;
+        std::string toString() const override{ return "LN"; }
+        Operand* clone() override{ return new OpeLN(*this); }
+        void visitIntLit(IntLit* l1) override;
+        void visitRealLit(RealLit* l1) override;
+        void visitRationalLit(RationalLit* l1) override;
 };
 
 class OpeSQRT: public Operator, public Visitor {

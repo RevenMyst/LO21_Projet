@@ -137,10 +137,17 @@ void OpeDIV::ope()
 	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
         int divid = dynamic_cast<IntLit*>(l2)->getInt();
         int divis = dynamic_cast<IntLit*>(l1)->getInt();
-        Litteral* l3 = new IntLit(divid/divis);
-        delete l1;
-        delete l2;
-        l3->exec();
+        if(divis != 0) {
+            Litteral* l3 = new IntLit(divid/divis);
+            delete l1;
+            delete l2;
+            l3->exec();
+        }
+        else {
+            l2->exec();
+            l1->exec();
+            throw ComputerException("Erreur tentative de division par 0");
+        }
 	}
 	else {
         l2->exec();
@@ -156,10 +163,17 @@ void OpeMOD::ope()
 	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
         int divid = dynamic_cast<IntLit*>(l2)->getInt();
         int divis = dynamic_cast<IntLit*>(l1)->getInt();
-        Litteral* l3 = new IntLit(divid%divis);
-        delete l1;
-        delete l2;
-        l3->exec();
+        if(divis != 0) {
+            Litteral* l3 = new IntLit(divid%divis);
+            delete l1;
+            delete l2;
+            l3->exec();
+        }
+        else {
+            l2->exec();
+            l1->exec();
+            throw ComputerException("Erreur tentative de division par 0");
+        }
 	}
 	else {
         l2->exec();
@@ -713,6 +727,39 @@ void OpeEXP::visitRealLit(RealLit *l){
 		lit->exec();
 }
 
+void OpeLN::ope() {
+        Litteral *l = Computer::getInstance().getPile()->pull();
+        std::cout<<"LN";
+        l->accept(this);
+        delete l;
+}
+
+void OpeLN::visitIntLit(IntLit *l){
+        if(l->getValue() <= 0) {
+            l->exec();
+            throw ComputerException("Erreur : Litterale <= 0");
+        }
+        RealLit *lit = new RealLit(log(l->getValue()));
+        lit->exec();
+}
+
+void OpeLN::visitRationalLit(RationalLit *l){
+        if(l->getValue() <= 0) {
+            l->exec();
+            throw ComputerException("Erreur : Litterale <= 0");
+        }
+        RealLit *lit = new RealLit(log(l->getValue()));
+        lit->exec();
+}
+
+void OpeLN::visitRealLit(RealLit *l){
+        if(l->getValue() <= 0) {
+            l->exec();
+            throw ComputerException("Erreur : Litterale <= 0");
+        }
+        RealLit *lit = new RealLit(log(l->getValue()));
+        lit->exec();
+}
 
 void OpeSQRT::ope() {
     Litteral *l = Computer::getInstance().getPile()->pull();
@@ -740,14 +787,14 @@ void OpeSQRT::visitRealLit(RealLit *l) {
 		lit->exec();
 	}
 	else {
-		l->exec(); 
+		l->exec();
 		throw ComputerException("Erreur : racine carrée négative.");
 	}
 }
 
 void OpeSQRT::visitRationalLit(RationalLit *l) {
 	if (l->getValue() >= 0) {
-		NumLit* lit;
+        Litteral* lit;
 		double sqrtNum = std::sqrt(l->getNum());
 		double sqrtDen = std::sqrt(l->getDen());
 		if (sqrtNum - static_cast<int>(sqrtNum) == 0 && sqrtDen - static_cast<int>(sqrtDen) == 0) {
