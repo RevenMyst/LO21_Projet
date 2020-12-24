@@ -137,10 +137,17 @@ void OpeDIV::ope()
 	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
         int divid = dynamic_cast<IntLit*>(l2)->getInt();
         int divis = dynamic_cast<IntLit*>(l1)->getInt();
-        Litteral* l3 = new IntLit(divid/divis);
-        delete l1;
-        delete l2;
-        l3->exec();
+        if(divis != 0) {
+            Litteral* l3 = new IntLit(divid/divis);
+            delete l1;
+            delete l2;
+            l3->exec();
+        }
+        else {
+            l2->exec();
+            l1->exec();
+            throw ComputerException("Erreur tentative de division par 0");
+        }
 	}
 	else {
         l2->exec();
@@ -156,10 +163,17 @@ void OpeMOD::ope()
 	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
         int divid = dynamic_cast<IntLit*>(l2)->getInt();
         int divis = dynamic_cast<IntLit*>(l1)->getInt();
-        Litteral* l3 = new IntLit(divid%divis);
-        delete l1;
-        delete l2;
-        l3->exec();
+        if(divis != 0) {
+            Litteral* l3 = new IntLit(divid%divis);
+            delete l1;
+            delete l2;
+            l3->exec();
+        }
+        else {
+            l2->exec();
+            l1->exec();
+            throw ComputerException("Erreur tentative de division par 0");
+        }
 	}
 	else {
         l2->exec();
