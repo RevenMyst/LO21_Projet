@@ -226,7 +226,7 @@ Litteral* PlusSimpleAction::exec(Litteral* l1, Litteral* l2)
     //Additions simples : int + int, int + reel, reel + int, reel + reel, rationnel+reel, reel+rationnel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
-    //si mantisse nulle le Reel est  simplifié à l'empilement
+    //si mantisse nulle le Reel est  simplifiï¿½ ï¿½ l'empilement
     return new RealLit(lit1->getValue() + lit2->getValue());
 }
 
@@ -258,7 +258,7 @@ Litteral* MulSimpleAction::exec(Litteral* l1, Litteral* l2)
     //Multiplication simples : int * int, int * reel, reel * int, reel * reel, rationnel*reel, reel*rationnel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
-    //si mantisse nulle le Reel est  simplifié à l'empilement
+    //si mantisse nulle le Reel est  simplifiï¿½ ï¿½ l'empilement
     return new RealLit(lit1->getValue() * lit2->getValue());
 }
 
@@ -290,7 +290,7 @@ Litteral* MoinsSimpleAction::exec(Litteral* l1, Litteral* l2)
     //Soustractions simples : int - int, int - reel, reel - int, reel - reel, rationnel-reel, reel-rationnel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
-    //si mantisse nulle le Reel est  simplifié à l'empilement
+    //si mantisse nulle le Reel est  simplifiï¿½ ï¿½ l'empilement
     return new RealLit(lit1->getValue() - lit2->getValue());
 }
 
@@ -332,7 +332,7 @@ Litteral* DivisionSimpleAction::exec(Litteral* l1, Litteral* l2)
     //Divisions simples : int/reel, reel/int, reel/reel, reel/rationnel, rationnel/reel
     NumLit* lit1 = dynamic_cast<NumLit*>(l1);
     NumLit* lit2 = dynamic_cast<NumLit*>(l2);
-    //si mantisse nulle le Reel est  simplifié à l'empilement
+    //si mantisse nulle le Reel est  simplifiï¿½ ï¿½ l'empilement
     return new RealLit(lit1->getValue() / lit2->getValue());
 }
 
@@ -438,7 +438,7 @@ Litteral* POWRatRatRatRealAction::exec(Litteral* l1, Litteral* l2)
     double numerateur= pow(lit1->getNum(),lit2->getValue());
     double denominateur= pow(lit1->getDen(),lit2->getValue());
 
-    //Cas de la racine carrée, cubique ect
+    //Cas de la racine carrï¿½e, cubique ect
     if((denominateur- floor(denominateur)==0)&&(numerateur - floor(numerateur)==0))
         return new RationalLit(numerateur,denominateur);
 

@@ -7,7 +7,7 @@ class Pile
 {
 	std::list<Litteral*> litterals;
     unsigned int elementsAAfficher = 10;
-	
+
 public:
 
 	Pile() = default;
@@ -19,4 +19,3 @@ public:
     unsigned int& toShow() {return elementsAAfficher;}
 	~Pile();
 };
-

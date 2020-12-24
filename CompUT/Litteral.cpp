@@ -210,6 +210,3 @@ Operand* IntLit::clone()
 {
 	return new IntLit(*this);
 }
-
-
-

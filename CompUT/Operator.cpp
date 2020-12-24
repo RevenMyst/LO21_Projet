@@ -740,14 +740,14 @@ void OpeSQRT::visitRealLit(RealLit *l) {
 		lit->exec();
 	}
 	else {
-		l->exec(); 
+		l->exec();
 		throw ComputerException("Erreur : racine carrée négative.");
 	}
 }
 
 void OpeSQRT::visitRationalLit(RationalLit *l) {
 	if (l->getValue() >= 0) {
-		NumLit* lit;
+        Litteral* lit;
 		double sqrtNum = std::sqrt(l->getNum());
 		double sqrtDen = std::sqrt(l->getDen());
 		if (sqrtNum - static_cast<int>(sqrtNum) == 0 && sqrtDen - static_cast<int>(sqrtDen) == 0) {

@@ -110,5 +110,3 @@ Operand* INTFactory::getLitteral(std::string str)
 {
     return new IntLit(stoi(str));
 }
-
-

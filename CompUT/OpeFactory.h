@@ -241,6 +241,3 @@ public:
     EXPFactory() = default;
     Operator * getOpe() override { return new OpeEXP(); }
 };
-
-
-

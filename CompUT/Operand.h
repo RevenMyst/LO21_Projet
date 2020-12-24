@@ -10,5 +10,3 @@ public:
     virtual ~Operand()= default;
 
 };
-
-
