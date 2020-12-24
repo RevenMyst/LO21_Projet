@@ -299,6 +299,17 @@ public:
 		void visitRationalLit(RationalLit* l1) override;
 };
 
+class OpeLN : public Operator, public Visitor {
+public:
+        OpeLN() : Operator(1) {}
+        void ope() override;
+        std::string toString() const override{ return "LN"; }
+        Operand* clone() override{ return new OpeLN(*this); }
+        void visitIntLit(IntLit* l1) override;
+        void visitRealLit(RealLit* l1) override;
+        void visitRationalLit(RationalLit* l1) override;
+};
+
 class OpeSQRT: public Operator, public Visitor {
 public:
     OpeSQRT(): Operator(1) {}

@@ -727,6 +727,39 @@ void OpeEXP::visitRealLit(RealLit *l){
 		lit->exec();
 }
 
+void OpeLN::ope() {
+        Litteral *l = Computer::getInstance().getPile()->pull();
+        std::cout<<"LN";
+        l->accept(this);
+        delete l;
+}
+
+void OpeLN::visitIntLit(IntLit *l){
+        if(l->getValue() <= 0) {
+            l->exec();
+            throw ComputerException("Erreur : Litterale <= 0");
+        }
+        RealLit *lit = new RealLit(log(l->getValue()));
+        lit->exec();
+}
+
+void OpeLN::visitRationalLit(RationalLit *l){
+        if(l->getValue() <= 0) {
+            l->exec();
+            throw ComputerException("Erreur : Litterale <= 0");
+        }
+        RealLit *lit = new RealLit(log(l->getValue()));
+        lit->exec();
+}
+
+void OpeLN::visitRealLit(RealLit *l){
+        if(l->getValue() <= 0) {
+            l->exec();
+            throw ComputerException("Erreur : Litterale <= 0");
+        }
+        RealLit *lit = new RealLit(log(l->getValue()));
+        lit->exec();
+}
 
 void OpeSQRT::ope() {
     Litteral *l = Computer::getInstance().getPile()->pull();

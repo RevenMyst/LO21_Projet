@@ -241,3 +241,9 @@ public:
     EXPFactory() = default;
     Operator * getOpe() override { return new OpeEXP(); }
 };
+
+class LNFactory: public OpeFactory {
+public:
+    LNFactory() = default;
+    Operator * getOpe() override { return new OpeLN(); }
+};
