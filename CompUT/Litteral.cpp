@@ -11,10 +11,14 @@ std::string Litteral::toPileString(){
 }
 std::string Litteral::reduceString(){
     string str = toString();
+    bool reduced = false;
     while(QFontMetrics(QFont("Segoe UI",15)).horizontalAdvance(str.c_str())>320){
         str = str.substr(0, str.size()-1);
+        reduced = true;
     }
-    str+="...";
+    if(reduced){
+        str+="...";
+    }
     return str;
 }
 void Litteral::exec()
