@@ -142,6 +142,7 @@ public:
     QScrollArea *scrollAreaVar2;
     QWidget *scrollVar2;
     QVBoxLayout *verticalLayout_5;
+    QPushButton *varSuppr;
     QLabel *label;
     QLabel *label_2;
     QLabel *label_3;
@@ -154,6 +155,7 @@ public:
     QScrollArea *scrollAreaFun2;
     QWidget *scrollFun2;
     QVBoxLayout *verticalLayout_3;
+    QPushButton *funSuppr;
     QLineEdit *errorLine;
     QPushButton *closeErrorLine;
 
@@ -548,6 +550,9 @@ public:
         verticalLayout_5 = new QVBoxLayout(scrollVar2);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         scrollAreaVar2->setWidget(scrollVar2);
+        varSuppr = new QPushButton(frame_2);
+        varSuppr->setObjectName(QString::fromUtf8("varSuppr"));
+        varSuppr->setGeometry(QRect(160, 460, 80, 21));
         label = new QLabel(Parametres);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(40, 10, 111, 16));
@@ -596,6 +601,9 @@ public:
         verticalLayout_3 = new QVBoxLayout(scrollFun2);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         scrollAreaFun2->setWidget(scrollFun2);
+        funSuppr = new QPushButton(frame_3);
+        funSuppr->setObjectName(QString::fromUtf8("funSuppr"));
+        funSuppr->setGeometry(QRect(160, 460, 80, 21));
         tabWidget->addTab(Parametres, QString());
         errorLine = new QLineEdit(Dialog);
         errorLine->setObjectName(QString::fromUtf8("errorLine"));
@@ -612,7 +620,7 @@ public:
 
         retranslateUi(Dialog);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
         listWidget->setCurrentRow(-1);
         tabOpeAlpha->setCurrentIndex(0);
 
@@ -716,12 +724,14 @@ public:
         label_8->setText(QCoreApplication::translate("Dialog", "Nom", nullptr));
         label_9->setText(QCoreApplication::translate("Dialog", "Valeur", nullptr));
         varSave->setText(QCoreApplication::translate("Dialog", "Sauvegarder", nullptr));
+        varSuppr->setText(QCoreApplication::translate("Dialog", "Supprimer", nullptr));
         label->setText(QCoreApplication::translate("Dialog", "Parametres", nullptr));
         label_2->setText(QCoreApplication::translate("Dialog", "Variables", nullptr));
         label_3->setText(QCoreApplication::translate("Dialog", "Fonctions", nullptr));
         label_10->setText(QCoreApplication::translate("Dialog", "Nom", nullptr));
         label_11->setText(QCoreApplication::translate("Dialog", "Valeur", nullptr));
         funSave->setText(QCoreApplication::translate("Dialog", "Sauvegarder", nullptr));
+        funSuppr->setText(QCoreApplication::translate("Dialog", "Supprimer", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(Parametres), QCoreApplication::translate("Dialog", "Parametres", nullptr));
         errorLine->setText(QString());
         closeErrorLine->setText(QCoreApplication::translate("Dialog", "X", nullptr));

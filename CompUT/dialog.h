@@ -46,7 +46,11 @@ class Dialog: public QDialog {
         void on_varSave_pressed();
         void on_funSave_pressed();
 
-    private:
+        void on_funSuppr_clicked();
+
+        void on_varSuppr_clicked();
+
+private:
         Computer * computer;
         unsigned int progDeepness = 0;
         Ui::Dialog * ui;

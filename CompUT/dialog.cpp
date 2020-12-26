@@ -267,3 +267,19 @@ void Dialog::on_funSave_pressed() {
         error(e.what(), "");
     }
 }
+
+void Dialog::on_funSuppr_clicked()
+{
+    QString funName = ui -> funName -> text();
+    ui -> funName -> setText("");
+    ui -> funValue -> setText("");
+    computer->getAtomManager()->removeAtom(funName.toStdString());
+}
+
+void Dialog::on_varSuppr_clicked()
+{
+    QString varName = ui -> varName -> text();
+    ui -> varName -> setText("");
+    ui -> varValue -> setText("");
+    computer->getAtomManager()->removeAtom(varName.toStdString());
+}

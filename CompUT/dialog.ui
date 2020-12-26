@@ -36,7 +36,7 @@ QLineEdit{background-color:#363e3f;border:1px solid #252c2d;color:white;padding:
     <string notr="true"/>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="Calculateur">
     <attribute name="title">
@@ -1504,6 +1504,19 @@ QLineEdit{background-color:#363e3f;border:1px solid #252c2d;color:white;padding:
        <layout class="QVBoxLayout" name="verticalLayout_5"/>
       </widget>
      </widget>
+     <widget class="QPushButton" name="varSuppr">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>460</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Supprimer</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QLabel" name="label">
      <property name="geometry">
@@ -1678,6 +1691,19 @@ QLineEdit{background-color:#363e3f;border:1px solid #252c2d;color:white;padding:
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3"/>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="funSuppr">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>460</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Supprimer</string>
+      </property>
      </widget>
     </widget>
    </widget>
