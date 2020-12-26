@@ -97,6 +97,7 @@ public:
     QPushButton *pushButton_47;
     QPushButton *pushButton_59;
     QPushButton *UNDObutton_2;
+    QPushButton *pushButton_60;
     QWidget *tabAlpha;
     QPushButton *pushButton_44;
     QPushButton *pushButton_48;
@@ -392,6 +393,10 @@ public:
         UNDObutton_2 = new QPushButton(tabOpe);
         UNDObutton_2->setObjectName(QString::fromUtf8("UNDObutton_2"));
         UNDObutton_2->setGeometry(QRect(270, 20, 51, 31));
+        pushButton_60 = new QPushButton(tabOpe);
+        pushButton_60->setObjectName(QString::fromUtf8("pushButton_60"));
+        pushButton_60->setGeometry(QRect(150, 20, 51, 31));
+        pushButton_60->setFocusPolicy(Qt::NoFocus);
         tabOpeAlpha->addTab(tabOpe, QString());
         tabAlpha = new QWidget();
         tabAlpha->setObjectName(QString::fromUtf8("tabAlpha"));
@@ -620,7 +625,7 @@ public:
 
         retranslateUi(Dialog);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         listWidget->setCurrentRow(-1);
         tabOpeAlpha->setCurrentIndex(0);
 
@@ -686,6 +691,7 @@ public:
         pushButton_47->setText(QCoreApplication::translate("Dialog", "FORGET", nullptr));
         pushButton_59->setText(QCoreApplication::translate("Dialog", "STO", nullptr));
         UNDObutton_2->setText(QCoreApplication::translate("Dialog", "WHILE", nullptr));
+        pushButton_60->setText(QCoreApplication::translate("Dialog", "EVAL", nullptr));
         tabOpeAlpha->setTabText(tabOpeAlpha->indexOf(tabOpe), QCoreApplication::translate("Dialog", "Operateurs", nullptr));
         pushButton_44->setText(QCoreApplication::translate("Dialog", "A", nullptr));
         pushButton_48->setText(QCoreApplication::translate("Dialog", "B", nullptr));
