@@ -6,6 +6,7 @@
 #include "Action.h"
 #include <iostream>
 #include <cmath>
+#define MAXIt 100
 
 void OpeDUP::ope()
 {
@@ -557,8 +558,15 @@ void OpeWHILE::ope()
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
     std::cout << "WHILE"<<endl;
 	bool stop = false;
+    int nbIt = 0;
 	while(stop != true) {
-        std::cout << "boucle :"<<endl;
+        if(nbIt >= MAXIt) {
+            std::string s;
+            s = "Attention : Nombre maximal de " + std::to_string(MAXIt) + " iterations atteint";
+            l2->exec();
+            l1->exec();
+            throw ComputerException(s);
+        }
         Litteral* l3 = dynamic_cast<Litteral*>(l1->clone());
         Litteral* l4 = dynamic_cast<Litteral*>(l2->clone());
         if(l4->getClass() == PROGLIT) {
@@ -581,7 +589,6 @@ void OpeWHILE::ope()
             l4 = Computer::getInstance().getPile()->pull();
         }
         if(l4->getClass() == INTLIT && dynamic_cast<IntLit*>(l4)->getInt() == 0) {
-            std::cout << "STOP"<<endl;
             stop = true;
             delete l1;
             delete l2;
@@ -591,13 +598,11 @@ void OpeWHILE::ope()
             if(l3->getClass() == PROGLIT) {
                 ProgLit* plit = dynamic_cast<ProgLit*>(l3);
                 plit->compile();
-                delete l3;
             }
             else if(l3->getClass() == EXPLIT) {
                 ExpLit* elit = dynamic_cast<ExpLit*>(l3);
                 try {
                     elit->compile();
-                    delete l3;
                 }
                 catch(std::exception const& e) {
                     delete l3;
@@ -609,6 +614,7 @@ void OpeWHILE::ope()
             }
             else l3->exec();
         }
+        nbIt++;
         delete l4;
 	}
 }

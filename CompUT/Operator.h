@@ -77,7 +77,7 @@ public:
 
 class OpeFORGET : public Operator, public Visitor {
 public:
-	OpeFORGET() : Operator(2) {}
+    OpeFORGET() : Operator(1) {}
 	void ope() override;
 	void visitExpLit(ExpLit* l1) override;
     std::string toString() const override { return "FORGET"; }
