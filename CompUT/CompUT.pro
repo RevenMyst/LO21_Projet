@@ -25,7 +25,6 @@ HEADERS += \
     ComputerException.h \
     LitFactory.h \
     Litteral.h \
-    Master.h \
     OpeFactory.h \
     Operand.h \
     Operator.h \

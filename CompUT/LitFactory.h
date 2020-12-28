@@ -1,3 +1,10 @@
+//////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary> Definit les methodes reconnaitre et construire les litterales </summary>
+///
+/// <classes> ComputerException </classes>
+///
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include <string>
 #include <vector>
@@ -25,14 +32,14 @@ public:
 	bool isTypeLit(std::string str);
 	Operand* getLitteral(std::string str);
 };
-
+/*** non utilisé
 class RATFactory : public LitFactory {
 public:
 	RATFactory() = default;
 	bool isTypeLit(std::string str);
 	Operand* getLitteral(std::string str);
 };
-
+***/
 class ExpressionFactory : public LitFactory {
 public:
     ExpressionFactory() = default;

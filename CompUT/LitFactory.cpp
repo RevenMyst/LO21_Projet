@@ -25,7 +25,7 @@ std::vector<LitFactory*> LitFactory::getLitFactories()
 	return litteraux;
 }
 
-
+/*** non utilisé
 bool RATFactory::isTypeLit(std::string str)
 {
 	return std::regex_match(str, std::regex("-?[0-9]+/-?[0-9]+"));
@@ -51,7 +51,7 @@ Operand* RATFactory::getLitteral(std::string str){
   }
   return new RationalLit(stoi(num), stoi(den));
 }
-
+***/
 bool ATOMFactory::isTypeLit(std::string str)
 {
 	return std::regex_match(str, std::regex("([A-Z]+[0-9]*)+"));
