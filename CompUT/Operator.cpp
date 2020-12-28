@@ -6,6 +6,7 @@
 #include "Action.h"
 #include <iostream>
 #include <cmath>
+#define MAXIt 1000
 
 void OpeDUP::ope()
 {
@@ -440,14 +441,22 @@ void OpeDivision::ope()
 }
 }
 
-
 void OpeIFT::ope()
 {
+    Computer::getInstance().save();
     Litteral* l1 = Computer::getInstance().getPile()->pull();
-	Litteral* l2 = Computer::getInstance().getPile()->pull();
+    Litteral* l2 = Computer::getInstance().getPile()->pull();
     if(l2->getClass() == PROGLIT) {
         ProgLit* plit = dynamic_cast<ProgLit*>(l2);
-        plit->compile();
+        try {
+            plit->compile();
+        }
+        catch(ComputerException const &e) {
+            Computer::getInstance().backup();
+            delete l1;
+            delete l2;
+            throw ComputerException(e.what());
+        }
         l2 = Computer::getInstance().getPile()->pull();
     }
     else if(l2->getClass() == EXPLIT) {
@@ -456,9 +465,10 @@ void OpeIFT::ope()
             elit->compile();
         }
         catch(std::exception const& e) {
-            l2->exec();
-            l1->exec();
-            return;
+            Computer::getInstance().backup();
+            delete l1;
+            delete l2;
+            throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
         }
         l2 = Computer::getInstance().getPile()->pull();
     }
@@ -467,7 +477,15 @@ void OpeIFT::ope()
     else {
         if(l1->getClass() == PROGLIT) {
             ProgLit* plit = dynamic_cast<ProgLit*>(l1);
-            plit->compile();
+            try {
+                plit->compile();
+            }
+            catch(ComputerException const &e) {
+                Computer::getInstance().backup();
+                delete l1;
+                delete l2;
+                throw ComputerException(e.what());
+            }
         }
         else if(l1->getClass() == EXPLIT) {
             ExpLit* elit = dynamic_cast<ExpLit*>(l1);
@@ -475,9 +493,10 @@ void OpeIFT::ope()
                 elit->compile();
             }
             catch(std::exception const& e) {
-                l2->exec();
-                l1->exec();
-                return;
+                Computer::getInstance().backup();
+                delete l1;
+                delete l2;
+                throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
             }
         }
         else l1->exec();
@@ -487,12 +506,22 @@ void OpeIFT::ope()
 
 void OpeIFTE::ope()
 {
+    Computer::getInstance().save();
     Litteral* l3 = Computer::getInstance().getPile()->pull();
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
     if(l2->getClass() == PROGLIT) {
         ProgLit* plit = dynamic_cast<ProgLit*>(l2);
-        plit->compile();
+        try {
+            plit->compile();
+        }
+        catch(ComputerException const &e) {
+            Computer::getInstance().backup();
+            delete l1;
+            delete l2;
+            delete l3;
+            throw ComputerException(e.what());
+        }
         l2 = Computer::getInstance().getPile()->pull();
     }
     else if(l2->getClass() == EXPLIT) {
@@ -501,17 +530,27 @@ void OpeIFTE::ope()
             elit->compile();
         }
         catch(std::exception const& e) {
-            l2->exec();
-            l1->exec();
-            l3->exec();
-            return;
+            Computer::getInstance().backup();
+            delete l1;
+            delete l2;
+            delete l3;
+            throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
         }
         l2 = Computer::getInstance().getPile()->pull();
     }
     if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0) {
         if(l3->getClass() == PROGLIT) {
             ProgLit* plit = dynamic_cast<ProgLit*>(l3);
-            plit->compile();
+            try {
+                plit->compile();
+            }
+            catch(ComputerException const &e) {
+                Computer::getInstance().backup();
+                delete l1;
+                delete l2;
+                delete l3;
+                throw ComputerException(e.what());
+            }
         }
         else if(l3->getClass() == EXPLIT) {
             ExpLit* elit = dynamic_cast<ExpLit*>(l3);
@@ -519,10 +558,11 @@ void OpeIFTE::ope()
                 elit->compile();
             }
             catch(std::exception const& e) {
-                l2->exec();
-                l1->exec();
-                l3->exec();
-                return;
+                Computer::getInstance().backup();
+                delete l1;
+                delete l2;
+                delete l3;
+                throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
             }
         }
         else l3->exec();
@@ -531,7 +571,16 @@ void OpeIFTE::ope()
     else {
         if(l1->getClass() == PROGLIT) {
             ProgLit* plit = dynamic_cast<ProgLit*>(l1);
-            plit->compile();
+            try {
+                plit->compile();
+            }
+            catch(ComputerException const &e) {
+                Computer::getInstance().backup();
+                delete l1;
+                delete l2;
+                delete l3;
+                throw ComputerException(e.what());
+            }
         }
         else if(l1->getClass() == EXPLIT) {
             ExpLit* elit = dynamic_cast<ExpLit*>(l1);
@@ -539,10 +588,11 @@ void OpeIFTE::ope()
                 elit->compile();
             }
             catch(std::exception const& e) {
-                l2->exec();
-                l1->exec();
-                l3->exec();
-                return;
+                Computer::getInstance().backup();
+                delete l1;
+                delete l2;
+                delete l3;
+                throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
             }
         }
         else l1->exec();
@@ -553,17 +603,34 @@ void OpeIFTE::ope()
 
 void OpeWHILE::ope()
 {
+    Computer::getInstance().save();
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
-    std::cout << "WHILE"<<endl;
 	bool stop = false;
+    int nbIt = 0;
 	while(stop != true) {
-        std::cout << "boucle :"<<endl;
+        if(nbIt >= MAXIt) {
+            const std::string s = "Erreur nombre maximal de " + std::to_string(MAXIt) + " iterations atteint";
+            Computer::getInstance().backup();
+            delete l1;
+            delete l2;
+            throw ComputerException(s);
+        }
         Litteral* l3 = dynamic_cast<Litteral*>(l1->clone());
         Litteral* l4 = dynamic_cast<Litteral*>(l2->clone());
         if(l4->getClass() == PROGLIT) {
             ProgLit* plit = dynamic_cast<ProgLit*>(l4);
-            plit->compile();
+            try {
+                plit->compile();
+            }
+            catch(ComputerException const &e) {
+                Computer::getInstance().backup();
+                delete l1;
+                delete l2;
+                delete l3;
+                delete l4;
+                throw ComputerException(e.what());
+            }
             l4 = Computer::getInstance().getPile()->pull();
         }
         else if(l4->getClass() == EXPLIT) {
@@ -572,16 +639,16 @@ void OpeWHILE::ope()
                 elit->compile();
             }
             catch(std::exception const& e) {
+                Computer::getInstance().backup();
+                delete l1;
+                delete l2;
                 delete l3;
                 delete l4;
-                l2->exec();
-                l1->exec();
-                return;
+                throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
             }
             l4 = Computer::getInstance().getPile()->pull();
         }
         if(l4->getClass() == INTLIT && dynamic_cast<IntLit*>(l4)->getInt() == 0) {
-            std::cout << "STOP"<<endl;
             stop = true;
             delete l1;
             delete l2;
@@ -590,25 +657,35 @@ void OpeWHILE::ope()
         else {
             if(l3->getClass() == PROGLIT) {
                 ProgLit* plit = dynamic_cast<ProgLit*>(l3);
-                plit->compile();
-                delete l3;
+                try {
+                    plit->compile();
+                }
+                catch(ComputerException const &e) {
+                    Computer::getInstance().backup();
+                    delete l1;
+                    delete l2;
+                    delete l3;
+                    delete l4;
+                    throw ComputerException(e.what());
+                }
             }
             else if(l3->getClass() == EXPLIT) {
                 ExpLit* elit = dynamic_cast<ExpLit*>(l3);
                 try {
                     elit->compile();
-                    delete l3;
                 }
                 catch(std::exception const& e) {
+                    Computer::getInstance().backup();
+                    delete l1;
+                    delete l2;
                     delete l3;
                     delete l4;
-                    l2->exec();
-                    l1->exec();
-                    return;
+                    throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
                 }
             }
             else l3->exec();
         }
+        nbIt++;
         delete l4;
 	}
 }
