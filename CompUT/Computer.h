@@ -4,6 +4,7 @@
 #include "Pile.h"
 #include <vector>
 #include <QObject>
+#include <iostream>
 
 class Operand;
 class AtomManager : public QObject
@@ -20,8 +21,8 @@ public:
 	Litteral* getLitteral(const std::string str);
     size_t size() { return atoms.size(); }
     std::map<std::string, Litteral*> getAtoms(){return atoms;}
-signals:
-    void modifAtom();
+
+
 };
 
 class Computer : public QObject
@@ -35,7 +36,16 @@ private:
 	Computer() :pile(new Pile()), atomManager(new AtomManager()) {}
 	Computer(const Computer& c);
 	Computer& operator=(const Computer& c) = default;
-	~Computer() { delete pile; }
+    ~Computer() {
+        delete pile;
+        delete atomManager;
+        for(AtomManager* a : atomHistory){
+            delete a;
+        }
+        for(Pile* p : pileHistory){
+            delete p;
+        }
+    }
 public:
 	static Computer& getInstance(){
 		static Computer instance;
@@ -49,6 +59,7 @@ public:
 	void save();
 	void backup();
 signals:
+    void modifAtom();
     void modifEtat();
     void error(const char* err,std::string);
 };

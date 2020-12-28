@@ -44,7 +44,7 @@ Dialog::Dialog(QWidget * parent):
 
         //connexion des signals du computer au slot du dialog
         connect(computer, SIGNAL(modifEtat()), this, SLOT(refresh()));
-        connect(computer -> getAtomManager(), SIGNAL(modifAtom()), this, SLOT(refreshAtom()));
+        connect(computer, SIGNAL(modifAtom()), this, SLOT(refreshAtom()));
         connect(computer, SIGNAL(error(const char * , std::string)), this, SLOT(error(const char * , std::string)));
 
     }
@@ -239,7 +239,7 @@ void Dialog::on_varSave_pressed() {
         Operand * o = computer -> createOperand(varValue.toStdString());
         // En soit l'utilisateur peut creer une fonction dans le champs variable
         if (dynamic_cast < Litteral * > (o)) {
-            computer -> backup();
+            computer ->save();
             computer -> getAtomManager() -> addAtom(varName.toStdString(), dynamic_cast < Litteral * > (o));
         }
 
@@ -258,7 +258,7 @@ void Dialog::on_funSave_pressed() {
         Operand * o = computer -> createOperand(funValue.toStdString());
         ///ici l'utilisateur ne peut que creer un programme
         if (dynamic_cast < ProgLit * > (o)) {
-            computer -> backup();
+            computer -> save();
             computer -> getAtomManager() -> addAtom(funName.toStdString(), dynamic_cast < ProgLit * > (o));
         } else {
             throw ComputerException("Erreur : la valeur ne correspond pas a un programme");

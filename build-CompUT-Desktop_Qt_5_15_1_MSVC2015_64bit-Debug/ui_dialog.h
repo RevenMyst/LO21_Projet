@@ -503,13 +503,16 @@ public:
         QFont font1;
         font1.setPointSize(12);
         checkBox->setFont(font1);
+        checkBox->setFocusPolicy(Qt::NoFocus);
         checkBox_2 = new QCheckBox(frame);
         checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
         checkBox_2->setGeometry(QRect(10, 60, 321, 19));
         checkBox_2->setFont(font1);
+        checkBox_2->setFocusPolicy(Qt::NoFocus);
         spinBox = new QSpinBox(frame);
         spinBox->setObjectName(QString::fromUtf8("spinBox"));
         spinBox->setGeometry(QRect(10, 100, 42, 31));
+        spinBox->setFocusPolicy(Qt::NoFocus);
         spinBox->setValue(10);
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));

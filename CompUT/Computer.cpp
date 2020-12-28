@@ -33,14 +33,18 @@ bool AtomManager::addAtom(const string str, Litteral* o)
         removeAtom(str);
     }
     pair<map<string, Litteral*>::iterator, bool> res = atoms.insert(pair<string, Litteral*>(str, o));
-    modifAtom();
+
+    Computer::getInstance().modifAtom();
     return res.second;
 }
 
 bool AtomManager::removeAtom(const string str)
 {
+    if (atoms.count(str) > 0) {
+        delete atoms.at(str);
+    }
     size_t res = atoms.erase(str);
-    modifAtom();
+    Computer::getInstance().modifAtom();
     return res != 0;
 }
 
@@ -150,14 +154,25 @@ void Computer::save()
 void Computer::backup()
 {
     if (pileHistory.size() > 1) {
-        Pile* temp = pile;
+
+        std::cout<<"test";
+        Pile* tempPile = pile;
+        AtomManager* tempAtom = atomManager;
         //on supprime la sauvegarde pre-UNDO
+        delete pileHistory.back();
         pileHistory.pop_back();
+        delete atomHistory.back();
+        atomHistory.pop_back();
         //on retablit la sauvegarde
         pile = pileHistory.back();
+        atomManager = atomHistory.back();
         //on supprime de la liste
         pileHistory.pop_back();
-        delete temp;
+        atomHistory.pop_back();
+        delete tempPile;
+        delete tempAtom;
+        std::cout<<"test";
+        modifAtom();
     }
 
 }

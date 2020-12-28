@@ -1342,6 +1342,9 @@ QLineEdit{background-color:#363e3f;border:1px solid #252c2d;color:white;padding:
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Masquer le clavier d'operateurs</string>
       </property>
@@ -1360,6 +1363,9 @@ QLineEdit{background-color:#363e3f;border:1px solid #252c2d;color:white;padding:
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Masquer le clavier de Variables/Fonctions</string>
       </property>
@@ -1372,6 +1378,9 @@ QLineEdit{background-color:#363e3f;border:1px solid #252c2d;color:white;padding:
         <width>42</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
       </property>
       <property name="value">
        <number>10</number>
