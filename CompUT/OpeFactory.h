@@ -13,8 +13,11 @@ class OpeFactory
 public:
 	OpeFactory() = default;
 	virtual ~OpeFactory() {}
+    // retourne l'operateur voulu
 	virtual Operator* getOpe() = 0;
+    //recupere toutes les Factories
 	static std::map<std::string, OpeFactory*> getOpeFactories();
+    // pour savoir si string correspond operator
 	static bool isOpe(std::string ope);
 };
 

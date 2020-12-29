@@ -21,33 +21,48 @@ class Dialog: public QDialog {
     public:
 
         explicit Dialog(QWidget * parent = nullptr);
+        // lorsque l'utilisateur tape dans la ligne de commande
         void keyPressEvent(QKeyEvent * e);
         ~Dialog();
 
-    public slots:
-
-        void pushCommandLine();
-        void spaceChar();
-        void delChar();
-        void clearChar();
-        void refreshAtom();
 
     private slots:
+        //ajouter le string du bouton au clic
+        void pushCommandLine();
+        // ajout espace
+        void spaceChar();
+        // suppression
+        void delChar();
+        //vide la command line
+        void clearChar();
+        //maj affichage des var et fonctions
+        void refreshAtom();
+        //afficher/masquer claviers
         void on_checkBox_stateChanged(int arg1);
         void on_checkBox_2_stateChanged(int arg1);
+        //fermer la ligne d'erreur
         void on_closeErrorLine_clicked();
+        //afficher + ou - d'elements de la pile
         void on_spinBox_textChanged(const QString & arg1);
+        // maj de l'affichage de la pile
         void refresh();
+        //affichage erreur
         void error(const char * err, std::string);
+        //recupere commande et execute
         void execCommand();
+        // ecriture des infos d'une variable pour maj
         void editVar();
+        // ecriture des infos d'une fonction pour maj
         void editFun();
+        //detection clic bouton entré
         void on_EnterButton_pressed();
+        //maj/ajout variable
         void on_varSave_pressed();
+        //maj/ajout fonction
         void on_funSave_pressed();
-
+        //suppresion fonction
         void on_funSuppr_clicked();
-
+        //suppression variable
         void on_varSuppr_clicked();
 
 private:

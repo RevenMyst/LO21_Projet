@@ -25,9 +25,11 @@ public:
 	~AtomManager();
 	bool addAtom(const std::string, Litteral*);
 	bool removeAtom(const std::string str);
-	Litteral* getLitteral(const std::string str);
-    size_t size() { return atoms.size(); }
-    std::map<std::string, Litteral*> getAtoms(){return atoms;}
+    //recupere une copiel'operande associée au string
+    Litteral* getLitteral(const std::string str) const;
+    size_t size() const { return atoms.size(); }
+    //recupere tout le tableau
+    std::map<std::string, Litteral*> getAtoms() const{return atoms;}
 
 
 };
@@ -40,6 +42,7 @@ private:
 	std::list<Pile*> pileHistory;
 	Pile* pile;
 	AtomManager* atomManager;
+
 	Computer() :pile(new Pile()), atomManager(new AtomManager()) {}
 	Computer(const Computer& c);
 	Computer& operator=(const Computer& c) = default;
@@ -58,11 +61,11 @@ public:
 		static Computer instance;
 		return instance;
 	}
-	static std::vector<std::string> parse(std::string str);
+    static std::vector<std::string> parse(std::string str);
 	static Operand* createOperand(std::string str);
-	Pile* getPile() { return pile; }
-	AtomManager* getAtomManager() { return atomManager; }
-	void execCommand(std::string str);
+    Pile* getPile() const{ return pile; }
+    AtomManager* getAtomManager() const { return atomManager; }
+    void execCommand(std::string str);
 	void save();
 	void backup();
 signals:

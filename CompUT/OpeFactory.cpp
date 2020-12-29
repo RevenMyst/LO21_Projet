@@ -166,5 +166,6 @@ std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
 
 bool OpeFactory::isOpe(std::string ope)
 {
+    // si c'est un ope alors il y a une entrée avec ce string donc count() > 0
 	return getOpeFactories().count(ope) > 0;
 }

@@ -12,6 +12,10 @@
 #include "Operand.h"
 using namespace std;
 
+
+/**********************
+ *****AtomManager******
+ **********************/
 AtomManager::AtomManager(AtomManager& a)
 {
     for (auto atom : a.atoms) {
@@ -22,6 +26,7 @@ AtomManager::AtomManager(AtomManager& a)
 
 AtomManager::~AtomManager()
 {
+    //il faut detruire l'operande stockée
     for (auto a : atoms) {
         delete a.second;
     }
@@ -29,6 +34,7 @@ AtomManager::~AtomManager()
 
 bool AtomManager::addAtom(const string str, Litteral* o)
 {
+    // si il existe deja, on le supprime
     if (atoms.count(str) > 0) {
         removeAtom(str);
     }
@@ -41,6 +47,7 @@ bool AtomManager::addAtom(const string str, Litteral* o)
 bool AtomManager::removeAtom(const string str)
 {
     if (atoms.count(str) > 0) {
+        //il faut supprimer l'operande stockée
         delete atoms.at(str);
     }
     size_t res = atoms.erase(str);
@@ -48,50 +55,63 @@ bool AtomManager::removeAtom(const string str)
     return res != 0;
 }
 
-Litteral* AtomManager::getLitteral(const string str)
+Litteral* AtomManager::getLitteral(const string str) const
 {
+    //si n'existe pas retourne nullptr
     try {
         return dynamic_cast<Litteral*>(atoms.at(str)->clone());
     }
     catch (std::exception &e) {
+
         return nullptr;
     }
 
 }
-
+/**********************
+ *******Computer*******
+ **********************/
 vector<string> Computer::parse(string str)
 {
 
     istringstream iss(str);
+    // on separe les strings par les espaces
     vector<string> results((istream_iterator<string>(iss)), istream_iterator<string>());
     vector<string> res;
+    //il faut reassembler les litterales programmes
+    //profondeur de la litterales programmes
     int prog = 0;
     string p = "";
     for (size_t i = 0; i < results.size(); i++) {
+        // si ce n'est pas un element de ProgLit on ajoute simplement dans res
         if (results[i] != "[" && prog == 0) {
             res.push_back(results[i]);
         }
         else {
+            //si c'est [ on commence a creer le string de la Proglit plus incremente la profondeur
             if (results[i] == "[") {
                 p = p + results[i] + " ";
                 prog++;
             }
             else if (results[i] == "]") {
+                // si c'est ] on decremente la profondeur
                 prog--;
 
                 p = p + results[i] + " ";
                 if (prog == 0) {
+                    //si profondeur = 0 on a finit de reconstruire la ProgLit
                     p = p.substr(0, p.size() - 1);
                     //p = p.substr(2, p.size() - 4); //pour enlever les crochets
                     res.push_back(p);
                     p = "";
                 }
             }
+            //sinon on ajoute a la ProgLit courante
             else {
                 p = p + results[i] + " ";
             }
         }
     }
+    //on retourne le nouveau tableau
     return res;
 }
 
@@ -146,6 +166,7 @@ void Computer::save()
     atomHistory.push_back(new AtomManager(*atomManager));
     pileHistory.push_back(new Pile(*pile));
     if (pileHistory.size() >= 10) {
+        //si plus de 10 elements on supprimes les derniers pour economiser de l'espace
         pileHistory.pop_front();
         atomHistory.pop_front();
     }
@@ -155,7 +176,6 @@ void Computer::backup()
 {
     if (pileHistory.size() > 1) {
 
-        std::cout<<"test";
         Pile* tempPile = pile;
         AtomManager* tempAtom = atomManager;
         //on supprime la sauvegarde pre-UNDO
@@ -171,7 +191,6 @@ void Computer::backup()
         atomHistory.pop_back();
         delete tempPile;
         delete tempAtom;
-        std::cout<<"test";
         modifAtom();
     }
 
