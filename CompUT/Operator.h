@@ -14,6 +14,7 @@ class Operator : public Operand
 {
 private:
 	unsigned int arite;
+    //verifie quil reste assez d'elements dans la pile
 	bool verify();
 protected:
 	virtual void ope() = 0;

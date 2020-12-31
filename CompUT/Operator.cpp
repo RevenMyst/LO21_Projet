@@ -8,8 +8,27 @@
 #include <cmath>
 #define MAXIt 1000
 
+bool Operator::verify()
+{
+    return (arite <= Computer::getInstance().getPile()->size());
+}
+
+void Operator::exec()
+{
+    //si il y a assez de litterales dans la pile on exec
+    if (verify()) {
+        ope();
+        delete this;
+    }
+    //sinon erreur
+    else {
+        throw ComputerException("Erreur : Il n'y a pas assez de Litterals dans la pile.");
+    }
+}
+
 void OpeDUP::ope()
 {
+    // depile, clone puis rempile
 	Litteral* l = Computer::getInstance().getPile()->pull();
 	Computer::getInstance().getPile()->push(l);
 	Computer::getInstance().getPile()->push(dynamic_cast<Litteral*>(l->clone()));
@@ -17,11 +36,13 @@ void OpeDUP::ope()
 
 void OpeDROP::ope()
 {
+    //depile  et detruit
 	delete Computer::getInstance().getPile()->pull();
 }
 
 void OpeCLEAR::ope()
 {
+    //depile et detruit tout
 	size_t size = Computer::getInstance().getPile()->size();
 	for (size_t i = 0; i < size; i++) {
 		delete Computer::getInstance().getPile()->pull();
@@ -30,40 +51,29 @@ void OpeCLEAR::ope()
 
 void OpeSWAP::ope()
 {
+    //depile et rempile
 	Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
 	Computer::getInstance().getPile()->push(l1);
 	Computer::getInstance().getPile()->push(l2);
 }
 
-bool Operator::verify()
-{
-	return (arite <= Computer::getInstance().getPile()->size());
-}
 
-void Operator::exec()
-{
-	if (verify()) {
-		ope();
-		delete this;
-	}
-	else {
-		throw ComputerException("Erreur : Il n'y a pas assez de Litterals dans la pile.");
-	}
-}
 
 void OpeSTO::ope()
 {
 	Pile* p = Computer::getInstance().getPile();
 	Litteral* l1 = p->pull();
 	Litteral* l2 = p->pull();
+    // premier lit doit etre Expression la deuxieme ne doit pas etre expression
 	if (l1->getClass() == EXPLIT && l2->getClass()!= EXPLIT) {
 		ExpLit* lit = dynamic_cast<ExpLit*>(l1);
 		if (!OpeFactory::isOpe(lit->getValue())) {
-			//si ce n'est pas un nom reservé
+            //si ce n'est pas un nom reservé on ajoute aux atoms
 			Computer::getInstance().getAtomManager()->addAtom(lit->getValue(), l2);
 			delete lit;
 		}else{
+            // si nom reservé on rempile et erreur
 			l1->exec();
 			l2->exec();
 			throw ComputerException("Erreur Un operateur utilise deja ce nom");
@@ -71,6 +81,7 @@ void OpeSTO::ope()
 
 	}
 	else {
+        //si pas bon type on reempile et lance erreur
 		l1->exec();
 		l2->exec();
 		throw ComputerException("Erreur l'operateur STO doit recevoir une litteral expression et une litteral numerique ou programme.");
@@ -79,13 +90,14 @@ void OpeSTO::ope()
 
 void OpeEVAL::ope()
 {
+    //DP Visitor
 	Litteral* l = Computer::getInstance().getPile()->pull();
 	l->accept(this);
 }
 
 void OpeEVAL::visitExpLit(ExpLit* l)
 {
-
+// soit compile soit rempile
     try {
         l->compile();
     }
@@ -96,6 +108,7 @@ void OpeEVAL::visitExpLit(ExpLit* l)
 
 void OpeEVAL::visitProgLit(ProgLit* l)
 {
+    // la litterale est automatiquement detruite apres compilation
 	l->compile();
 }
 
@@ -189,6 +202,7 @@ void OpeFORGET::ope()
 }
 void OpeFORGET::visitExpLit(ExpLit* l)
 {
+    //remove retourne un boolean
 	if (!Computer::getInstance().getAtomManager()->removeAtom(l->getValue())) {
         throw ComputerException("Aucune variable ou programme n'est associé a cette expression");
 	}
@@ -419,7 +433,7 @@ void OpeDivision::ope()
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
 
-	if(static_cast<IntLit*>(l1)!= nullptr && static_cast<IntLit*>(l1)->getValue()==0)
+    if(dynamic_cast<IntLit*>(l1) && dynamic_cast<IntLit*>(l1)->getValue()==0)
     {
         l2->exec();
         l1->exec();
@@ -428,7 +442,8 @@ void OpeDivision::ope()
     else {
 	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
 	if (Action::exist(t)) {
-		Action::getActions().at(t)->exec(l2, l1)->exec();
+        std::cout<<"exec ";
+        Action::getActions().at(t)->exec(l2, l1)->exec();
 	}
 
     else {

@@ -7,11 +7,13 @@
 #include<QFontMetrics>
 
 std::string Litteral::toPileString(){
+    //de base toPileString == reduceString sauf ExpLit et ProgLit
     return reduceString();
 }
 std::string Litteral::reduceString(){
     string str = toString();
     bool reduced = false;
+    //calcul de la taille de rendu dans la pile
     while(QFontMetrics(QFont("Segoe UI",15)).horizontalAdvance(str.c_str())>320){
         str = str.substr(0, str.size()-1);
         reduced = true;
@@ -23,6 +25,7 @@ std::string Litteral::reduceString(){
 }
 void Litteral::exec()
 {
+    //de base = exec() = empiler mais pour RealLit et RationnalLit possible simplification en IntLit
     Computer::getInstance().getPile()->push(this);
 }
 
@@ -31,16 +34,20 @@ void Litteral::exec()
 /*******************************/
 
 std::string RealLit::toString() const {
+    // 5.0 -> 5.
+    ///en theorie impossible car simplification
 	std::ostringstream ss;
 	if (getMant() == 0) {
 		return std::to_string(getInt()) + ".";
 	}
+    // 0.5 -> .5
 	else if (getInt() == 0) {
 		ss << getMant();
 		std::string str = ss.str();
 		str.erase(0, 1);
 		return str;
-	}
+    }
+    // 1.5 -> 1.5
 	else {
 		ss << value;
 		return ss.str();
@@ -55,6 +62,7 @@ void RealLit::accept(Visitor* visitor)
 
 void RealLit::exec()
 {
+    //si mantisse nulle -> empile IntLit a la place
 	if (getMant() != 0) {
 		Litteral::exec();
 	}
@@ -76,9 +84,9 @@ void RationalLit::accept(Visitor* visitor)
 }
 
 void RationalLit::ReductionRational() {
+    //simplifie la fraction
 	for (int i = numerateur * denominateur; i > 1; i--) {
-		if ((denominateur % i == 0) && (numerateur % i == 0)) {
-            std::cout<<i<<" "<<denominateur % i<<" "<<numerateur % i<<endl;
+        if ((denominateur % i == 0) && (numerateur % i == 0)) {
 			denominateur /= i;
 			numerateur /= i;
 		}
@@ -86,13 +94,16 @@ void RationalLit::ReductionRational() {
 }
 void RationalLit::exec()
 {
+    // 5/1 -> IntLit 5
     if(denominateur == 1){
         Computer::getInstance().getPile()->push(new IntLit(numerateur));
         delete this;
     }else if(numerateur == 0){
+        // 0/5 -> IntLit 0
         Computer::getInstance().getPile()->push(new IntLit(0));
         delete this;
     }else{
+       // 2/3 -> 2/3
         Computer::getInstance().getPile()->push(this);
     }
 }
@@ -103,6 +114,7 @@ double RationalLit::getValue() const {
 
 std::string RationalLit::toString() const
 {
+    ///En theorie impossible car simplification
 	//Cas d'ou on a un entier
 	if (getDen() == 1)
 		return(std::to_string(getNum()));
@@ -126,6 +138,7 @@ ProgLit::ProgLit(const ProgLit& lit)
 
 std::string ProgLit::toString() const
 {
+    //toString de Prog = toString des Operand
 	std::string str = "[ ";
 	for (Operand* o : operands) {
 		str = str + o->toString() + " ";
@@ -136,6 +149,7 @@ std::string ProgLit::toString() const
 
 void ProgLit::compile()
 {
+    // compile = exec() de chaque operand
 	for (Operand* o : getOperands()) {
 		o->clone()->exec();
 	}

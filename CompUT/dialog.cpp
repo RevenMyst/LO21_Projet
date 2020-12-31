@@ -55,7 +55,7 @@ void Dialog::refresh() {
     unsigned int indice = 1;
     for (Litteral * lit: computer -> getPile() -> getLitterals()) {
         if (indice <= computer -> getPile() -> toShow()) {
-            std::cout<<QFontMetrics(ui->listWidget->font()).horizontalAdvance(lit->toPileString().c_str())<<endl;
+            //std::cout<<QFontMetrics(ui->listWidget->font()).horizontalAdvance(lit->toPileString().c_str())<<endl;
             str = "[" + to_string(indice) + "] >> " + lit -> toPileString().c_str();
             ui -> listWidget -> addItem(QString::fromUtf8(str.c_str()));
         }
