@@ -364,6 +364,8 @@ void OpePlus::ope()
 	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l1->getClass(), l2->getClass());
 	if (Action::exist(t)) {
 		Action::getActions().at(t)->exec(l1, l2)->exec();
+		delete l1;
+		delete l2;
 	}
 	else {
 		// l'addition est commutative, pour limiter le nombre d'action on verifie si l'addition dans l'autre sens existe
@@ -371,6 +373,8 @@ void OpePlus::ope()
 		get<2>(t) = l1->getClass();
 		if (Action::exist(t)) {
 			Action::getActions().at(t)->exec(l2, l1)->exec();
+			delete l1;
+			delete l2;
 		}
 		else {
 			//ces deux litterales ne possedent pas d'actions pour les additionner on reempile et on envoie une erreur
@@ -390,6 +394,8 @@ void OpeMul::ope()
 	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l1->getClass(), l2->getClass());
 	if (Action::exist(t)) {
 		Action::getActions().at(t)->exec(l1, l2)->exec();
+		delete l1;
+		delete l2;
 	}
 	else {
 		// la mulitplication est commutative, pour limiter le nombre d'action on verifie si la multiplication dans l'autre sens existe
@@ -397,6 +403,8 @@ void OpeMul::ope()
 		get<2>(t) = l1->getClass();
 		if (Action::exist(t)) {
 			Action::getActions().at(t)->exec(l2, l1)->exec();
+			delete l1;
+			delete l2;
 		}
 		else {
 			//ces deux litterales ne possedent pas d'actions pour les mulitplier on reempile et on envoie une erreur
@@ -416,6 +424,8 @@ void OpeMoins::ope()
 	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
 	if (Action::exist(t)) {
 		Action::getActions().at(t)->exec(l2, l1)->exec();
+		delete l1;
+		delete l2;
 	}
 
     else {
@@ -442,8 +452,10 @@ void OpeDivision::ope()
     else {
 	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
 	if (Action::exist(t)) {
-        std::cout<<"exec ";
         Action::getActions().at(t)->exec(l2, l1)->exec();
+	delete l1;
+	delete l2;
+		
 	}
 
     else {
@@ -784,6 +796,8 @@ void OpePOW::ope(){
 	tuple<string, LitType, LitType> t = make_tuple(this->toString(), l2->getClass(), l1->getClass());
 	if (Action::exist(t)) {
 		Action::getActions().at(t)->exec(l2, l1)->exec();
+		delete l1;
+		delete l2;
 	}
 
     else {
