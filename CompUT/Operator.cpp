@@ -942,6 +942,8 @@ void AtomLit::ope()
 		exp->compile();
 	}
 	catch (std::exception const& e) {
+        /* l'atome ne correspond pas à l'identificateur d'une variable ou d'un programme,
+        empilement d'une nouvelle littérale expression */
         exp->exec();
     }
 }
