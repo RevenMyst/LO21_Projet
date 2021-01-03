@@ -6,7 +6,7 @@
 #include "Action.h"
 #include <iostream>
 #include <cmath>
-#define MAXIt 1000
+#define MAXIt 1000 // nombre maximal d'itérations pour le WHILE
 
 bool Operator::verify()
 {
@@ -117,10 +117,12 @@ void OpeAND::ope()
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
 	if((l1->getClass() == INTLIT && dynamic_cast<IntLit*>(l1)->getInt() == 0) || (l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)) {
+        // au moins l'une des deux littérales est fausse
         Litteral* l3 = new IntLit(0);
         l3->exec();
 	}
     else {
+        // les deux littérales sont vraies
         Litteral* l3 = new IntLit(1);
         l3->exec();
     }
@@ -133,10 +135,12 @@ void OpeOR::ope()
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
 	if((l1->getClass() == INTLIT && dynamic_cast<IntLit*>(l1)->getInt() == 0) && (l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)) {
+        // les deux littérales sont fausses
         Litteral* l3 = new IntLit(0);
         l3->exec();
 	}
     else {
+        // au moins l'une des deux littérales est vraie
         Litteral* l3 = new IntLit(1);
         l3->exec();
     }
@@ -149,21 +153,25 @@ void OpeDIV::ope()
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
 	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
+        // les deux littérales sont entières
         int divid = dynamic_cast<IntLit*>(l2)->getInt();
         int divis = dynamic_cast<IntLit*>(l1)->getInt();
         if(divis != 0) {
+            // l'utilisateur ne cherche pas à diviser par 0
             Litteral* l3 = new IntLit(divid/divis);
             delete l1;
             delete l2;
             l3->exec();
         }
         else {
+            // l'utilisateur cherche à diviser par 0
             l2->exec();
             l1->exec();
             throw ComputerException("Erreur tentative de division par 0");
         }
 	}
 	else {
+        // au moins l'une des deux littérales n'est pas entière
         l2->exec();
         l1->exec();
         throw ComputerException("Erreur l'operateur DIV doit recevoir des litterales entieres");
@@ -175,21 +183,25 @@ void OpeMOD::ope()
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
 	if(l1->getClass() == INTLIT && l2->getClass() == INTLIT) {
+        // les deux littérales sont entières
         int divid = dynamic_cast<IntLit*>(l2)->getInt();
         int divis = dynamic_cast<IntLit*>(l1)->getInt();
         if(divis != 0) {
+            // l'utilisateur ne cherche pas à diviser par 0
             Litteral* l3 = new IntLit(divid%divis);
             delete l1;
             delete l2;
             l3->exec();
         }
         else {
+            // l'utilisateur cherche à diviser par 0
             l2->exec();
             l1->exec();
             throw ComputerException("Erreur tentative de division par 0");
         }
 	}
 	else {
+        // au moins l'une des deux littérales n'est pas entière
         l2->exec();
         l1->exec();
         throw ComputerException("Erreur l'operateur MOD doit recevoir des litterales entieres");
@@ -474,6 +486,7 @@ void OpeIFT::ope()
     Litteral* l1 = Computer::getInstance().getPile()->pull();
     Litteral* l2 = Computer::getInstance().getPile()->pull();
     if(l2->getClass() == PROGLIT) {
+        // le test logique est un programme qu'on évalue
         ProgLit* plit = dynamic_cast<ProgLit*>(l2);
         try {
             plit->compile();
@@ -487,6 +500,7 @@ void OpeIFT::ope()
         l2 = Computer::getInstance().getPile()->pull();
     }
     else if(l2->getClass() == EXPLIT) {
+        // le test logique est une expression qu'on évalue
         ExpLit* elit = dynamic_cast<ExpLit*>(l2);
         try {
             elit->compile();
@@ -500,9 +514,12 @@ void OpeIFT::ope()
         l2 = Computer::getInstance().getPile()->pull();
     }
     if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0)
+        // la valeur du test logique est fausse, le deuxième argument est abandonné
         delete l1;
     else {
+        // la valeur du test logique est vraie
         if(l1->getClass() == PROGLIT) {
+            // le deuxième argument est un programme qu'on évalue
             ProgLit* plit = dynamic_cast<ProgLit*>(l1);
             try {
                 plit->compile();
@@ -515,6 +532,7 @@ void OpeIFT::ope()
             }
         }
         else if(l1->getClass() == EXPLIT) {
+            // le deuxième argument est une expression qu'on évalue
             ExpLit* elit = dynamic_cast<ExpLit*>(l1);
             try {
                 elit->compile();
@@ -526,7 +544,7 @@ void OpeIFT::ope()
                 throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
             }
         }
-        else l1->exec();
+        else l1->exec(); // le deuxième argument est une littérale numérique qu'on empile
     }
     delete l2;
 }
@@ -538,6 +556,7 @@ void OpeIFTE::ope()
     Litteral* l1 = Computer::getInstance().getPile()->pull();
 	Litteral* l2 = Computer::getInstance().getPile()->pull();
     if(l2->getClass() == PROGLIT) {
+        // le test logique est un programme qu'on évalue
         ProgLit* plit = dynamic_cast<ProgLit*>(l2);
         try {
             plit->compile();
@@ -552,6 +571,7 @@ void OpeIFTE::ope()
         l2 = Computer::getInstance().getPile()->pull();
     }
     else if(l2->getClass() == EXPLIT) {
+        // le test logique est une expression qu'on évalue
         ExpLit* elit = dynamic_cast<ExpLit*>(l2);
         try {
             elit->compile();
@@ -566,7 +586,9 @@ void OpeIFTE::ope()
         l2 = Computer::getInstance().getPile()->pull();
     }
     if(l2->getClass() == INTLIT && dynamic_cast<IntLit*>(l2)->getInt() == 0) {
+        // la valeur du test logique est fausse
         if(l3->getClass() == PROGLIT) {
+            // le troisième argument est un programme qu'on évalue
             ProgLit* plit = dynamic_cast<ProgLit*>(l3);
             try {
                 plit->compile();
@@ -580,6 +602,7 @@ void OpeIFTE::ope()
             }
         }
         else if(l3->getClass() == EXPLIT) {
+            // le troisième argument est une expression qu'on évalue
             ExpLit* elit = dynamic_cast<ExpLit*>(l3);
             try {
                 elit->compile();
@@ -592,11 +615,13 @@ void OpeIFTE::ope()
                 throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
             }
         }
-        else l3->exec();
-        delete l1;
+        else l3->exec(); // le troisième argument est une littérale numérique qu'on empile
+        delete l1; // le deuxième argument est abandonné
     }
     else {
+        // la valeur du test logique est vraie
         if(l1->getClass() == PROGLIT) {
+            // le deuxième argument est un programme qu'on évalue
             ProgLit* plit = dynamic_cast<ProgLit*>(l1);
             try {
                 plit->compile();
@@ -610,6 +635,7 @@ void OpeIFTE::ope()
             }
         }
         else if(l1->getClass() == EXPLIT) {
+            // le deuxième argument est une expression qu'on évalue
             ExpLit* elit = dynamic_cast<ExpLit*>(l1);
             try {
                 elit->compile();
@@ -622,8 +648,8 @@ void OpeIFTE::ope()
                 throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
             }
         }
-        else l1->exec();
-        delete l3;
+        else l1->exec(); // le deuxième argument est une littérale numérique qu'on empile
+        delete l3; // le troisième argument est abandonné
     }
     delete l2;
 }
@@ -636,7 +662,9 @@ void OpeWHILE::ope()
 	bool stop = false;
     int nbIt = 0;
 	while(stop != true) {
+        // la valeur du test logique était vraie à l'itération précédente
         if(nbIt >= MAXIt) {
+            // ce bloc d'instructions permet de stopper une boucle while éventuellement infinie
             const std::string s = "Erreur nombre maximal de " + std::to_string(MAXIt) + " iterations atteint";
             Computer::getInstance().backup();
             delete l1;
@@ -646,6 +674,7 @@ void OpeWHILE::ope()
         Litteral* l3 = dynamic_cast<Litteral*>(l1->clone());
         Litteral* l4 = dynamic_cast<Litteral*>(l2->clone());
         if(l4->getClass() == PROGLIT) {
+            // le test logique est un programme qu'on évalue
             ProgLit* plit = dynamic_cast<ProgLit*>(l4);
             try {
                 plit->compile();
@@ -661,6 +690,7 @@ void OpeWHILE::ope()
             l4 = Computer::getInstance().getPile()->pull();
         }
         else if(l4->getClass() == EXPLIT) {
+            // le test logique est une expression qu'on évalue
             ExpLit* elit = dynamic_cast<ExpLit*>(l4);
             try {
                 elit->compile();
@@ -676,13 +706,16 @@ void OpeWHILE::ope()
             l4 = Computer::getInstance().getPile()->pull();
         }
         if(l4->getClass() == INTLIT && dynamic_cast<IntLit*>(l4)->getInt() == 0) {
+            // la valeur du test logique est fausse
             stop = true;
             delete l1;
             delete l2;
             delete l3;
         }
         else {
+            // la valeur du test logique est vraie
             if(l3->getClass() == PROGLIT) {
+                // le deuxième argument est un programme qu'on évalue
                 ProgLit* plit = dynamic_cast<ProgLit*>(l3);
                 try {
                     plit->compile();
@@ -697,6 +730,7 @@ void OpeWHILE::ope()
                 }
             }
             else if(l3->getClass() == EXPLIT) {
+                // le deuxième argument est une expression qu'on évalue
                 ExpLit* elit = dynamic_cast<ExpLit*>(l3);
                 try {
                     elit->compile();
@@ -710,7 +744,7 @@ void OpeWHILE::ope()
                     throw ComputerException("Erreur l'expression ne correspond a aucun programme ou variable");
                 }
             }
-            else l3->exec();
+            else l3->exec(); // le deuxième argument est une littérale numérique qu'on empile
         }
         nbIt++;
         delete l4;
@@ -840,8 +874,12 @@ void OpeLN::ope() {
         delete l;
 }
 
+/* redéfinition des méthodes visitIntLit, visitRationalLit et visitRealLit uniquement,
+l'opérateur LN ne pouvant être appliqué que sur les littérales numériques */
+
 void OpeLN::visitIntLit(IntLit *l){
         if(l->getValue() <= 0) {
+            // la valeur de la littérale entière n'est pas dans l'ensemble de définition du logarithme népérien
             l->exec();
             throw ComputerException("Erreur : Litterale <= 0");
         }
@@ -851,6 +889,7 @@ void OpeLN::visitIntLit(IntLit *l){
 
 void OpeLN::visitRationalLit(RationalLit *l){
         if(l->getValue() <= 0) {
+            // la valeur de la littérale rationnelle n'est pas dans l'ensemble de définition du logarithme népérien
             l->exec();
             throw ComputerException("Erreur : Litterale <= 0");
         }
@@ -860,6 +899,7 @@ void OpeLN::visitRationalLit(RationalLit *l){
 
 void OpeLN::visitRealLit(RealLit *l){
         if(l->getValue() <= 0) {
+            // la valeur de la littérale réelle n'est pas dans l'ensemble de définition du logarithme népérien
             l->exec();
             throw ComputerException("Erreur : Litterale <= 0");
         }
