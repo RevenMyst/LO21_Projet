@@ -24,44 +24,47 @@ public:
 };
 
 // Classe Addition Actions -----------
+
+///additions simples : int + int, int + reel, reel + int, reel + reel, reel + rationnel, rationnel + reel
 class PlusSimpleAction : public Action {
-	//additions simples : int + int, int + reel, reel + int, reel + reel, reel + rationnel, rationnel + reel
 public:
 	PlusSimpleAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
 
+///addition : rationnel + rationnel
 class PlusRatRatAction : public Action {
-	//addition : rationnel + rationnel
 public:
 	PlusRatRatAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///additions : int + rationnel, rationnel + int
 class PlusRatIntAction : public Action {
-	//additions : int + rationnel, rationnel + int
 public:
 	PlusRatIntAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
 //Classe Actions Multiplication ----------
+
+///multiplications simples : int * int, int * reel, reel * int, reel * reel, reel * rationnel, rationnel * reel
 class MulSimpleAction : public Action {
-	//multiplications simples : int * int, int * reel, reel * int, reel * reel, reel * rationnel, rationnel * reel
 public:
 	MulSimpleAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///multiplication : rationnel * rationnel
 class MulRatRatAction : public Action {
-	//multiplication : rationnel * rationnel
 public:
 	MulRatRatAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
+
+///multiplications : int * rationnel, rationnel * int
 class MulRatIntAction : public Action {
-	//multiplications : int * rationnel, rationnel * int
 public:
 	MulRatIntAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
@@ -69,65 +72,67 @@ public:
 
 
 //Classe Soustraction Actions ---
+
+///soustraction simples : int - int, int - reel, reel - int, reel - reel, reel - rationnel, rationnel - reel
 class MoinsSimpleAction : public Action {
-	//soustraction simples : int - int, int - reel, reel - int, reel - reel, reel - rationnel, rationnel - reel
 public:
 	MoinsSimpleAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///soustraction : rationnel - rationnel
 class MoinsRatRatAction : public Action {
-	//soustraction : rationnel - rationnel
 public:
 	MoinsRatRatAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///soustraction: rationnel - int
 class MoinsRatIntAction : public Action {
-	//soustraction: rationnel - int
 public:
 	MoinsRatIntAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///soustraction : int - rationnel
 class MoinsIntRatAction : public Action {
-	//soustraction : int - rationnel
 public:
 	MoinsIntRatAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
 //Classe Division Actions ---
+
+///division simples : int / int, int / reel, reel / int, reel / reel, reel / rationnel, rationnel / reel
 class DivisionSimpleAction : public Action {
-	//division simples : int / int, int / reel, reel / int, reel / reel, reel / rationnel, rationnel / reel
 public:
 	DivisionSimpleAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///division : rationnel / rationnel
 class DivisionRatRatAction : public Action {
-	//division : rationnel / rationnel
 public:
 	DivisionRatRatAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///division: rationnel / int
 class DivisionRatIntAction : public Action {
-	//division: rationnel / int
 public:
 	DivisionRatIntAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///division : int / rationnel
 class DivisionIntRatAction : public Action {
-	//division : int / rationnel
 public:
 	DivisionIntRatAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///division : int / int
 class DivisionIntIntAction : public Action {
-	//division : int / int
 public:
 	DivisionIntIntAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
@@ -135,30 +140,31 @@ public:
 
 
 //Classe Puissance Actions ---
+
+///Puissance : Int^Rationnel, Real^Rationnel, Int^Real, Real^Real, Real^Int
 class POWSimpleAction : public Action {
-    //Puissance : Int^Rationnel, Real^Rationnel, Int^Real, Real^Real, Real^Int
 public:
 	POWSimpleAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
 
+///Puissance: int ^ int
 class POWIntIntAction : public Action {
-	//Puissance: int ^ int
 public:
 	POWIntIntAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///Puissance: Rationnel ^ int
 class POWRatIntAction : public Action {
-	//Puissance: Rationnel ^ int
 public:
 	POWRatIntAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;
 };
 
+///Puissance: Rationnel ^ Rationnel, Rationnal^Real
 class POWRatRatRatRealAction : public Action {
-	//Puissance: Rationnel ^ Rationnel, Rationnal^Real
 public:
 	POWRatRatRatRealAction() = default;
 	Litteral* exec(Litteral* l1, Litteral* l2) override;

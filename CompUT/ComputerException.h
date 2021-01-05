@@ -9,6 +9,7 @@
 #include <string>
 #include <stdexcept>
 using namespace std;
+/// classe d'exception pour l'application
 class ComputerException : public exception {
 private:
 	string info;

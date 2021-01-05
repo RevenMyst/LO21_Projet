@@ -35,7 +35,7 @@ void Litteral::exec()
 
 std::string RealLit::toString() const {
     // 5.0 -> 5.
-    ///en theorie impossible car simplification
+    //en theorie impossible car simplification
 	std::ostringstream ss;
 	if (getMant() == 0) {
 		return std::to_string(getInt()) + ".";
@@ -114,7 +114,7 @@ double RationalLit::getValue() const {
 
 std::string RationalLit::toString() const
 {
-    ///En theorie impossible car simplification
+    //En theorie impossible car simplification
 	//Cas d'ou on a un entier
 	if (getDen() == 1)
 		return(std::to_string(getNum()));

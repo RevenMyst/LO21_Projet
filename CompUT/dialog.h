@@ -14,7 +14,7 @@
 namespace Ui {
     class Dialog;
 }
-
+/// Interface graphique
 class Dialog: public QDialog {
     Q_OBJECT
 

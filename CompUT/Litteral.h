@@ -20,7 +20,7 @@ enum LitType { INTLIT, REALLIT, RATIONALLIT, EXPLIT, PROGLIT};
 
 
 class Visitor;
-
+/// superclass des Litteral
 class Litteral : public Operand
 {
 protected:
@@ -32,19 +32,19 @@ public:
 	void exec() override;
 };
 
-
+/// Interface qui definit une Litteral pouvant etre comparee arithmetiquement
 class CompLit{
 public:
 	virtual double getComparableValue() = 0;
 };
-
+/// Interface qui definit une Litterale possedant une valeur numerique
 class NumLit {
 public:
 	virtual double getValue() const = 0;
 
 };
 
-
+/// Litterale expression en attente d'evaluation
 class ExpLit : public Litteral
 {
 	std::string name;
@@ -59,7 +59,7 @@ public:
     Operand* clone() override{ return new ExpLit(*this); }
     void compile();
 };
-
+/// Litterale reelle
 class RealLit : public Litteral, public CompLit, public NumLit
 {
 	float value;
@@ -78,7 +78,7 @@ public:
 
 
 };
-
+/// Litterale rationnelle
 class RationalLit : public Litteral, public CompLit, public NumLit
 {
 	int numerateur;
@@ -104,7 +104,7 @@ public:
     Operand* clone() override{ return new RationalLit(*this); }
     double getComparableValue() override{ return (numerateur / denominateur); }
 };
-
+/// Litteral entiere
 class IntLit : public Litteral, public CompLit, public NumLit
 {
 	int value;
@@ -123,7 +123,7 @@ public:
 
 };
 
-
+/// Litteral programme
 class ProgLit : public Litteral
 {
 private:

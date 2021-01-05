@@ -8,7 +8,7 @@
 #include <list>
 
 class Litteral;
-
+/// Stocke les Litterale
 class Pile
 {
 	std::list<Litteral*> litterals;

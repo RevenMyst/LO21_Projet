@@ -14,6 +14,7 @@
 #include <iostream>
 
 class Operand;
+/// Stocke les variable et fonction
 class AtomManager : public QObject
 {
     Q_OBJECT
@@ -33,7 +34,7 @@ public:
 
 
 };
-
+/// Execute le commande
 class Computer : public QObject
 {
     Q_OBJECT
