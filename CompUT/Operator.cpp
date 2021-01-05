@@ -970,15 +970,30 @@ void OpeTrigonometry::pushValue(double x) {
 }
 
 void OpeTrigonometry::visitIntLit(IntLit *l1) {
-    pushValue(getResult(l1->getValue()));
+    try {
+        pushValue(getResult(l1->getValue()));
+    }  catch (exception& e) {
+        l1->exec();
+        throw ComputerException(e.what());
+    }
 }
 
 void OpeTrigonometry::visitRealLit(RealLit *l1) {
-    pushValue(getResult(l1->getValue()));
+    try {
+        pushValue(getResult(l1->getValue()));
+    }  catch (exception& e) {
+        l1->exec();
+        throw ComputerException(e.what());
+    }
 }
 
 void OpeTrigonometry::visitRationalLit(RationalLit *l1) {
-    pushValue(getResult(l1->getValue()));
+    try {
+        pushValue(getResult(l1->getValue()));
+    }  catch (exception& e) {
+        l1->exec();
+        throw ComputerException(e.what());
+    }
 }
 
 

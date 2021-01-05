@@ -118,7 +118,7 @@ vector<string> Computer::parse(string str)
 Operand* Computer::createOperand(string str)
 {
     if (OpeFactory::isOpe(str)) {
-        return OpeFactory::getOpeFactories().at(str)->getOpe();
+        return OpeFactory::getOpeFactories().at(str)->clone();
     }
     else {
         //c'est une litterale

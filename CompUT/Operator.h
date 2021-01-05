@@ -357,21 +357,37 @@ public:
 
 class OpeARCSIN: public OpeTrigonometry {
 public:
-    double getResult(double x) override { return std::asin(x); }
+    double getResult(double x) override {
+        if(x>-1&&x<=1){
+            return std::asin(x);
+        }else{
+            throw ComputerException("Pour ARCSIN la valeur doit etre comprise entre -1 et 1");
+        }}
     std::string toString() const override{ return "ARCSIN"; }
     Operand* clone() override{ return new OpeARCSIN(*this); }
 };
 
 class OpeARCCOS: public OpeTrigonometry {
 public:
-    double getResult(double x) override { return std::acos(x); }
+    double getResult(double x) override {
+        if(x>-1&&x<=1){
+            return std::acos(x);
+        }else{
+            throw ComputerException("Pour ARCCOS la valeur doit etre comprise entre -1 et 1");
+        }
+        }
     std::string toString() const override{ return "ARCCOS"; }
     Operand* clone() override{ return new OpeARCCOS(*this); }
 };
 
 class OpeARCTAN: public OpeTrigonometry {
 public:
-    double getResult(double x) override { return std::atan(x); }
+    double getResult(double x) override {
+        if(x>-1&&x<=1){
+            return std::atan(x);
+        }else{
+            throw ComputerException("Pour ARCTAN la valeur doit etre comprise entre -1 et 1");
+        }}
     std::string toString() const override{ return "ARCTAN"; }
     Operand* clone() override{ return new OpeARCTAN(*this); }
 };

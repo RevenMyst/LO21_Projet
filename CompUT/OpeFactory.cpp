@@ -1,164 +1,164 @@
 #include "OpeFactory.h"
 
-std::map<std::string, OpeFactory*> OpeFactory::getOpeFactories()
+std::map<std::string, Operator*> OpeFactory::getOpeFactories()
 {
-	std::map<std::string, OpeFactory*>factories;
-	std::pair<std::string, OpeFactory*> entry;
+    std::map<std::string, Operator*>factories;
+    std::pair<std::string, Operator*> entry;
 
 	entry.first = "DUP";
-	entry.second = new DUPFactory();
+    entry.second = new OpeDUP();
 	factories.insert(entry);
 
 	entry.first = "DROP";
-	entry.second = new DROPFactory();
+    entry.second = new OpeDROP();
 	factories.insert(entry);
 
 	entry.first = "SWAP";
-	entry.second = new SWAPFactory();
+    entry.second = new OpeSWAP();
 	factories.insert(entry);
 
 	entry.first = "CLEAR";
-	entry.second = new CLEARFactory();
+    entry.second = new OpeCLEAR();
 	factories.insert(entry);
 
 	entry.first = "STO";
-	entry.second = new STOFactory();
+    entry.second = new OpeSTO();
 	factories.insert(entry);
 
 	entry.first = "FORGET";
-	entry.second = new FORGETFactory();
+    entry.second = new OpeFORGET();
 	factories.insert(entry);
 
 	entry.first = "EVAL";
-	entry.second = new EVALFactory();
+    entry.second = new OpeEVAL();
 	factories.insert(entry);
 
 	entry.first = "AND";
-	entry.second = new ANDFactory();
+    entry.second = new OpeAND();
 	factories.insert(entry);
 
 	entry.first = "OR";
-	entry.second = new ORFactory();
+    entry.second = new OpeOR();
 	factories.insert(entry);
 
 	entry.first = "+";
-	entry.second = new PLUSFactory();
+    entry.second = new OpePlus();
 	factories.insert(entry);
 
 	entry.first = "-";
-	entry.second = new MOINSFactory();
+    entry.second = new OpeMoins();
 	factories.insert(entry);
 
 	entry.first = "*";
-	entry.second = new MULFactory();
+    entry.second = new OpeMul();
 	factories.insert(entry);
 
 	entry.first = "/";
-    entry.second = new DIVISIONFactory();
+    entry.second = new OpeDivision();
 	factories.insert(entry);
 
 	entry.first = "=";
-	entry.second = new EQUALFactory();
+    entry.second = new OpeEQUAL();
 	factories.insert(entry);
 
 	entry.first = "!=";
-	entry.second = new DIFFactory();
+    entry.second = new OpeDIF();
 	factories.insert(entry);
 
 	entry.first = ">";
-	entry.second = new GTFactory();
+    entry.second = new OpeGT();
 	factories.insert(entry);
 
 	entry.first = "<";
-	entry.second = new LTFactory();
+    entry.second = new OpeLT();
 	factories.insert(entry);
 
 	entry.first = ">=";
-	entry.second = new GTEFactory();
+    entry.second = new OpeGTE();
 	factories.insert(entry);
 
 	entry.first = "<=";
-	entry.second = new LTEFactory();
+    entry.second = new OpeLTE();
 	factories.insert(entry);
 
 	entry.first = "DIV";
-	entry.second = new DIVFactory();
+    entry.second = new OpeDIV();
 	factories.insert(entry);
 
 	entry.first = "MOD";
-	entry.second = new MODFactory();
+    entry.second = new OpeMOD();
 	factories.insert(entry);
 
 	entry.first = "IFT";
-	entry.second = new IFTFactory();
+    entry.second = new OpeIFT();
 	factories.insert(entry);
 
 	entry.first = "IFTE";
-	entry.second = new IFTEFactory();
+    entry.second = new OpeIFTE();
 	factories.insert(entry);
 
     entry.first = "WHILE";
-    entry.second = new WHILEFactory();
+    entry.second = new OpeWHILE();
     factories.insert(entry);
 
 	entry.first = "NOT";
-	entry.second = new NOTFactory();
+    entry.second = new OpeNOT();
 	factories.insert(entry);
 
 	entry.first = "NEG";
-	entry.second = new NEGFactory();
+    entry.second = new OpeNEG();
 	factories.insert(entry);
 
 	entry.first = "UNDO";
-	entry.second = new UNDOFactory();
+    entry.second = new OpeUNDO();
 	factories.insert(entry);
 
     entry.first = "NUM";
-    entry.second = new NUMFactory();
+    entry.second = new OpeNUM();
     factories.insert(entry);
 
     entry.first = "DEN";
-    entry.second = new DENFactory();
+    entry.second = new OpeDEN();
     factories.insert(entry);
 
     entry.first = "POW";
-    entry.second = new POWFactory();
+    entry.second = new OpePOW();
     factories.insert(entry);
 
     entry.first = "SQRT";
-    entry.second = new SQRTFactory();
+    entry.second = new OpeSQRT();
     factories.insert(entry);
 
     entry.first = "SIN";
-    entry.second = new SINFactory();
+    entry.second = new OpeSIN();
     factories.insert(entry);
 
     entry.first = "COS";
-    entry.second = new COSFactory();
+    entry.second = new OpeCOS();
     factories.insert(entry);
 
     entry.first = "TAN";
-    entry.second = new TANFactory();
+    entry.second = new OpeTAN();
     factories.insert(entry);
 
     entry.first = "ARCSIN";
-    entry.second = new ARCSINFactory();
+    entry.second = new OpeARCSIN();
     factories.insert(entry);
 
     entry.first = "ARCCOS";
-    entry.second = new ARCCOSFactory();
+    entry.second = new OpeARCCOS();
     factories.insert(entry);
 
     entry.first = "ARCTAN";
-    entry.second = new ARCTANFactory();
+    entry.second = new OpeARCTAN();
     factories.insert(entry);
 
     entry.first = "EXP";
-    entry.second = new EXPFactory();
+    entry.second = new OpeEXP();
     factories.insert(entry);
 
     entry.first = "LN";
-    entry.second = new LNFactory();
+    entry.second = new OpeLN();
     factories.insert(entry);
 
 	return factories;
